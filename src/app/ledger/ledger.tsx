@@ -3,7 +3,7 @@
 
 import type { Line } from "@/data/board";
 import type { LedgerModel } from "@/data/decisions";
-import { Nav } from "../nav";
+import { Shell } from "../shell";
 
 function Row({ line }: { line: Line }) {
   return (
@@ -23,17 +23,11 @@ function Row({ line }: { line: Line }) {
   );
 }
 
-export function Ledger({ model }: { model: LedgerModel }) {
+export function Ledger({ model, resetAction }: { model: LedgerModel; resetAction?: () => void | Promise<void> }) {
   return (
-    <div className="board">
-      <div className="banner" role="note">
-        {model.banner}
-      </div>
-      <Nav current="/ledger" />
-      <header className="header">
-        <h1 className="title">{model.title}</h1>
-        <p className="muted">{model.intro}</p>
-      </header>
+    <Shell current="/ledger" banner={model.banner} title={model.title} lede={<>
+        <p>{model.intro}</p>
+      </>}>
 
       {model.summary ? (
         <section aria-label="Totals" className="kpis">
@@ -72,6 +66,16 @@ export function Ledger({ model }: { model: LedgerModel }) {
           {r.note ? <p className="muted">Note: {r.note}</p> : null}
         </section>
       ))}
-    </div>
+      {resetAction ? (
+        <form className="form" action={resetAction}>
+          <p className="muted">This demo keeps your decisions in this browser only, so nobody else sees them. You can clear them and run it again.</p>
+          <div className="actions">
+            <button type="submit" className="secondary">
+              Start the demo again
+            </button>
+          </div>
+        </form>
+      ) : null}
+    </Shell>
   );
 }

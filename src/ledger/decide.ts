@@ -8,7 +8,7 @@ import { toPricedRequests, toWeekCapacities } from "@/data/scenario";
 import type { LedgerLine, LedgerRow, SyntheticScenario } from "@/data/schema";
 import type { Store } from "./store";
 
-export type Refusal = "name-required" | "bad-mode" | "unknown-week" | "already-decided" | "bad-choice" | "does-not-fit";
+export type Refusal = "name-required" | "bad-mode" | "unknown-week" | "already-decided" | "bad-choice" | "does-not-fit" | "storage-full";
 
 export type Outcome = { ok: true; row: LedgerRow } | { ok: false; error: Refusal; message: string };
 

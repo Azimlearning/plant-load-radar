@@ -143,7 +143,7 @@ No dates, by design (D-11). Order and exit criteria are what matter.
 | P2 Capture | LLM interface, Intake + Matching agents, orders inbox, confidence states | Authored WhatsApp-style text and pasted Excel rows become order lines; uncertain fields are flagged, not guessed; a model that invents a value cannot get it past the grounding check (photos deferred, D-16; live model path verified only against a scripted fake until a key is supplied) |
 | P2b Business case | ✅ (built and reviewed 2026-10-08)  `/value` page quantifying today's arrangement (excess-stock carrying cost, margin lost on missed outside orders, delay cost) from the calculator and sourced parameters with low/base/high bands and working shown; then a business-side review (business case, pilot, success measures, Q&A) | Every figure on the page comes from the calculator and a manifested source or is labelled illustrative; sensitivity shown; reviewed by `ceo-pitch-advisor` |
 | P3 Decide & write ✅ (built 2026-10-08) | Writer agent, human approval checkpoint, ledger, ask-the-board | Approve → ledger row with ringgit on both sides; displayed numbers ⊆ calculator output (tested) |
-| P4 Pitch-ready | Data realism pass, end-to-end demo script, backup recorded demo, deploy-target decision, rehearsal | Full demo runs from a clean clone; pitch Q&A rehearsed with `ceo-pitch-advisor` |
+| P4 Pitch-ready (UI rework and deploy readiness done 2026-10-09; deploy, rehearsal and script reconciliation open) | Data realism pass, end-to-end demo script, backup recorded demo, deploy-target decision, rehearsal | Full demo runs from a clean clone; pitch Q&A rehearsed with `ceo-pitch-advisor` |
 
 ---
 

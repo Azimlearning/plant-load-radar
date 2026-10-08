@@ -183,6 +183,17 @@ There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`
 **Why:** the pitch's central sentence is "people make the call". A button that visibly writes a validated, append-only record under a name is the cheapest honest proof of it, and recomputing on the server means the ledger cannot be made to say something the calculator did not.
 **Trade-offs / rejected:** a database (more weight than a demo needs, rule 8); trusting the client's numbers (breaks hard constraint 1); a model for drafts or questions (no key; unverifiable). **Known weakness:** a file ledger needs a writable filesystem, so it works locally and with `next start` but not on static hosting; the deploy choice (P4) must account for it. A typed name is not identity.
 
+## D-19 — Light app-shell UI, deck palette, and a per-browser ledger for the shareable deploy (2026-10-09)
+
+**Decision:**
+1. **Light theme only, app-shell layout** (top bar, left navigation, card canvas), in the pattern language of Microsoft 365 and Amazon seller tools, using the deck's own palette (brand green `1F6B45` for navigation and buttons, red `B03A2E` for the decision card). No logos or brand marks are copied.
+2. **Chart colours stay blue (spare) and red (short).** The deck's green and red fail the colour-blind check (ΔE 5.8 under protanopia); position, labels and legend still carry the meaning.
+3. **On Vercel the ledger is a per-browser cookie**, selected by `PLR_LEDGER_MODE=cookie` or the `VERCEL` variable. Every read re-derives each row from the scenario and drops any that does not match, so an edited cookie cannot display a figure the calculator did not produce. A "Start the demo again" button exists in cookie mode only. Locally the append-only file ledger (D-18) is unchanged.
+4. **Deploy from the GitHub repo.** The `data/` files are included in the server bundle explicitly because they are read at request time.
+
+**Why:** the demo has to be openable by judges without a shared writable file, and one judge's approval must not change what the next judge sees. A cookie is the cheapest per-visitor store (rule 8): no database, no secret to configure.
+**Trade-offs / rejected:** a hosted database (more setup, a secret, shared state); `/tmp` on the function (shared and ephemeral, so judges would see each other's decisions); a dark theme (the user asked for light); the deck's green for spare bars (fails the colour-blind check). **Known weakness:** a cookie ledger is not append-only at the server level, and a visitor can clear it; it is the visitor's own demo state, and nothing outside their browser is affected.
+
 ---
 
 ## Working assumptions (`ASSUMED:`)

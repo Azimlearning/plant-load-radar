@@ -5,7 +5,7 @@
 import type { Line } from "@/data/board";
 import type { DecisionsModel, PendingView } from "@/data/decisions";
 import { MAX_NAME, MAX_NOTE } from "@/ledger/decide";
-import { Nav } from "../nav";
+import { Shell } from "../shell";
 
 function LineItem({ line }: { line: Line }) {
   return (
@@ -107,17 +107,11 @@ function Pending({ p, action, approverNote }: { p: PendingView; action: (formDat
   );
 }
 
-export function Decisions({ model, action }: { model: DecisionsModel; action: (formData: FormData) => void | Promise<void> }) {
+export function Decisions({ model, action, resetAction }: { model: DecisionsModel; action: (formData: FormData) => void | Promise<void>; resetAction?: () => void | Promise<void> }) {
   return (
-    <div className="board">
-      <div className="banner" role="note">
-        {model.banner}
-      </div>
-      <Nav current="/decisions" />
-      <header className="header">
-        <h1 className="title">{model.title}</h1>
-        <p className="muted">{model.intro}</p>
-      </header>
+    <Shell current="/decisions" banner={model.banner} title={model.title} lede={<>
+        <p>{model.intro}</p>
+      </>}>
       {model.error ? (
         <p className="error" role="alert">
           {model.error}
@@ -130,9 +124,19 @@ export function Decisions({ model, action }: { model: DecisionsModel; action: (f
       ) : (
         model.pending.map((p) => <Pending key={p.week} p={p} action={action} approverNote={model.approverNote} />)
       )}
+      {resetAction ? (
+        <form className="form" action={resetAction}>
+          <p className="muted">This demo keeps your decisions in this browser only, so nobody else sees them. You can clear them and run it again.</p>
+          <div className="actions">
+            <button type="submit" className="secondary">
+              Start the demo again
+            </button>
+          </div>
+        </form>
+      ) : null}
       <footer className="footer">
         <p>{model.draftNote}</p>
       </footer>
-    </div>
+    </Shell>
   );
 }

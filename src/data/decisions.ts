@@ -16,6 +16,7 @@ export const REFUSAL_TEXT: Record<Refusal | "unknown", string> = {
   "already-decided": "Nothing was recorded: that week already has a decision in the ledger.",
   "bad-choice": "Nothing was recorded: choose one of the requests the rule pushed back.",
   "does-not-fit": "Nothing was recorded: that request does not fit in this week's free capacity.",
+  "storage-full": "Nothing was recorded: this browser's demo ledger is full. Start the demo again.",
   unknown: "Nothing was recorded.",
 };
 

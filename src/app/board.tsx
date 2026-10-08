@@ -3,7 +3,7 @@
 // which records them (see board.test.tsx, the "every figure comes from the model" check).
 
 import Link from "next/link";
-import { Nav } from "./nav";
+import { Shell } from "./shell";
 import type { Bar, BoardModel, Chart, Line, RecommendationView } from "@/data/board";
 
 // ---- chart geometry (pixels in the SVG's own coordinate system; not data) ----------------------------
@@ -107,11 +107,10 @@ function LineItem({ line }: { line: Line }) {
   );
 }
 
-function Recommendation({ rec, actionsNote }: { rec: RecommendationView; actionsNote: string }) {
-  const p = rec.prebuild;
+function Recommendation({ rec, actionsNote, area }: { rec: RecommendationView; actionsNote: string; area?: string }) {
   return (
-    <section className="card" aria-labelledby={`rec-${rec.week}`}>
-      <p className="eyebrow">{rec.decided ? "Decided" : "Decision needed"}</p>
+    <section className={`card ${rec.decided ? "" : "card-alert"} ${area ?? ""}`} aria-labelledby={`rec-${rec.week}`}>
+      <p className={`eyebrow ${rec.decided ? "eyebrow-done" : ""}`}>{rec.decided ? "Decided" : "Decision needed"}</p>
       <h2 id={`rec-${rec.week}`} className="card-title">
         {rec.headline}
       </h2>
@@ -147,9 +146,16 @@ function Recommendation({ rec, actionsNote }: { rec: RecommendationView; actions
           <span className="actions-note">{actionsNote}</span>
         </div>
       )}
+    </section>
+  );
+}
 
-      <div className="alt">
-        <h3 className="col-title">Alternative: build ahead</h3>
+function Prebuild({ rec, area }: { rec: RecommendationView; area?: string }) {
+  const p = rec.prebuild;
+  return (
+    <section className={`card ${area ?? ""}`} aria-labelledby={`alt-${rec.week}`}>
+
+        <h2 id={`alt-${rec.week}`} className="card-title">Alternative: build ahead</h2>
         {p.possible ? (
           <>
             <p className="muted">
@@ -177,30 +183,19 @@ function Recommendation({ rec, actionsNote }: { rec: RecommendationView; actions
           The stock limit is an assumption, set by the team: a larger limit can make the shortage disappear, and stock
           ties up cash. It is shown here so the choice is visible.
         </p>
-      </div>
-    </section>
+          </section>
   );
 }
 
+const TONE: Record<string, string> = { "weeks-short": "kpi-alert", "at-stake": "kpi-good" };
+
 export function Board({ model }: { model: BoardModel }) {
+  const [first, ...others] = model.recommendations;
   return (
-    <div className="board">
-      <div className="banner" role="note">
-        {model.banner}
-      </div>
-
-      <Nav current="/" />
-
-      <header className="header">
-        <h1 className="title">{model.title}</h1>
-        <p className="muted">
-          {model.plant} · {model.product} · {model.range}
-        </p>
-      </header>
-
+    <Shell current="/" banner={model.banner} title="Board" lede={`${model.plant} · ${model.product} · ${model.range}`}>
       <section aria-label="Headline figures" className="kpis">
         {model.kpis.map((k) => (
-          <div key={k.id} className="kpi">
+          <div key={k.id} className={`kpi ${TONE[k.id] ?? ""}`}>
             <div className="kpi-label">{k.label}</div>
             <div className="kpi-value">{k.value}</div>
             <div className="kpi-note">{k.note}</div>
@@ -208,54 +203,102 @@ export function Board({ model }: { model: BoardModel }) {
         ))}
       </section>
 
-      <section className="card" aria-labelledby="chart-title">
-        <h2 id="chart-title" className="card-title">
-          Spare or short capacity, by week
-        </h2>
-        <p className="muted">Cubic metres left after confirmed orders and this week&apos;s new requests.</p>
-        <Legend />
-        <p className="scroll-hint">Narrow screen: scroll the chart sideways to see every week, or open the table below.</p>
-        <div className="chart-scroll">
-          <ChartSvg chart={model.chart} />
-        </div>
-        <details className="twin">
-          <summary>Show as a table</summary>
+      <div className="split">
+        <section className="card area-chart" aria-labelledby="chart-title">
+          <h2 id="chart-title" className="card-title">
+            Spare or short capacity, by week
+          </h2>
+          <p className="muted">Cubic metres left after confirmed orders and this week&apos;s new requests.</p>
+          <Legend />
+          <p className="scroll-hint">Narrow screen: scroll the chart sideways to see every week, or open the table below.</p>
+          <div className="chart-scroll">
+            <ChartSvg chart={model.chart} />
+          </div>
+          <details className="twin">
+            <summary>Show as a table</summary>
+            <div className="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Week</th>
+                    <th scope="col">Capacity</th>
+                    <th scope="col">Committed</th>
+                    <th scope="col">Free</th>
+                    <th scope="col">New requests</th>
+                    <th scope="col">Spare or short</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {model.weekTable.map((r) => (
+                    <tr key={r.week}>
+                      <th scope="row">{r.week}</th>
+                      <td>{r.capacity}</td>
+                      <td>{r.committed}</td>
+                      <td>{r.free}</td>
+                      <td>{r.wanted}</td>
+                      <td>{r.spare}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </section>
+        {first ? (
+          <Recommendation rec={first} actionsNote={model.actionsNote} area="area-decision" />
+        ) : (
+          <section className="card area-decision">
+            <h2 className="card-title">No week needs a decision</h2>
+            <p className="muted">Every request fits in the capacity left after confirmed orders.</p>
+          </section>
+        )}
+        {first && !first.decided ? <Prebuild rec={first} area="area-alt" /> : null}
+      </div>
+
+      {others.map((rec) => (
+        <Recommendation key={rec.week} rec={rec} actionsNote={model.actionsNote} />
+      ))}
+
+      {others.filter((r) => !r.decided).map((rec) => (
+        <Prebuild key={rec.week} rec={rec} />
+      ))}
+
+      {model.orders && (
+        <section className="card" aria-labelledby="orders-title">
+          <h2 id="orders-title" className="card-title">
+            {model.orders.title}
+          </h2>
+          <p className="muted">{model.orders.note}</p>
           <div className="table-scroll">
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Week</th>
-                  <th scope="col">Capacity</th>
-                  <th scope="col">Committed</th>
-                  <th scope="col">Free</th>
-                  <th scope="col">New requests</th>
-                  <th scope="col">Spare or short</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Order</th>
+                  <th scope="col">Tier</th>
+                  <th scope="col">Why it needs a person</th>
                 </tr>
               </thead>
               <tbody>
-                {model.weekTable.map((r) => (
-                  <tr key={r.week}>
-                    <th scope="row">{r.week}</th>
-                    <td>{r.capacity}</td>
-                    <td>{r.committed}</td>
-                    <td>{r.free}</td>
-                    <td>{r.wanted}</td>
-                    <td>{r.spare}</td>
+                {model.orders.rows.map((r) => (
+                  <tr key={r.who + r.what + r.why}>
+                    <th scope="row">{r.who}</th>
+                    <td>{r.what}</td>
+                    <td>
+                      <span className="tag">{r.tier}</span>
+                    </td>
+                    <td className="wrap">{r.why}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </details>
-      </section>
-
-      {model.recommendations.length === 0 ? (
-        <section className="card">
-          <h2 className="card-title">No week needs a decision</h2>
-          <p className="muted">Every request fits in the capacity left after confirmed orders.</p>
+          <div className="actions">
+            <Link className="button secondary" href="/inbox">
+              Open the orders inbox
+            </Link>
+          </div>
         </section>
-      ) : (
-        model.recommendations.map((rec) => <Recommendation key={rec.week} rec={rec} actionsNote={model.actionsNote} />)
       )}
 
       {model.focus && (
@@ -292,6 +335,6 @@ export function Board({ model }: { model: BoardModel }) {
       <footer className="footer">
         <p>{model.notBuilt}</p>
       </footer>
-    </div>
+    </Shell>
   );
 }

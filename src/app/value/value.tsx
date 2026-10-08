@@ -2,7 +2,7 @@
 // It performs no arithmetic and formats no numbers; every figure is a string from src/data/value.ts, which records
 // them (see value.test.tsx, the "every figure comes from the model" check).
 
-import { Nav } from "../nav";
+import { Shell } from "../shell";
 import type { LineView, ValueModel } from "@/data/value";
 
 function Line({ line }: { line: LineView }) {
@@ -42,16 +42,10 @@ function Line({ line }: { line: LineView }) {
 
 export function Value({ model }: { model: ValueModel }) {
   return (
-    <div className="board">
-      <div className="banner" role="note">
-        {model.banner}
-      </div>
-      <Nav current="/value" />
-      <header className="header">
-        <h1 className="title">{model.title}</h1>
-        <p className="muted">{model.intro}</p>
+    <Shell current="/value" banner={model.banner} title={model.title} lede={<>
+        <p>{model.intro}</p>
         <p className="scroll-hint">{model.scrollHint}</p>
-      </header>
+      </>}>
 
       <section className="card" aria-labelledby="total-title">
         <h2 id="total-title" className="card-title">
@@ -164,6 +158,6 @@ export function Value({ model }: { model: ValueModel }) {
       <footer className="footer">
         <p>{model.footnote}</p>
       </footer>
-    </div>
+    </Shell>
   );
 }

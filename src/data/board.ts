@@ -138,6 +138,8 @@ export interface BoardModel {
   weekTable: { week: string; capacity: string; committed: string; free: string; wanted: string; spare: string }[];
   /** Shown beside the Approve and Change buttons. */
   actionsNote: string;
+  /** The orders-to-check strip under the chart, or null when no capture source is given. */
+  orders: { title: string; note: string; rows: { who: string; what: string; tier: string; why: string }[] } | null;
   notBuilt: string;
   /** Every figure that may appear on screen, as formatted ("2,000"). */
   allowedFigures: string[];
@@ -184,6 +186,8 @@ export function lineFormatter(s: SyntheticScenario, fig: Figures) {
 export interface CaptureSummary {
   needsPerson: number;
   lines: number;
+  /** A few order lines a person has to check, as read by the capture pipeline (raw values; the board formats them). */
+  preview?: { who: string | null; product: string | null; volumeM3: number | null; tier: string; why: string }[];
 }
 
 /** What the ledger holds, for the board: decided weeks and who decided them. */
@@ -337,6 +341,18 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledge
     recommendations,
     focus,
     weekTable,
+    orders: capture?.preview
+      ? {
+          title: "Orders to check",
+          note: `The first few of ${fig.n(capture.needsPerson)} order lines the rules reader could not settle on its own. Open the orders inbox for all of them.`,
+          rows: capture.preview.map((p) => ({
+            who: p.who ?? "Customer not named",
+            what: [p.volumeM3 === null ? "Volume missing" : fig.m3(p.volumeM3), p.product ? fig.text(p.product) : null].filter(Boolean).join(" · "),
+            tier: p.tier,
+            why: fig.text(p.why),
+          })),
+        }
+      : null,
     actionsNote: "A named person approves or changes this on the decisions page. Nothing is recorded until they do, and nothing is sent.",
     notBuilt: "Approving records a decision in the ledger; it sends nothing, because this demo has no WhatsApp or email connection.",
     allowedFigures: fig.all(),

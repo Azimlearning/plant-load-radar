@@ -21,6 +21,7 @@ Nothing in P0 reads an environment variable — the deterministic core and data 
 |---|---|---|
 | `PLR_LLM_MODEL` | Cheapest model that passes the P2 extraction tests (chosen in P2, recorded in an ADR) | Which model the agents call |
 | `PLR_DATA_DIR` | `./data` | Where loaders look for datasets and `MANIFEST.md` |
+| `PLR_LEDGER_MODE` | Optional. `file` or `cookie`; default `cookie` when `VERCEL` is set, else `file` | Where decisions are kept. Cookie mode is per-browser and re-derived on every read (ADR D-19) |
 | `PLR_LEDGER_PATH` | Optional. Default `.ledger/ledger.jsonl` (gitignored) | Where the append-only decision ledger is written (ADR D-18). Needs a writable filesystem, so it works locally and with `next start`, not on static hosting. Not yet listed in `.env.example` (edits to that file are blocked in this environment); add the line `PLR_LEDGER_PATH=` by hand |
 
 ---

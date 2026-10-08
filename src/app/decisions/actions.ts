@@ -9,12 +9,11 @@ import { redirect } from "next/navigation";
 import { loadJsonDataset } from "@/data/loaders";
 import { SyntheticScenarioSchema } from "@/data/schema";
 import { SCENARIO_FILE } from "@/data/synth";
-import { recordDecision } from "@/ledger/decide";
-import { fileStore } from "@/ledger/store";
+import { resetDemo, saveDecision } from "@/ledger/session";
 
 export async function decide(formData: FormData): Promise<void> {
   const scenario = loadJsonDataset(SCENARIO_FILE, SyntheticScenarioSchema).data;
-  const out = recordDecision(
+  const out = await saveDecision(
     scenario,
     {
       week: formData.get("week"),
@@ -23,9 +22,15 @@ export async function decide(formData: FormData): Promise<void> {
       approvedBy: formData.get("approvedBy"),
       note: formData.get("note"),
     },
-    fileStore(),
   );
   if (!out.ok) redirect(`/decisions?error=${out.error}`);
   for (const path of ["/", "/decisions", "/ledger"]) revalidatePath(path);
   redirect("/ledger");
+}
+
+/** "Start the demo again": clears this visitor's own demo decisions. Does nothing when the file ledger is in use. */
+export async function startAgain(): Promise<void> {
+  await resetDemo();
+  for (const path of ["/", "/decisions", "/ledger"]) revalidatePath(path);
+  redirect("/decisions");
 }

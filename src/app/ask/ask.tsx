@@ -2,19 +2,13 @@
 // the address and answers it server-side with the calculator. No client code, no free-text understanding.
 
 import type { AskModel } from "@/data/ask";
-import { Nav } from "../nav";
+import { Shell } from "../shell";
 
 export function Ask({ model }: { model: AskModel }) {
   return (
-    <div className="board">
-      <div className="banner" role="note">
-        {model.banner}
-      </div>
-      <Nav current="/ask" />
-      <header className="header">
-        <h1 className="title">{model.title}</h1>
-        <p className="muted">{model.intro}</p>
-      </header>
+    <Shell current="/ask" banner={model.banner} title={model.title} lede={<>
+        <p>{model.intro}</p>
+      </>}>
 
       <section className="card" aria-labelledby="ask-form">
         <h2 id="ask-form" className="card-title">
@@ -66,6 +60,6 @@ export function Ask({ model }: { model: AskModel }) {
       <footer className="footer">
         <p>{model.note}</p>
       </footer>
-    </div>
+    </Shell>
   );
 }

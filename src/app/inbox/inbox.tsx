@@ -2,7 +2,7 @@
 // It performs no arithmetic and formats no numbers; the quoted message words and every figure are strings from
 // src/data/inbox.ts, which records them (see inbox.test.tsx).
 
-import { Nav } from "../nav";
+import { Shell } from "../shell";
 import type { Chip, InboxModel, LineView, MessageView } from "@/data/inbox";
 
 function ChipItem({ chip }: { chip: Chip }) {
@@ -78,19 +78,13 @@ function Message({ m }: { m: MessageView }) {
 
 export function Inbox({ model }: { model: InboxModel }) {
   return (
-    <div className="board">
-      <div className="banner" role="note">
-        {model.banner}
-      </div>
-      <Nav current="/inbox" />
-      <header className="header">
-        <h1 className="title">{model.title}</h1>
-        <p className="muted">{model.summary}</p>
-        <p className="muted">{model.readerNote}</p>
-      </header>
+    <Shell current="/inbox" banner={model.banner} title={model.title} lede={<>
+        <p>{model.summary}</p>
+        <p>{model.readerNote}</p>
+      </>}>
       {model.messages.map((m) => (
         <Message key={m.key} m={m} />
       ))}
-    </div>
+    </Shell>
   );
 }
