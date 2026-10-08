@@ -219,6 +219,7 @@ export const SynthParamsSchema = z.object({
     lossRiskRMKeyAccount: z.number().nonnegative(),
   }),
   margin: z.object({ fixedCostShareOfRevenue: z.number().min(0).max(1), customerNoise: z.number().min(0).max(0.2) }),
+  planner: z.object({ stockCapM3: z.number().nonnegative() }),
   story: z.object({
     week: WeekSchema,
     shortfallM3: z.number().nonnegative(),
@@ -268,6 +269,7 @@ export const SyntheticScenarioSchema = z
       notes: z.array(z.string()),
     }),
     plant: z.object({ id: z.string().min(1), name: z.string().min(1), product: z.string().min(1) }),
+    plannerSettings: z.object({ stockCapM3: z.number().nonnegative() }),
     capacity: z.array(CapacityWeekSchema).min(1),
     projects: z.array(ProjectCardSchema.extend({ name: z.string().min(1) })).min(1),
     customers: z.array(CustomerCardSchema.extend({ name: z.string().min(1) })).min(2),

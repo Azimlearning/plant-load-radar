@@ -95,7 +95,7 @@ Single app. Everything lives in the repo root. `refdocs/context/` is documentati
 | Regenerate demo data | `npm run generate:synthetic` | Rewrites `data/synthetic/scenario.json` from `params.json` + public data (tsx). A test fails if the committed file is stale, so run this after changing the generator or params. Verified 2026-10-08 |
 | Refresh public data | `npm run fetch:public` | Re-downloads the two DOSM series into `data/public/` (CC BY 4.0). Then update the manifest row's retrieved date by hand. Verified 2026-10-08 |
 | Hard-coded figures | `npm run check:literals` | Fails if a numeric literal (3+ digits or a fraction) appears in `src/core` or `src/app` outside a named SCREAMING_CASE constant. Verified 2026-10-08 |
-| Dev server | `npm run dev` | Placeholder page only until P1; not run yet |
+| Dev server | `npm run dev` | The board at `/`. Not run in dev mode yet; the production build was run with `npm run build` then `npx next start` and viewed (2026-10-08). After a rebuild, stop the old `next start` process first or it keeps serving the stale build |
 | Agents smoke test | *not yet defined* | P2 |
 
 ---

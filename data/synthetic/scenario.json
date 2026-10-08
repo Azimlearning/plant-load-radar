@@ -56,6 +56,9 @@
     "name": "Plant S (fictional)",
     "product": "AAC block"
   },
+  "plannerSettings": {
+    "stockCapM3": 1000
+  },
   "capacity": [
     {
       "plant": "plant-s",

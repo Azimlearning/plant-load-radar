@@ -28,3 +28,4 @@ Status vocabulary: `Draft` · `In progress` · `Done` · `Blocked` · `Supersede
 | File | Description | Status |
 |---|---|---|
 | [2026-10-08-p0-foundation.md](2026-10-08-p0-foundation.md) | P0 Foundation — skeleton, schemas, data + provenance, rule calculator | Done |
+| [2026-10-08-p1-board.md](2026-10-08-p1-board.md) | P1 Board — planner, view-model, board screen, UI honesty tests | Done |

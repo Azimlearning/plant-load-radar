@@ -29,3 +29,4 @@ If reality diverges from the doc mid-build, **edit the doc** and note it in the 
 | File | Companion plan | Status |
 |---|---|---|
 | [2026-10-08-p0-foundation.md](2026-10-08-p0-foundation.md) | [../plans/2026-10-08-p0-foundation.md](../plans/2026-10-08-p0-foundation.md) | Done |
+| [2026-10-08-p1-board.md](2026-10-08-p1-board.md) | [../plans/2026-10-08-p1-board.md](../plans/2026-10-08-p1-board.md) | Done |

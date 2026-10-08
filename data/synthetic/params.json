@@ -38,6 +38,7 @@
     "lossRiskRMKeyAccount": 20000
   },
   "margin": { "fixedCostShareOfRevenue": 0.1, "customerNoise": 0.02 },
+  "planner": { "stockCapM3": 1000 },
   "story": {
     "week": "2026-W43",
     "shortfallM3": 2000,
@@ -83,6 +84,7 @@
     "customers.pricePerM3RM": "ASSUMED PLACEHOLDER: no public AAC price per m3 exists (data/MANIFEST.md, searched and not found). Run results at several prices before quoting anything.",
     "customers.priceSpread": "ASSUMED: customer-to-customer price variation.",
     "customers.lossRiskRMKeyAccount": "ASSUMED: extra RM at stake if a key account is lost. Illustrative.",
+    "planner.stockCapM3": "ASSUMED: the most AAC the plant will hold as pre-built stock at the end of any week, about a third of a day of nominal output (nominal is about 2,600 m3 a day); stock ties up cash (research 01 section 4). Measured on the committed scenario (2026-10-08): at 500 m3 Contractor B is no longer pushed out but two other requests are; at 2,000 m3 or more the week-43 contest disappears entirely; at this value the contest remains. The cap is a visible assumption on the board, not a hidden tuning knob.",
     "margin.fixedCostShareOfRevenue": "ASSUMED: share of revenue that is fixed cost. Contribution margin ratio = public AAC and precast PBT margin + this share.",
     "margin.customerNoise": "ASSUMED: customer-to-customer variation in margin ratio.",
     "story.week": "Illustrative: the deck's contested week is 43.",

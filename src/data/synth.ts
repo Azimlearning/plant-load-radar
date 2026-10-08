@@ -354,6 +354,7 @@ export function generateScenario(dir: string = dataDir(), seedOverride?: number)
       ],
     },
     plant: params.plant,
+    plannerSettings: { stockCapM3: params.planner.stockCapM3 },
     capacity,
     projects,
     customers,

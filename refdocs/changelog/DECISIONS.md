@@ -132,6 +132,19 @@ There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`
 **Trade-offs:** The generator's demand dynamics are assumptions anchored to public aggregates (scale, regional split, seasonality, price trend), not learned from data; the pitch says so. Revisit only if a genuine order-level public dataset appears.
 **OQ-10 verdict:** order-level data is not findable. **OQ-11 verdict:** a trained model is not justified.
 
+## D-15 — How the board is built and what it will and will not show (2026-10-08, P1)
+
+**Decision:**
+1. **View-model + dumb component.** `src/data/board.ts` computes and formats everything; `src/app/board.tsx` only lays out strings from it and does no arithmetic. Every number is produced through a `Figures` registry that records it, and a test renders the page to HTML and fails if any figure a reader can see or hear (text, tooltips, aria labels) is missing from the registry. This is hard constraint #1 made mechanical in the UI. It was checked by planting a typed-in `RM246,000` and a computed number in the component; both were caught.
+2. **Only KPIs with a real source today.** Weeks short, decisions waiting and largest shortage are shown. The deck's "protected this month" and "orders to check" tiles are **left out**, not stubbed with zeros: they need the ledger (P3) and intake (P2) and would otherwise be invented numbers.
+3. **Approve and Change are inert**, visibly disabled with the reason beside them. Writing the ledger is a later phase and must be human-gated (D-04); a live-looking button that does nothing would mislead.
+4. **Pre-build is a shown alternative, not hidden and not the default answer.** The card leads with the rule's decision given today's capacity and then shows what building ahead (within a stock limit) would change. The stock limit is an **assumed, visible parameter** (`planner.stockCapM3` = 1,000 m3). Measured on the committed scenario: below 500 m3 Contractor B is still pushed out; from 500 m3 B is served but two other requests are pushed instead (building ahead changes who loses, not only whether someone does); at 2,000 m3 or more the week-43 contest disappears. The cap is set where the contest remains, and this is stated on screen.
+5. **A hand-written SVG chart, no chart library.** A diverging bar (spare above the line, short below) per the dataviz skill: two poles validated with the skill's script in light and dark (CVD separation ΔE about 19 to 22), bars at most 24px with rounded data ends, hairline solid grid, direct labels only on short weeks and the largest spare week, a legend, and a table twin. Short versus spare differs by direction and label, not colour alone. Text never wears a series colour (a small red label failed contrast at 3.85:1 in light mode and was changed to a text token with a red dot).
+6. **Static page.** `/` is prerendered at build from the committed scenario through the manifest-enforcing loader; no runtime file reads.
+
+**Why:** the pitch's promises are "numbers come from the calculator" and "people make the call"; each choice above keeps the screen from quietly breaking one of them, and the plan's own risk table named the pre-build question as the thing most likely to make the demo dishonest.
+**Trade-offs / rejected:** a chart library (more weight, harder to verify); a client-side week selector (the page would stop being static and the honesty check would need a browser); showing pre-build's stock cost in ringgit (needs a placeholder price and a low-authority carrying rate, so it would overstate precision); stubbing the two missing KPIs (fabrication). The phone layout scrolls the chart sideways (with a hint) rather than shrinking text to unreadable size.
+
 ---
 
 ## Working assumptions (`ASSUMED:`)
@@ -149,3 +162,4 @@ Not decisions — guesses made to keep moving. Each one must be confirmed or kil
 9. **ASSUMED: ordinary laptops, no GPU.** If a trained model is built (D-06) it must be small enough to train on CPU or on a free notebook tier.
 10. ~~ASSUMED: a defensible public training source may not exist.~~ **Resolved by D-14:** none exists; plain synthetic data it is.
 11. **ASSUMED: external order value = contribution margin + loss risk (full margin treated as at risk when deferred).** Pessimistic; see D-13.
+12. **ASSUMED: a stock limit of 1,000 m3 for pre-build** (about a third of a day of nominal output). It decides whether the week-43 contest survives, and it is shown on screen. See D-15.

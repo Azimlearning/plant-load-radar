@@ -1,4 +1,6 @@
 // Server-side only: uses node:fs. Never import this from a client component.
+// The fs calls carry `turbopackIgnore` comments on purpose: the board page is prerendered at build time and
+// reads nothing at runtime, so Turbopack's "trace the whole project for deployment" warning does not apply.
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { isAbsolute, join, posix, relative, resolve, sep } from "node:path";
 import * as z from "zod";
@@ -33,7 +35,7 @@ export const MANIFEST_FILE = "MANIFEST.md";
 
 /** The data directory: PLR_DATA_DIR if set, otherwise ./data. */
 export function dataDir(): string {
-  return resolve(process.env.PLR_DATA_DIR ?? "./data");
+  return resolve(/*turbopackIgnore: true*/ process.env.PLR_DATA_DIR ?? "./data");
 }
 
 const COLUMNS = 6;
@@ -81,8 +83,8 @@ export function parseManifest(markdown: string): ManifestEntry[] {
 
 export function loadManifest(dir: string = dataDir()): ManifestEntry[] {
   const path = join(dir, MANIFEST_FILE);
-  if (!existsSync(path)) throw new ManifestError(`No ${MANIFEST_FILE} in ${dir}`);
-  return parseManifest(readFileSync(path, "utf8"));
+  if (!existsSync(/*turbopackIgnore: true*/ path)) throw new ManifestError(`No ${MANIFEST_FILE} in ${dir}`);
+  return parseManifest(readFileSync(/*turbopackIgnore: true*/ path, "utf8"));
 }
 
 function toPosix(p: string): string {
@@ -90,7 +92,7 @@ function toPosix(p: string): string {
 }
 
 function listFiles(dir: string, base: string = dir): string[] {
-  return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+  return readdirSync(/*turbopackIgnore: true*/ dir, { withFileTypes: true }).flatMap((e) => {
     const full = join(dir, e.name);
     return e.isDirectory() ? listFiles(full, base) : [toPosix(relative(base, full))];
   });
@@ -108,7 +110,7 @@ export function findUnmanifested(dir: string = dataDir()): string[] {
 export function findMissingFiles(dir: string = dataDir()): string[] {
   return loadManifest(dir)
     .map((e) => e.file)
-    .filter((f) => !existsSync(join(dir, f)))
+    .filter((f) => !existsSync(join(/*turbopackIgnore: true*/ dir, f)))
     .sort();
 }
 
@@ -134,11 +136,11 @@ export function loadJsonDataset<S extends z.ZodType>(
   dir: string = dataDir(),
 ): { entry: ManifestEntry; data: z.output<S> } {
   const entry = requireManifested(relPath, dir);
-  const full = join(dir, entry.file);
-  if (!existsSync(full)) throw new ManifestError(`"${entry.file}" is in the manifest but not on disk`);
+  const full = join(/*turbopackIgnore: true*/ dir, entry.file);
+  if (!existsSync(/*turbopackIgnore: true*/ full)) throw new ManifestError(`"${entry.file}" is in the manifest but not on disk`);
   let raw: unknown;
   try {
-    raw = JSON.parse(readFileSync(full, "utf8"));
+    raw = JSON.parse(readFileSync(/*turbopackIgnore: true*/ full, "utf8"));
   } catch (e) {
     throw new ManifestError(`"${entry.file}" is not valid JSON: ${(e as Error).message}`);
   }

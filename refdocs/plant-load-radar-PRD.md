@@ -166,6 +166,7 @@ Canonical one-line list. Load-bearing entries are expanded as ADRs in `changelog
 | D-12 | Pitch framing defaults: no "shortage today" claim; product sits beside the ERP; third plant not claimed as running; RM82k/day is a labelled upper bound; adopt the autonomy-ladder framing (demo builds Stage 1 only) | Team could not answer OQ-13/14/16/17; research shows these are the safest honest readings |
 | D-13 | Rule implementation semantics: value = RM lost by one more week of deferral; schedule-sensitivity factor; close-call band relative to the current maximum; weekly, whole-request, work-conserving; reservations lapse | Removes ambiguities in the context example; all tested (P0 Tasks 6–7) |
 | D-14 | No trained model for demo data; seeded synthetic generator calibrated to public series | P0 Task 4 found no order-level or other defensible public training data; only aggregates exist (resolves OQ-10, OQ-11) |
+| D-15 | Board design: view-model with a figure registry and a rendered-HTML honesty test; only sourced KPIs; inert Approve/Change; pre-build shown as a labelled alternative with an assumed visible stock cap; hand SVG chart | Keeps the screen from breaking hard constraints 1 and 2 (P1) |
 
 ---
 

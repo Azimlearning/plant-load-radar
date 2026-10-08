@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { dailyDelayRateRM } from "@/core/costs";
+import { prebuildAlternative } from "@/core/planner";
 import { decide } from "@/core/rule";
 import { loadJsonDataset, loadManifest } from "./loaders";
 import { toPricedRequests, toWeekCapacities } from "./scenario";
@@ -91,6 +92,19 @@ describe("the committed scenario tells the deck's story end to end", () => {
     const bValue = w43.deferred.find((d) => d.requestId === b.id)!.valueRM;
     expect(Math.abs(aValue - bValue) > 0.1 * Math.max(aValue, bValue), "not a close call, so it is decided on ringgit").toBe(true);
     expect(w43.served.find((s) => s.requestId === a.id)!.byCloseCall).toBe(false);
+  });
+
+  it("pre-build is a real lever but, at the scenario's stock cap, the week-43 contest remains", () => {
+    const weeks = toWeekCapacities(committed);
+    const reqs = toPricedRequests(committed);
+    const cap = committed.plannerSettings.stockCapM3;
+    const withCap = prebuildAlternative(weeks, reqs, params.story.week, cap);
+    expect(withCap.coveredM3).toBeGreaterThan(0);
+    expect(withCap.residualShortM3, "still short at this cap").toBeGreaterThan(0);
+    expect(withCap.outcome, "so the rule still has to choose").not.toBeNull();
+    // A much larger cap would make the contest disappear: the cap is what keeps the demo's decision alive, and it is labelled.
+    const unlimited = prebuildAlternative(weeks, reqs, params.story.week, params.story.shortfallM3 * 2);
+    expect(unlimited.outcome).toBeNull();
   });
 
   it("the planned maintenance week runs at reduced capacity", () => {
