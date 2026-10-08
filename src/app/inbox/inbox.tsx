@@ -2,7 +2,7 @@
 // It performs no arithmetic and formats no numbers; the quoted message words and every figure are strings from
 // src/data/inbox.ts, which records them (see inbox.test.tsx).
 
-import Link from "next/link";
+import { Nav } from "../nav";
 import type { Chip, InboxModel, LineView, MessageView } from "@/data/inbox";
 
 function ChipItem({ chip }: { chip: Chip }) {
@@ -82,13 +82,7 @@ export function Inbox({ model }: { model: InboxModel }) {
       <div className="banner" role="note">
         {model.banner}
       </div>
-      <nav className="nav" aria-label="Pages">
-        <Link href="/">Board</Link>
-        <Link href="/inbox" aria-current="page">
-          Orders inbox
-        </Link>
-        <Link href="/value">Cost of today</Link>
-      </nav>
+      <Nav current="/inbox" />
       <header className="header">
         <h1 className="title">{model.title}</h1>
         <p className="muted">{model.summary}</p>

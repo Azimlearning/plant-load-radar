@@ -51,3 +51,6 @@ wandb/
 
 # NOTE: data/ is committed. Everything in it is public, model-generated or synthetic
 # (D-06) — there is no private/Chin Hin data in this project.
+
+# Decision ledger (runtime state, written by the Approve action; ADR D-18)
+.ledger/

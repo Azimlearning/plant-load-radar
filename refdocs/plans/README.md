@@ -30,4 +30,5 @@ Status vocabulary: `Draft` · `In progress` · `Done` · `Blocked` · `Supersede
 | [2026-10-08-p0-foundation.md](2026-10-08-p0-foundation.md) | P0 Foundation — skeleton, schemas, data + provenance, rule calculator | Done |
 | [2026-10-08-p1-board.md](2026-10-08-p1-board.md) | P1 Board — planner, view-model, board screen, UI honesty tests | Done |
 | [2026-10-08-p2-capture.md](2026-10-08-p2-capture.md) | P2 Capture — samples, rules extractor, grounding, matching, LLM interface, pipeline, inbox | Offline path done; LLM tasks deferred (D-17) |
+| [2026-10-08-p3-decide.md](2026-10-08-p3-decide.md) | P3 Decide & write — ledger, approval, templated drafts, ask the board | Built |
 | [2026-10-08-p2b-value.md](2026-10-08-p2b-value.md) | P2b Business case — the /value page: cost of today's arrangement as a labelled worked example | Built and reviewed |

@@ -169,6 +169,20 @@ There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`
 **Why:** the pitch is judged on the decision, the owner, the board and the business outcome, and on honesty about data. A live-looking model integration with no key adds risk and no pitch value; the missing quantification is a direct gap against the brief.
 **Trade-offs:** the demo's Intake is not an LLM, so the pitch must say so plainly ("a rules reader today; a model reader is the next step"), which slightly weakens the "agentic" slide; the cost is smaller than being caught implying a live model. If the team gets a key, Tasks 5 and 6 are still specified in the P2 execution doc and can be built then.
 
+## D-18 — Decide & write: a file ledger, a server-recomputed approval, templated drafts (2026-10-08)
+
+**Decision:**
+1. **Ledger = an append-only JSON Lines file** (`PLR_LEDGER_PATH`, default `.ledger/ledger.jsonl`, gitignored), written only by a server action. It is runtime state, not project data, so it needs no manifest row; every load validates each line with zod and fails loudly on a bad one. No update or delete path exists.
+2. **The server recomputes everything.** The approval form sends only the week, the mode (approve or change), the chosen request, a named approver and a note. The calculator produces the ringgit on both sides; any number in the request is ignored. One decision per week.
+3. **A named person is required** (typed name, no auth: D-11). There is no auto-approve flag and no approval without a name (D-04).
+4. **`LedgerRowSchema` is extended** to lists of served and deferred requests with their values, because the week-43 decision defers three requests and the P0 shape held one.
+5. **Drafts are templated** behind a `Drafter` interface (D-17: no key, no live model). They are marked "not sent": there is no WhatsApp or Power Automate integration (D-11).
+6. **"Ringgit at stake", not "protected".** The ledger page and board tile sum the value at stake in decisions taken, labelled as such; a "saved" or "protected" figure would be a benefit claim nothing has measured (business review, 2026-10-08).
+7. **Ask the board answers fixed-shape questions** (can we take N m³ for a party in week W?) with the calculator, through a plain GET form. No free-text understanding is claimed.
+
+**Why:** the pitch's central sentence is "people make the call". A button that visibly writes a validated, append-only record under a name is the cheapest honest proof of it, and recomputing on the server means the ledger cannot be made to say something the calculator did not.
+**Trade-offs / rejected:** a database (more weight than a demo needs, rule 8); trusting the client's numbers (breaks hard constraint 1); a model for drafts or questions (no key; unverifiable). **Known weakness:** a file ledger needs a writable filesystem, so it works locally and with `next start` but not on static hosting; the deploy choice (P4) must account for it. A typed name is not identity.
+
 ---
 
 ## Working assumptions (`ASSUMED:`)

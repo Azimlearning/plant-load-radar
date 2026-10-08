@@ -82,25 +82,45 @@ export const CustomerCardSchema = z.object({
   lossRiskRM: z.number().nonnegative().default(0),
 });
 
-/** One approved decision, with the ringgit on each side (the ledger is append-only). */
-export const LedgerRowSchema = z.object({
-  id: z.string().min(1),
-  decidedAt: IsoDateTimeSchema,
-  week: WeekSchema,
-  servedRequestId: z.string().min(1),
-  deferredRequestId: z.string().min(1).nullable(),
-  servedValueRM: z.number().nonnegative(),
-  deferredValueRM: z.number().nonnegative(),
-  /** A named person. There is no auto-approval (ADR D-04). */
-  approvedBy: z.string().min(1),
-  mode: z.enum(["recommendation-approved", "changed-by-scheduler"]),
-  note: z.string(),
+/** One request in a decision: who, how much, the ringgit at stake, and where a pushed-back request ends up. */
+export const LedgerLineSchema = z.object({
+  requestId: z.string().min(1),
+  partyId: z.string().min(1),
+  side: z.enum(["internal", "external"]),
+  volumeM3: z.number().positive(),
+  valueRM: z.number().nonnegative(),
+  /** For a deferred request: the week it is finally served, or null if no week in the horizon has room. Absent when served. */
+  movedTo: WeekSchema.nullable().optional(),
 });
+
+/**
+ * One approved decision, with the ringgit on each side (the ledger is append-only, ADR D-18). The values are the
+ * calculator's, recomputed on the server; `approvedBy` is a named person (there is no auto-approval, ADR D-04).
+ */
+export const LedgerRowSchema = z
+  .object({
+    id: z.string().min(1),
+    decidedAt: IsoDateTimeSchema,
+    week: WeekSchema,
+    served: z.array(LedgerLineSchema).min(1),
+    deferred: z.array(LedgerLineSchema),
+    servedValueRM: z.number().nonnegative(),
+    deferredValueRM: z.number().nonnegative(),
+    approvedBy: z.string().trim().min(1).max(80),
+    mode: z.enum(["recommendation-approved", "changed-by-scheduler"]),
+    note: z.string().max(500),
+  })
+  .superRefine((r, ctx) => {
+    const close = (a: number, b: number) => Math.abs(a - b) < 0.005;
+    if (!close(r.servedValueRM, r.served.reduce((t, l) => t + l.valueRM, 0))) ctx.addIssue({ code: "custom", path: ["servedValueRM"], message: "Must equal the sum of the served lines" });
+    if (!close(r.deferredValueRM, r.deferred.reduce((t, l) => t + l.valueRM, 0))) ctx.addIssue({ code: "custom", path: ["deferredValueRM"], message: "Must equal the sum of the deferred lines" });
+  });
 
 export type CapacityWeekRecord = z.output<typeof CapacityWeekSchema>;
 export type OrderRecord = z.output<typeof OrderSchema>;
 export type ProjectCardRecord = z.output<typeof ProjectCardSchema>;
 export type CustomerCardRecord = z.output<typeof CustomerCardSchema>;
+export type LedgerLine = z.output<typeof LedgerLineSchema>;
 export type LedgerRow = z.output<typeof LedgerRowSchema>;
 
 // ---- Public data files (data/public) ---------------------------------------------------------

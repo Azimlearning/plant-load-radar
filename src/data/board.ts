@@ -107,6 +107,8 @@ export interface PrebuildView {
 export interface RecommendationView {
   week: Week;
   weekName: string;
+  /** Set once a person has decided this week; the board then shows who, not a button. */
+  decided: { by: string; when: string; mode: string } | null;
   headline: string;
   freeText: string;
   wantedText: string;
@@ -150,19 +152,8 @@ export function niceStep(max: number, target: number = TICK_TARGET): number {
   return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * pow; // standard 1-2-5 rounding
 }
 
-/** What the capture pipeline found, for the board's "Orders to check" tile. */
-export interface CaptureSummary {
-  needsPerson: number;
-  lines: number;
-}
-
-export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): BoardModel {
-  const fig = new Figures();
-  const weeks = toWeekCapacities(s);
-  const reqs = toPricedRequests(s);
-  const balances = weekBalances(weeks, reqs);
-  const recs = recommend(weeks, reqs);
-
+/** Names and the formatted ringgit lines for a recommendation: shared by the board and the decisions page. */
+export function lineFormatter(s: SyntheticScenario, fig: Figures) {
   const names = new Map<string, string>([...s.projects.map((p) => [p.projectId, p.name] as const), ...s.customers.map((c) => [c.customerId, c.name] as const)]);
   const requestById = new Map(s.requests.map((r) => [r.id, r]));
   const who = (requestId: string): string => names.get(requestById.get(requestId)!.partyId) ?? requestId;
@@ -176,6 +167,41 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): Boar
     return (lossRisk.get(requestById.get(e.requestId)!.partyId) ?? 0) > 0 ? "margin plus the risk of losing a key account" : "margin at risk";
   };
 
+  const line = (e: { requestId: string; side: "internal" | "external"; volumeM3: number; valueRM: number }, to?: Week | null): Line => ({
+    who: who(e.requestId),
+    side: e.side,
+    volume: fig.m3(e.volumeM3),
+    value: fig.rm(e.valueRM),
+    valueMeaning: meaning(e),
+    ...(to === undefined ? {} : { to: to === null ? "no free week in this horizon" : fig.week(to) }),
+  });
+  const servedLines = (r: Recommendation): Line[] => r.served.map((e) => line(e));
+  const movedLines = (r: Recommendation): Line[] => r.deferred.map((e) => line(e, e.movedTo));
+  return { names, who, line, servedLines, movedLines };
+}
+
+/** What the capture pipeline found, for the board's "Orders to check" tile. */
+export interface CaptureSummary {
+  needsPerson: number;
+  lines: number;
+}
+
+/** What the ledger holds, for the board: decided weeks and who decided them. */
+export interface LedgerSummaryInput {
+  rows: readonly { week: string; approvedBy: string; decidedAt: string; mode: string; servedValueRM: number }[];
+}
+
+export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledger: LedgerSummaryInput["rows"] = []): BoardModel {
+  const fig = new Figures();
+  const weeks = toWeekCapacities(s);
+  const reqs = toPricedRequests(s);
+  const balances = weekBalances(weeks, reqs);
+  const recs = recommend(weeks, reqs);
+  const decidedBy = new Map(ledger.map((r) => [r.week, r] as const));
+  const waiting = recs.filter((r) => !decidedBy.has(r.week));
+
+  const { names, servedLines, movedLines } = lineFormatter(s, fig);
+
   // Chart ---------------------------------------------------------------------------------------------
   const maxAbs = Math.max(1, ...balances.map((b) => Math.abs(b.spareM3)));
   const step = niceStep(maxAbs);
@@ -183,7 +209,7 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): Boar
   const ticks: Chart["ticks"] = [];
   for (let m3 = -extent; m3 <= extent; m3 += step) ticks.push({ m3, label: fig.signed(m3) });
 
-  const contestedWeeks = new Set(recs.map((r) => r.week));
+  const contestedWeeks = new Set(waiting.map((r) => r.week));
   const biggestSpare = balances.filter((b) => b.spareM3 > 0).sort((a, b) => b.spareM3 - a.spareM3)[0];
   const bars: Bar[] = balances.map((b: WeekBalance) => {
     const isShort = b.spareM3 < 0;
@@ -209,17 +235,6 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): Boar
   };
 
   // Recommendations -------------------------------------------------------------------------------------
-  const line = (e: { requestId: string; side: "internal" | "external"; volumeM3: number; valueRM: number }, to?: Week | null): Line => ({
-    who: who(e.requestId),
-    side: e.side,
-    volume: fig.m3(e.volumeM3),
-    value: fig.rm(e.valueRM),
-    valueMeaning: meaning(e),
-    ...(to === undefined ? {} : { to: to === null ? "no free week in this horizon" : fig.week(to) }),
-  });
-  const servedLines = (r: Recommendation): Line[] => r.served.map((e) => line(e));
-  const movedLines = (r: Recommendation): Line[] => r.deferred.map((e) => line(e, e.movedTo));
-
   const recommendations: RecommendationView[] = recs.map((r) => {
     const alt = prebuildAlternative(weeks, reqs, r.week, s.plannerSettings.stockCapM3);
     const prebuild: PrebuildView = {
@@ -235,6 +250,9 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): Boar
     return {
       week: r.week,
       weekName: fig.week(r.week),
+      decided: decidedBy.has(r.week)
+        ? { by: decidedBy.get(r.week)!.approvedBy, when: decidedBy.get(r.week)!.decidedAt.slice(0, 10), mode: decidedBy.get(r.week)!.mode === "changed-by-scheduler" ? "changed by the scheduler" : "approved as recommended" }
+        : null,
       headline: `${fig.week(r.week)} is ${fig.m3(r.shortM3)} short`,
       freeText: `${fig.m3(r.freeM3)} free after confirmed orders`,
       wantedText: `${fig.m3(r.demandM3)} wanted`,
@@ -267,7 +285,7 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): Boar
   const worst = [...balances].sort((a, b) => a.spareM3 - b.spareM3)[0];
   const kpis: Kpi[] = [
     { id: "weeks-short", label: "Weeks short", value: fig.n(shortWeeks.length), note: "weeks where demand exceeds free capacity" },
-    { id: "decisions", label: "Decisions waiting", value: fig.n(recs.length), note: "weeks the rule has to settle" },
+    { id: "decisions", label: "Decisions waiting", value: fig.n(waiting.length), note: "weeks the rule has to settle that no person has decided yet" },
     {
       id: "largest",
       label: "Largest shortage",
@@ -281,6 +299,16 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): Boar
             label: "Orders to check",
             value: fig.n(capture.needsPerson),
             note: `of ${fig.n(capture.lines)} order lines read from the sample messages (rules reader); see the orders inbox`,
+          },
+        ]
+      : []),
+    ...(ledger.length > 0
+      ? [
+          {
+            id: "at-stake",
+            label: "Ringgit at stake, decided",
+            value: fig.rm(ledger.reduce((t, r) => t + r.servedValueRM, 0)),
+            note: `on the side served first across ${fig.n(ledger.length)} logged decision${ledger.length === 1 ? "" : "s"}; what waiting a week would have cost, not a saving`,
           },
         ]
       : []),
@@ -309,8 +337,8 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): Boar
     recommendations,
     focus,
     weekTable,
-    actionsNote: "Switched off in this build. Approving will write to the ledger in a later phase, and only a person can approve.",
-    notBuilt: "Not built yet: approval and ledger, and ask-the-board arrive in later phases. Approve and Change are switched off in this build.",
+    actionsNote: "A named person approves or changes this on the decisions page. Nothing is recorded until they do, and nothing is sent.",
+    notBuilt: "Approving records a decision in the ledger; it sends nothing, because this demo has no WhatsApp or email connection.",
     allowedFigures: fig.all(),
   };
 }

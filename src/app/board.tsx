@@ -3,6 +3,7 @@
 // which records them (see board.test.tsx, the "every figure comes from the model" check).
 
 import Link from "next/link";
+import { Nav } from "./nav";
 import type { Bar, BoardModel, Chart, Line, RecommendationView } from "@/data/board";
 
 // ---- chart geometry (pixels in the SVG's own coordinate system; not data) ----------------------------
@@ -110,7 +111,7 @@ function Recommendation({ rec, actionsNote }: { rec: RecommendationView; actions
   const p = rec.prebuild;
   return (
     <section className="card" aria-labelledby={`rec-${rec.week}`}>
-      <p className="eyebrow">Decision needed</p>
+      <p className="eyebrow">{rec.decided ? "Decided" : "Decision needed"}</p>
       <h2 id={`rec-${rec.week}`} className="card-title">
         {rec.headline}
       </h2>
@@ -134,15 +135,18 @@ function Recommendation({ rec, actionsNote }: { rec: RecommendationView; actions
         loses is offered the next week with room rather than refused.
       </p>
 
-      <div className="actions">
-        <button type="button" disabled aria-describedby="not-built">
-          Approve
-        </button>
-        <button type="button" disabled aria-describedby="not-built">
-          Change
-        </button>
-        <span className="actions-note">{actionsNote}</span>
-      </div>
+      {rec.decided ? (
+        <p className="actions-note" role="status">
+          Decided by {rec.decided.by} on {rec.decided.when}: {rec.decided.mode}. See the ledger.
+        </p>
+      ) : (
+        <div className="actions">
+          <Link className="button" href="/decisions">
+            Review and decide
+          </Link>
+          <span className="actions-note">{actionsNote}</span>
+        </div>
+      )}
 
       <div className="alt">
         <h3 className="col-title">Alternative: build ahead</h3>
@@ -185,13 +189,7 @@ export function Board({ model }: { model: BoardModel }) {
         {model.banner}
       </div>
 
-      <nav className="nav" aria-label="Pages">
-        <Link href="/" aria-current="page">
-          Board
-        </Link>
-        <Link href="/inbox">Orders inbox</Link>
-        <Link href="/value">Cost of today</Link>
-      </nav>
+      <Nav current="/" />
 
       <header className="header">
         <h1 className="title">{model.title}</h1>
@@ -292,7 +290,7 @@ export function Board({ model }: { model: BoardModel }) {
       )}
 
       <footer className="footer">
-        <p id="not-built">{model.notBuilt}</p>
+        <p>{model.notBuilt}</p>
       </footer>
     </div>
   );

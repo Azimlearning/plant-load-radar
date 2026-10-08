@@ -117,13 +117,14 @@ describe("capacity and ledger", () => {
     expect(CapacityWeekSchema.safeParse({ plant: "S", product: "AAC", week: "2026-W43", capacityM3: -1 }).success).toBe(false);
   });
 
-  it("requires a named approver on a ledger row (no auto-approval)", () => {
+  it("requires a named approver on a ledger row (no auto-approval) and consistent totals", () => {
+    const line = { requestId: "A", partyId: "p", side: "internal", volumeM3: 10, valueRM: 100 };
     const row = {
       id: "l1",
       decidedAt: "2026-10-12T10:00:00Z",
       week: "2026-W43",
-      servedRequestId: "A",
-      deferredRequestId: "B",
+      served: [line],
+      deferred: [{ ...line, requestId: "B", side: "external", valueRM: 10, movedTo: "2026-W44" }],
       servedValueRM: 100,
       deferredValueRM: 10,
       approvedBy: "scheduler-1",
@@ -132,5 +133,8 @@ describe("capacity and ledger", () => {
     };
     expect(LedgerRowSchema.safeParse(row).success).toBe(true);
     expect(LedgerRowSchema.safeParse({ ...row, approvedBy: "" }).success).toBe(false);
+    expect(LedgerRowSchema.safeParse({ ...row, approvedBy: "   " }).success).toBe(false);
+    expect(LedgerRowSchema.safeParse({ ...row, servedValueRM: 999 }).success).toBe(false);
+    expect(LedgerRowSchema.safeParse({ ...row, served: [] }).success).toBe(false);
   });
 });

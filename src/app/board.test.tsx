@@ -76,23 +76,49 @@ describe("the synthetic-data notice", () => {
   });
 });
 
-describe("Approve and Change are inert (writing a ledger entry is a later phase and must be human-gated)", () => {
-  it("both buttons are disabled and explain why", () => {
-    const buttons = [...markup.matchAll(/<button[^>]*>([^<]*)<\/button>/g)];
-    expect(buttons.map((b) => b[1])).toEqual(["Approve", "Change"]);
-    for (const b of buttons) expect(b[0]).toContain("disabled");
-    expect(markup).toContain('aria-describedby="not-built"');
-    expect(markup).toContain('id="not-built"');
-    expect(visibleText(markup)).toMatch(/switched off in this build/i);
-    expect(markup).toContain('class="actions-note"'); // the reason sits right beside the buttons, not only in the footer
+describe("the board cannot decide anything: approval happens on the decisions page, by a named person", () => {
+  it("has no button, form or input; the way to decide is a link to /decisions", () => {
+    expect(markup).not.toMatch(/<button|<form|<input|<textarea/);
+    expect(markup).toContain('href="/decisions"');
+    expect(visibleText(markup)).toMatch(/Review and decide/);
+    expect(visibleText(markup)).toMatch(/Nothing is recorded until they do, and nothing is sent/);
   });
 
-  it("the page has no form, no client directive and no write path", () => {
-    expect(markup).not.toMatch(/<form|<input|<textarea/);
+  it("the page and component have no client directive and no write path", () => {
     for (const file of ["src/app/board.tsx", "src/app/page.tsx"]) {
       const src = readFileSync(join(process.cwd(), file), "utf8");
-      expect(src, file).not.toMatch(/["']use client["']|useState|useEffect|onClick|onSubmit|fetch\(|writeFile|appendFile|localStorage/);
+      expect(src, file).not.toMatch(/["']use client["']|useState|useEffect|onClick|onSubmit|fetch\(|writeFile|appendFile|appendRow|recordDecision|localStorage/);
     }
+  });
+});
+
+describe("a decided week and the ledger tile", () => {
+  const row = {
+    week: "2026-W43",
+    approvedBy: "Siti (scheduler)",
+    decidedAt: "2026-10-12T02:00:00.000Z",
+    mode: "recommendation-approved",
+    servedValueRM: 575_342,
+  };
+  const decided = buildBoard(scenario, undefined, [row]);
+  const html = render(decided);
+
+  it("says who decided and when, replaces the link, and no longer asks for a decision", () => {
+    expect(visibleText(html)).toMatch(/Decided by Siti \(scheduler\) on 2026-10-12: approved as recommended/);
+    expect(html).not.toContain('href="/decisions" class="button"');
+    expect(decided.kpis.find((k) => k.id === "decisions")?.value).toBe("0");
+    expect(decided.chart.bars.some((b) => b.contested)).toBe(false);
+  });
+
+  it("shows ringgit at stake labelled as not a saving, and every figure is still accounted for", () => {
+    const tile = decided.kpis.find((k) => k.id === "at-stake")!;
+    expect(tile).toMatchObject({ label: "Ringgit at stake, decided", value: "RM575,342" });
+    expect(tile.note).toMatch(/not a saving/);
+    expect(unexplainedFigures(html, decided.allowedFigures)).toEqual([]);
+  });
+
+  it("without a ledger there is no such tile", () => {
+    expect(model.kpis.some((k) => k.id === "at-stake")).toBe(false);
   });
 });
 
