@@ -27,7 +27,6 @@ Nothing in P0 reads an environment variable — the deterministic core and data 
 ## Setup
 
 ```bash
-# Planned — package.json is created in P0 Task 1; until then these will not work.
 npm install
 cp .env.example .env   # then fill in ANTHROPIC_API_KEY (needed only from P2)
 npm test

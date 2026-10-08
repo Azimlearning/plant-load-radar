@@ -164,6 +164,7 @@ Canonical one-line list. Load-bearing entries are expanded as ADRs in `changelog
 | D-10 | Seven subagents: doc-keeper, feature-planner, test-runner, ui-reviewer, data-steward, ceo-pitch-advisor, idea-catalyst | User requested the last three beyond the standard set |
 | D-11 | Demo/MVP for the pitch only; plan by order and exit criteria, never dates | User: "just a demo/MVP for the pitching itself"; "rolling and flexible, don't focus on timing" |
 | D-12 | Pitch framing defaults: no "shortage today" claim; product sits beside the ERP; third plant not claimed as running; RM82k/day is a labelled upper bound; adopt the autonomy-ladder framing (demo builds Stage 1 only) | Team could not answer OQ-13/14/16/17; research shows these are the safest honest readings |
+| D-13 | Rule implementation semantics: value = RM lost by one more week of deferral; schedule-sensitivity factor; close-call band relative to the current maximum; weekly, whole-request, work-conserving; reservations lapse | Removes ambiguities in the context example; all tested (P0 Tasks 6–7) |
 
 ---
 

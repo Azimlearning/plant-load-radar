@@ -8,9 +8,10 @@
 ## Every change
 
 - [ ] **It was actually run.** Not "it compiles" — executed, and the result observed. If it wasn't run, say so rather than implying otherwise.
-- [ ] **Build passes** — `npm run build` *(planned — P0 creates `package.json`)*
-- [ ] **Tests pass** — `npm test` *(planned — no test suite yet; P0 creates it; tracked in STATUS Known gaps)*
-- [ ] **Lint and types clean** — `npm run lint` and `npx tsc --noEmit` *(planned — P0)*
+- [ ] **Build passes** — `npm run build`
+- [ ] **Tests pass** — `npm test` *(only smoke tests exist until P0 Tasks 2–7 land; tracked in STATUS Known gaps)*
+- [ ] **No hard-coded figures** — `npm run check:literals`
+- [ ] **Lint and types clean** — `npm run lint` and `npm run typecheck` (not bare `tsc`; it needs `next typegen` first)
 - [ ] **No secrets staged** — `git status` shows no `.env*`; no key literal in the diff
 - [ ] **No stray debug output** left in the diff — print statements, commented-out experiments
 - [ ] **Changelog entry added** — `refdocs/changelog/CHANGELOG.md`, including an honest **Verified** line

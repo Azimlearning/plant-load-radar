@@ -14,7 +14,9 @@
 
 ---
 
-### Task 1 — Project skeleton
+### Task 1 — Project skeleton — ✅ DONE 2026-10-08
+
+> **Deviations from the steps below (all recorded in the changelog and D-05):** scaffolded with `create-next-app@latest` in a scratch folder (flags read from `--help`: `--ts --eslint --tailwind --app --src-dir --import-alias "@/*" --use-npm --disable-git`) and copied in without overwriting; `cacheComponents`/`partialPrefetching` turned off; system font stack instead of `next/font/google`; `@types/node` raised to `^24` (vitest 5 peer range); vitest uses native `resolve.tsconfigPaths` (no plugin); `typecheck` script runs `next typegen` first. The README setup section was updated rather than rewritten.
 
 **Files:** `package.json`, `tsconfig.json`, `src/` layout, `vitest` config, `eslint` config, `README.md` (setup section).
 
@@ -26,7 +28,9 @@
 
 **Verify:** `npm install` exits 0; `npm test` exits 0 (a smoke test is fine); `npm run lint` and `npx tsc --noEmit` exit 0. Record the Node and npm versions.
 
-### Task 2 — Schemas
+### Task 2 — Schemas — ✅ DONE 2026-10-08
+
+> Read the current zod docs first (zod 4.6.5: `import * as z from "zod"`, `z.iso.date()`). Order fields use a value/confidence/source wrapper with consistency rules (a `missing` field must be null; `confirmed`/`inferred` need a value). `schema.test.ts` contains compile-time guards that the schema output is assignable to the core types and that field types do not widen.
 
 **Files:** `src/data/schema.ts`, `src/data/schema.test.ts`.
 
@@ -36,7 +40,9 @@
 
 **Verify:** `npm test -- schema` passes, covering valid construction, a rejected invalid tier, and a `missing`-confidence field round-trip.
 
-### Task 3 — Data layout, manifest, loaders
+### Task 3 — Data layout, manifest, loaders — ✅ DONE 2026-10-08
+
+> `loadJsonDataset` is the gate (CSV loading is added when a CSV dataset exists). Beyond the plan: `findUnmanifested` and `findMissingFiles` audits, path-escape protection, and a test that runs both audits on the real `data/` folder.
 
 **Files:** `data/MANIFEST.md` (exists — keep its format), `src/data/loaders.ts`, `src/data/loaders.test.ts`.
 
@@ -46,7 +52,7 @@
 
 **Verify:** `npm test -- loaders` — one test loads a manifested fixture (passes), one asks for an unmanifested file (throws the named error), one rejects kind `real`.
 
-### Task 4 — Deep public-data research (parallel)
+### Task 4 — Deep public-data research (parallel) — ⬜ NEXT
 
 **Owner:** `data-steward` subagent. **Files:** `data/public/*`, `data/MANIFEST.md`, findings appended to `refdocs/plant-load-radar-sources.md`. **Start from** `refdocs/research/` and `refdocs/context/04_RESEARCH.md` — do not redo what is already sourced.
 
@@ -57,7 +63,7 @@
 
 **Verify:** every file under `data/` has a manifest row (a test or script lists unmanifested files → empty); each item in step 1 has either a `public` row or a "not found" row; OQ-10 and OQ-11 have a recorded verdict.
 
-### Task 5 — Synthetic generator (and trained model, only if Task 4 justifies it)
+### Task 5 — Synthetic generator (and trained model, only if Task 4 justifies it) — ⬜ after Task 4
 
 **Files:** `data/synthetic/params.json` (config), `src/data/synth.ts`, `src/data/synth.test.ts`. Only if justified: `pipeline/` (Python + uv, own README) and `data/model/*` with a model card.
 
@@ -67,7 +73,9 @@
 
 **Verify:** `npm test -- synth` — determinism (two runs byte-identical) and schema validity. Sanity check: at least one week is short and one has slack (the board needs both). If a model exists: its output also validates against the schemas and its model card names every training source.
 
-### Task 6 — Cost functions (parallel)
+### Task 6 — Cost functions — ✅ DONE 2026-10-08
+
+> Functions are `delayCostPerDayRM`, `dailyDelayRateRM`, `slipCostRM`, `contributionMarginRM`, `externalValueRM`, `workingCapitalCostPerYearRM`. `slipCostRM` is new relative to this plan: the rule needs the cost of a week of waiting, applying schedule sensitivity and the deadline+buffer threshold (ADR D-13).
 
 **Files:** `src/core/costs.ts`, `src/core/costs.test.ts`.
 
@@ -77,7 +85,9 @@
 
 **Verify:** `npm test -- costs` — RM300,000,000 past deadline → 82,191.78/day (±0.01); before deadline → 0; margin and carrying-cost examples (RM5m × 25% = RM1.25m/yr) match context `03` §9.
 
-### Task 7 — Rule comparator + fairness rules
+### Task 7 — Rule comparator + fairness rules — ✅ DONE 2026-10-08
+
+> `decide()` processes weeks in order and carries deferred requests forward, which implements *move before refuse* and the unplaced outcome in one mechanism. Semantics and trade-offs: ADR D-13. The literal check is now `npm run check:literals` (strips comments; allows only named SCREAMING_CASE constants).
 
 **Files:** `src/core/rule.ts`, `src/core/rule.test.ts`.
 

@@ -77,7 +77,7 @@ Work is rolling and flexible (user, 2026-10-08). Don't invent deadlines, target 
 | Tests / lint | vitest, ESLint, `tsc --noEmit` |
 | Offline data pipeline (optional) | Python + uv in `pipeline/`, only if a trained model is actually used (D-06). It emits files into `data/` with manifest rows; the web app never imports it. |
 
-**Nothing is installed yet** — P0 creates the project skeleton. Until `package.json` exists, the commands below are plans, not facts.
+**Installed 2026-10-08 (P0 Task 1):** Next.js 16.4.0, React 19.3.0, TypeScript 5, Tailwind 4, ESLint 9, vitest 5. Next 16 differs from older versions — `AGENTS.md` says to read `node_modules/next/dist/docs/` before writing Next.js code, and to check current docs rather than recall APIs. zod, the LLM layer and the agents are not installed yet (P0 Task 2, P2).
 
 ## Surfaces
 
@@ -87,11 +87,13 @@ Single app. Everything lives in the repo root. `refdocs/context/` is documentati
 
 | What | Command | Notes |
 |---|---|---|
-| Install | `npm install` | Planned — P0 creates `package.json` |
-| Tests | `npm test` | Planned — P0 (vitest) |
-| Lint | `npm run lint` | Planned — P0 |
-| Type check | `npx tsc --noEmit` | Planned — P0 |
-| Dev server | `npm run dev` | Planned — P1 |
+| Install | `npm install` | Verified 2026-10-08 |
+| Tests | `npm test` | vitest, one run (`npm run test:watch` to watch). Verified 2026-10-08 (smoke tests only so far) |
+| Lint | `npm run lint` | ESLint. Verified 2026-10-08 |
+| Type check | `npm run typecheck` | Runs `next typegen` first (generates the global `LayoutProps` types), then `tsc --noEmit`. Plain `tsc` fails on a fresh clone. Verified 2026-10-08 |
+| Build | `npm run build` | Verified 2026-10-08 (static placeholder page) |
+| Hard-coded figures | `npm run check:literals` | Fails if a numeric literal (3+ digits or a fraction) appears in `src/core` or `src/app` outside a named SCREAMING_CASE constant. Verified 2026-10-08 |
+| Dev server | `npm run dev` | Placeholder page only until P1; not run yet |
 | Agents smoke test | *not yet defined* | P2 |
 
 ---

@@ -4,7 +4,7 @@
 
 **Build philosophy:** A demo built to be shown. Deterministic core first, agents second, polish last. Never build the second of anything until the first is green end-to-end. Numbers come from the calculator; data comes from files with provenance. Planning is by order and exit criteria — no dates (D-11).
 
-**Right now:** Nothing is built. This project was scaffolded on 2026-10-08 and the stack, data and timing assumptions were corrected the same day — the docs, agent config, and the P0 plan exist; no code does. The next session starts at `refdocs/plans/2026-10-08-p0-foundation.md`.
+**Right now:** The deterministic core exists and is tested: cost functions, the allocation rule with its fairness rules, zod schemas and manifest-enforcing loaders (P0 Tasks 1, 2, 3, 6, 7; 67 tests). There is **no data yet** (`data/` has only the manifest), no board, no agents and no LLM code. The next steps are P0 Task 4 (download public data, with manifest rows) then Task 5 (synthetic generator), in `refdocs/execution/2026-10-08-p0-foundation.md`.
 
 Programme state (from the user, 2026-10-08): pre-interview passed, team of 5 formed. Chin Hin has provided no data. Timing is rolling and flexible.
 
@@ -14,7 +14,7 @@ Programme state (from the user, 2026-10-08): pre-interview passed, team of 5 for
 
 | Phase | Scope | Status |
 |---|---|---|
-| P0 Foundation | Web skeleton, schemas, data + MANIFEST + loaders, deep public-data research, synthetic generator, rule calculator + tests | ⬜ Not started |
+| P0 Foundation | Web skeleton, schemas, data + MANIFEST + loaders, deep public-data research, synthetic generator, rule calculator + tests | 🔶 In progress — Tasks 1, 2, 3, 6, 7 done and verified (67 tests); Tasks 4 (public-data research) and 5 (synthetic generator) not started |
 | P1 Board | Capacity check, planner, web board, KPI tiles, recommendation card | ⬜ Not started |
 | P2 Capture | LLM interface, Intake + Matching agents, orders inbox, confidence states | ⬜ Not started |
 | P3 Decide & write | Writer agent, approval checkpoint, ledger, ask-the-board | ⬜ Not started |
@@ -33,14 +33,14 @@ Status vocabulary — use these exactly, and never round up:
 
 | Item | Approach | Status |
 |---|---|---|
-| Project skeleton | Next.js + TypeScript, vitest, ESLint, `tsc`; read current docs first | ⬜ |
-| Schemas | zod: capacity, orders (with per-field confidence), projects (delay-cost card), customers (margin card), ledger row | ⬜ |
-| Manifest + loaders | `data/MANIFEST.md`; loaders throw on files with no manifest row or kind `real` | ⬜ |
-| Deep public-data research | `data-steward` researches DOSM, LAD, carrying cost, Chin Hin disclosures, market data; records each hit and each "not findable"; verdicts on OQ-10 and OQ-11 | ⬜ |
-| Synthetic generator | Seeded, config-driven, calibrated to public aggregates, labelled `synthetic`; trained model only if research justifies it | ⬜ |
-| Delay-cost + margin functions | `(Σ price × 10%) ÷ 365 + idle site cost`, only past deadline; contribution margin | ⬜ |
-| Rule comparator + fairness | More ringgit wins; ~10% close call → first confirmed; confirmed orders never bumped; move before refuse | ⬜ |
-| Tests | Includes the RM300m block ≈ RM82,192/day vs RM18k margin worked example | ⬜ |
+| Project skeleton | Next.js 16.4.0 + TypeScript, vitest 5, ESLint; current docs read first | ✅ Done 2026-10-08 (placeholder page only; 2 smoke tests) |
+| Schemas | zod 4: capacity, orders (with per-field confidence), projects (delay-cost card), customers (margin card), ledger row | ✅ `src/data/schema.ts`; 12 tests + compile-time guards (schema ↔ core types, inferred field types) |
+| Manifest + loaders | `data/MANIFEST.md`; loaders throw on files with no manifest row or kind `real` | ✅ `src/data/loaders.ts`; 18 tests incl. one asserting the real `data/` folder has no unmanifested or missing files |
+| Deep public-data research | Research the DOSM, LAD, carrying-cost, Chin Hin disclosure and market-price sources; download only clearly licensed files into `data/public/` with manifest rows; verdicts on OQ-10 and OQ-11 | ⬜ Secondary research done (`refdocs/research/`); no files downloaded yet |
+| Synthetic generator | Seeded, config-driven, calibrated to public aggregates, labelled `synthetic`; trained model only if research justifies it | ⬜ Not started (needs Task 4's anchors first) |
+| Delay-cost + margin functions | `(Σ price × 10%) ÷ 365 + idle site cost`, only past deadline; contribution margin; schedule-sensitivity slip cost (D-13) | ✅ `src/core/costs.ts`; 13 tests incl. RM300m → 82,191.78/day |
+| Rule comparator + fairness | More ringgit wins; ~10% close call → first confirmed; confirmed orders never bumped; move before refuse | ✅ `src/core/rule.ts`, `fairness.ts`; 24 tests incl. the week-43 worked example; semantics in D-13 |
+| Tests | Includes the RM300m block ≈ RM82,192/day vs RM18k margin worked example | ✅ 67 passing across 5 files; mutation-checked (5 planted bugs all caught) |
 
 ---
 
@@ -52,6 +52,8 @@ What has actually been run, not what has been written. A row here needs a real c
 |---|---|---|---|
 | 2026-10-08 | Toolchain on the lead's machine | `node --version`, `npm --version`, `pnpm --version`, `python --version`, `uv --version`, `git --version` | Node 24.11.0, npm 11.6.1, pnpm 10.12.1, Python 3.13.14, uv 0.11.26, git 2.47.0 present |
 | 2026-10-08 | Pitch-pack files extracted intact | SHA-256 compare of `refdocs/context/*.md` against the zip contents | All 16 files identical |
+| 2026-10-08 | P0 Task 1: skeleton installs and passes its checks | `npm install` (exit 0); `npm test` → vitest 5.0.3; `npm run lint`; `npm run typecheck` (= `next typegen && tsc --noEmit`); `npm run build` (Next.js 16.4.0, Turbopack) | Tests 2/2 passed; lint clean; typecheck exit 0; build succeeded, static routes `/` and `/_not-found`. Bare `tsc --noEmit` fails on a fresh tree (`LayoutProps` is generated), hence `typecheck` |
+| 2026-10-08 | P0 Tasks 2, 3, 6, 7: schemas, loaders, cost functions, rule | `npm test` (vitest 5.0.3) → 5 files, **67 tests passed**; `npm run lint` exit 0; `npm run typecheck` exit 0; `npm run build` ok; `npm run check:literals` → 7 files, no hard-coded figures (and exits 1 when a literal is planted) | All pass. Mutation check: 5 deliberately planted bugs (capacity boundary, close-call band, delay-cost start day, reservations never lapse, committed capacity ignored) were each caught by the suite; sources restored and 67/67 re-confirmed. Negative type check confirmed `OrderRecord.volumeM3.value` infers as `number \| null`, not `any` |
 | 2026-10-08 | Secret-guard hook (Node port, `.claude/hooks/check_secrets.mjs`) behaves | Scratchpad script piped 11 payloads: planted Anthropic key via Write, Edit and MultiEdit; planted JWT; clean code; allowlist pragma; `.env.example`; `.env`; malformed JSON; empty stdin; non-write tool. `settings.json` parsed as valid JSON | 11/11 as expected: exit 2 on the four planted secrets, exit 0 on the rest. (This replaced an earlier Python hook, 9/9, since deleted.) |
 | 2026-10-08 | Research arithmetic | Recomputed by hand: 300e6×10%÷365 = 82,191.78; 500,000×10%×30÷365 = 4,109.59; 100,000×10%×139÷365 = 3,808.22; Q2 FY26 segment growth rates and PBT margins from the Bursa figures; Selangor+Johor shares 25.5%+19.6% | All match the figures written in `refdocs/research/` |
 
@@ -59,7 +61,10 @@ What has actually been run, not what has been written. A row here needs a real c
 
 ## Known gaps
 
-- No code, no tests, no `package.json` — all commands in CLAUDE.md "Running it" are plans until P0 lands.
+- Only a placeholder page exists in the UI. The core has tests but nothing runs end to end yet (no data, no board).
+- External order value is the full margin plus loss risk (pessimistic; D-13 assumption 11). Revisit when there is a basis for a probability of loss.
+- `npm audit` reports 5 high-severity findings, all in the lint toolchain (`eslint-config-next` → `fast-glob` → `micromatch` → `braces`, a ReDoS in glob matching). Dev-only, not shipped. The suggested `npm audit fix --force` would downgrade `eslint-config-next` to v14 (breaking) — do not run it; re-check after Next/eslint updates.
+- `npm run dev` has not been run yet (only `build`).
 - Secondary research is done (`refdocs/research/`) but is excerpt-level: no full annual report, paper or statute was read end to end, and no data files were downloaded. P0 Task 4 does that properly.
 - Pitch framing defaults are set by D-12 (OQ-13/14/17). Two facts remain unknown: OQ-15 (is the third AAC plant running?) and OQ-16 (do material shortages extend LAD?). The pitch must not claim either way.
 - No file-structure doc: deliberately not scaffolded (a file map of a project with no files is fabrication). Write one once there is a tree to describe.

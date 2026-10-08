@@ -34,13 +34,13 @@ The documents this project was scaffolded from, unzipped from `files (5).zip` in
 
 ## External code & libraries
 
-Nothing is installed yet. Choices from D-05 are listed so P0/P2 can verify them — **API behaviour must be read from current docs, not recalled** (use context7 or the library's docs).
+Installed in P0 Task 1: Next.js, TypeScript, Tailwind, ESLint, vitest (versions in `package.json`). Not installed yet: zod, the orchestration library, the LLM SDK. Choices from D-05 are listed so P0/P2 can verify them — **API behaviour must be read from current docs, not recalled** (use context7 or the library's docs).
 
 | Name | What it does for us | Link | License | Status |
 |---|---|---|---|---|
 | Next.js | Web app (App Router) | https://nextjs.org/docs | MIT | Chosen (D-05); not yet installed; scaffold flags unread |
 | TypeScript | Language for core, data, agents, UI | https://www.typescriptlang.org/docs/ | Apache-2.0 | Chosen (D-05) |
-| zod | Schemas and validation; also the agents' extraction schema | https://zod.dev/ | MIT | Chosen (D-05); version differences unread |
+| zod | Schemas and validation; also the agents' extraction schema | https://zod.dev/ | MIT | Installed 4.6.5 (2026-10-08); API read from the docs; v4 syntax (`import * as z`, `z.iso.date()`, `z.prettifyError`) in use |
 | vitest | Unit tests | https://vitest.dev/ | MIT | Chosen (D-05) |
 | ESLint | Lint | https://eslint.org/docs/ | MIT | Chosen (D-05) |
 | LangGraph.js *or* Vercel AI SDK | Agent orchestration — decide in P2 after reading current docs; LangGraph is the deck's named orchestrator | https://langchain-ai.github.io/langgraphjs/ · https://ai-sdk.dev/docs | MIT / Apache-2.0 | Undecided (ADR in P2); API unverified |

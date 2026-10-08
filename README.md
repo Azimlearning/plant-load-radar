@@ -24,7 +24,6 @@ One rule, one owner, one board:
 ## Setup
 
 ```bash
-# Planned — package.json is created in phase P0; until then these will not work.
 npm install
 ```
 
@@ -35,9 +34,10 @@ Copy `.env.example` to `.env` and fill in the values. Nothing needs a key until 
 ## Usage
 
 ```bash
-# Planned — see CLAUDE.md "Running it"
-npm test          # P0
-npm run dev       # P1
+npm test              # run the tests
+npm run lint          # lint
+npm run typecheck     # type check
+npm run dev           # dev server (placeholder page until phase P1)
 ```
 
 ## Project layout

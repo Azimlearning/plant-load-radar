@@ -47,6 +47,7 @@ D-05, D-06, D-08 and D-09 were first written earlier on 2026-10-08 and **revised
 - *Next.js front-end + Python (FastAPI) back-end:* clean split, but two deploys and two toolchains for a demo. Rejected (rule 8).
 - *Database:* not needed for a demo on file data. **Caveat:** serverless hosts (including Vercel) have ephemeral/read-only filesystems, so an append-only ledger *file* will not persist when hosted. For the demo, either keep the ledger in memory/browser storage, or pick storage in P4 alongside D-09.
 - *pnpm over npm:* pnpm is installed on the lead's machine, but npm ships with Node so teammates need nothing extra (rule 8).
+**Scaffold settings (P0 Task 1):** `cacheComponents` and `partialPrefetching` (opt-in flags the scaffolder enabled) are turned **off** because they make server code stricter about dynamic data and this demo reads local files (rule 8); fonts use the system stack so the demo builds offline; `@types/node` is `^24` to match the runtime and satisfy vitest 5's peer range; vitest uses Vite's native `resolve.tsconfigPaths` instead of a plugin.
 **Confirmed:** user, 2026-10-08: "for solution or tech stack just use most suitable." Claude's judgement is Next.js + TypeScript; no longer provisional. Reopen only with a new ADR (for example if it emerges that the team cannot work in TypeScript).
 
 ## D-06 — Data policy: Chin Hin gives no data; public, model-generated or synthetic only; no hard-coded data; manifest enforced (2026-10-08, revised same day)
@@ -106,6 +107,24 @@ There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`
 **Trade-offs:** (1) is less dramatic than "plants are overloaded"; (4) weakens the biggest number on slide 4 — a judge who attacks it finds it already caveated; (5) promises a roadmap the team won't build. All are cheaper than being caught overclaiming.
 **Still open (facts, not choices):** whether the third plant is commissioned (OQ-15) and whether materials shortages extend LAD (OQ-16) — find out via `data-steward` (company releases, Bursa filings) and, for LAD, a short legal read or a Chin Hin question at the pitch.
 
+## D-13 — How the allocation rule is implemented (2026-10-08, P0 Tasks 6–7)
+
+**Decision:** `src/core` implements the rule from context `03` §2 with these precise meanings:
+1. **Value at stake = RM lost by deferring a request one more week.** Internal: `slipCostRM(card, 7)` — days of handover slip beyond *deadline + buffer*, times (price × 10% ÷ 365 + idle site cost). External: contribution margin + loss risk. The context example compared "RM82k per day" with "RM18k total"; pricing both as the cost of one more week makes them comparable (the example still holds: ≈RM575k vs RM18k).
+2. **Schedule sensitivity (0–1)** is the days of handover slip caused by one day of material delay; delay cost applies only to the part of the slip that crosses deadline + buffer. This implements the "labelled upper bound" decision in D-12: RM82k/day is what you get at sensitivity 1 with the whole block past its deadline.
+3. **Close call:** `abs(a − b) ≤ 10% × max(a, b)`. The group of requests within the band *of the current highest value* is ranked by earliest confirmation date, then id. A pairwise banded comparison is not transitive (A≈B, B≈C, A≉C) and would make results depend on sort internals.
+4. **Weekly, whole-request, work-conserving:** weeks are processed earliest first; committed capacity (firm orders + active reservations) is never taken back; a request that does not fit carries into the next week and competes again (move before refuse; "unplaced" only if no week in the horizon has room); if the top-ranked request does not fit, a smaller lower-ranked one may still be served so capacity is not left idle. Requests are never split.
+5. **Reservations** lapse after their release date unless the call-off is confirmed; a confirmed call-off is a firm order, so it is not also counted as a reservation.
+6. **Pre-build** (AAC only, caller decides) fills short weeks from the nearest earlier spare without ever holding more than a stock cap at the end of any week.
+7. **Weeks are ISO labels** (`"2026-W43"`), compared as strings; dates are ISO `YYYY-MM-DD`, computed in UTC.
+
+**Why:** each choice removes an ambiguity that would otherwise be decided silently in code; all are covered by tests, and five deliberately planted bugs were each caught by the suite (boundary off-by-one, close-call band, delay-cost start day, reservation lapse, committed capacity ignored).
+**Trade-offs / rejected:**
+- *External value = full margin* is pessimistic: if the customer merely waits a week, the margin is not lost. It biases the rule slightly toward outside orders, i.e. toward the plant's commercial side, and the deck's example is unaffected. Alternative (probability-weighted loss) needs data we do not have. **ASSUMED** until a better basis exists.
+- *Splitting requests* across weeks: more realistic for divisible product, but ranks and prices get ambiguous; rejected for the demo (rule 8).
+- *Strict priority (never serve a lower-ranked request first)*: can strand capacity; rejected in favour of work-conserving.
+- *Weekly granularity*: ready-mix is dispatched daily and precast by mould slot; the same code can run on days or slots by changing the label, but only weekly AAC is shown.
+
 ---
 
 ## Working assumptions (`ASSUMED:`)
@@ -122,3 +141,4 @@ Not decisions — guesses made to keep moving. Each one must be confirmed or kil
 8. **ASSUMED: platform deliverables (proposal PDF + 3–5 min video, 16 Oct) are still not required** (context D14, pre-interview); unconfirmed now (OQ-03).
 9. **ASSUMED: ordinary laptops, no GPU.** If a trained model is built (D-06) it must be small enough to train on CPU or on a free notebook tier.
 10. **ASSUMED: a defensible public training source for a generative demand model may not exist.** If research finds none, the order stream is plain synthetic, calibrated to public aggregates — and that is fine.
+11. **ASSUMED: external order value = contribution margin + loss risk (full margin treated as at risk when deferred).** Pessimistic; see D-13.
