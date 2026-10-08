@@ -39,6 +39,8 @@ Singapore matters: Kota Tinggi's location suits Singapore orders, and Singapore 
 
 Full-year FY2025: revenue >RM4bn (+25%), building materials RM1.90bn revenue / RM134.1m PBT ✅. Pipeline RM5.29bn = RM2.18bn unbilled property sales + RM1.81bn construction orders + RM1.28bn Signature International (SIB) backlog ✅.
 
+**A detail the Bursa report shows (verified against the full PDF, 2026-10-08):** the division's Q2 profit before tax fell mainly because the safety-glass / door-frame / metal-roofing line swung from a RM12.4m profit to a **RM7.4m loss**, while AAC + precast PBT rose 43.1% (RM13.7m → RM19.6m). The AAC business is the bright spot inside a weak division. See `data/public/chinhin-segments-q2fy26.json`.
+
 **Reading it as a plant manager and as a CFO.** Volume is up, profit is thin. Building-materials PBT fell on "higher operating costs and tighter margins in a softer market" ✅. Management's stated near-term priorities include "enhancing productivity and operational efficiency across the building materials segment" and "ramping up new AAC capacity" ✅. That is our opening: *utilisation and margin per m³ are the lever, and the decision rule is how you pull it.* AAC + precast margin (≈10.8% PBT) is a little higher than ready-mix (≈10.3%); both are PBT margins, not contribution margins ❓.
 
 ## 4. Capacity — what is known and what is not

@@ -1,0 +1,2345 @@
+{
+  "meta": {
+    "dataset": "ppi_3d",
+    "title": "Monthly Producer Price Index, group 239 (manufacture of other non-metallic mineral products)",
+    "url": "https://storage.dosm.gov.my/ppi/ppi_3d.csv",
+    "retrieved": "2026-10-08",
+    "rawSha256": "14962c4492c92e4c836b3ad231c54cb772efd5b1d7781de4905c9dcfd7e04ee6",
+    "filter": "group = 239; series in abs, growth_yoy",
+    "units": "abs = index (DOSM base year); growth_yoy = percent change on the same month a year earlier",
+    "codes": {
+      "239": "Other non-metallic mineral products (includes cement, lime, plaster and concrete articles)"
+    },
+    "licence": "CC BY 4.0; attribution: Department of Statistics Malaysia (data.gov.my)"
+  },
+  "rows": [
+    {
+      "date": "2010-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 98.7
+    },
+    {
+      "date": "2010-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 99.3
+    },
+    {
+      "date": "2010-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 98.8
+    },
+    {
+      "date": "2010-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 99.2
+    },
+    {
+      "date": "2010-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 99.8
+    },
+    {
+      "date": "2010-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.8
+    },
+    {
+      "date": "2010-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.2
+    },
+    {
+      "date": "2010-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.4
+    },
+    {
+      "date": "2010-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.6
+    },
+    {
+      "date": "2010-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.4
+    },
+    {
+      "date": "2010-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.8
+    },
+    {
+      "date": "2010-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 101
+    },
+    {
+      "date": "2011-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 101.1
+    },
+    {
+      "date": "2011-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.9
+    },
+    {
+      "date": "2011-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.5
+    },
+    {
+      "date": "2011-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 100.6
+    },
+    {
+      "date": "2011-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 101.7
+    },
+    {
+      "date": "2011-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 101.7
+    },
+    {
+      "date": "2011-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.1
+    },
+    {
+      "date": "2011-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 101.7
+    },
+    {
+      "date": "2011-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.4
+    },
+    {
+      "date": "2011-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 104
+    },
+    {
+      "date": "2011-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 104.4
+    },
+    {
+      "date": "2011-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105
+    },
+    {
+      "date": "2012-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 104.9
+    },
+    {
+      "date": "2012-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.5
+    },
+    {
+      "date": "2012-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105
+    },
+    {
+      "date": "2012-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105
+    },
+    {
+      "date": "2012-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105
+    },
+    {
+      "date": "2012-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.3
+    },
+    {
+      "date": "2012-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.2
+    },
+    {
+      "date": "2012-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.8
+    },
+    {
+      "date": "2012-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.1
+    },
+    {
+      "date": "2012-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.1
+    },
+    {
+      "date": "2012-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.4
+    },
+    {
+      "date": "2012-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.7
+    },
+    {
+      "date": "2013-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.7
+    },
+    {
+      "date": "2013-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.7
+    },
+    {
+      "date": "2013-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.1
+    },
+    {
+      "date": "2013-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.4
+    },
+    {
+      "date": "2013-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.9
+    },
+    {
+      "date": "2013-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.6
+    },
+    {
+      "date": "2013-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.1
+    },
+    {
+      "date": "2013-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.1
+    },
+    {
+      "date": "2013-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.3
+    },
+    {
+      "date": "2013-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107
+    },
+    {
+      "date": "2013-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.6
+    },
+    {
+      "date": "2013-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.6
+    },
+    {
+      "date": "2014-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.2
+    },
+    {
+      "date": "2014-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.4
+    },
+    {
+      "date": "2014-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107
+    },
+    {
+      "date": "2014-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.9
+    },
+    {
+      "date": "2014-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.2
+    },
+    {
+      "date": "2014-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.9
+    },
+    {
+      "date": "2014-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108
+    },
+    {
+      "date": "2014-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.1
+    },
+    {
+      "date": "2014-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.6
+    },
+    {
+      "date": "2014-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.8
+    },
+    {
+      "date": "2014-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.4
+    },
+    {
+      "date": "2014-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.4
+    },
+    {
+      "date": "2015-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.8
+    },
+    {
+      "date": "2015-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.2
+    },
+    {
+      "date": "2015-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109
+    },
+    {
+      "date": "2015-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.5
+    },
+    {
+      "date": "2015-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.9
+    },
+    {
+      "date": "2015-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.8
+    },
+    {
+      "date": "2015-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.4
+    },
+    {
+      "date": "2015-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.8
+    },
+    {
+      "date": "2015-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.8
+    },
+    {
+      "date": "2015-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.6
+    },
+    {
+      "date": "2015-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.2
+    },
+    {
+      "date": "2015-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109
+    },
+    {
+      "date": "2016-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109
+    },
+    {
+      "date": "2016-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.7
+    },
+    {
+      "date": "2016-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.7
+    },
+    {
+      "date": "2016-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.9
+    },
+    {
+      "date": "2016-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.1
+    },
+    {
+      "date": "2016-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.1
+    },
+    {
+      "date": "2016-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.9
+    },
+    {
+      "date": "2016-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112
+    },
+    {
+      "date": "2016-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.8
+    },
+    {
+      "date": "2016-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.1
+    },
+    {
+      "date": "2016-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.5
+    },
+    {
+      "date": "2016-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.5
+    },
+    {
+      "date": "2017-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.1
+    },
+    {
+      "date": "2017-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.7
+    },
+    {
+      "date": "2017-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109
+    },
+    {
+      "date": "2017-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.1
+    },
+    {
+      "date": "2017-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.8
+    },
+    {
+      "date": "2017-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.7
+    },
+    {
+      "date": "2017-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109
+    },
+    {
+      "date": "2017-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.5
+    },
+    {
+      "date": "2017-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.5
+    },
+    {
+      "date": "2017-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.2
+    },
+    {
+      "date": "2017-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.9
+    },
+    {
+      "date": "2017-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.3
+    },
+    {
+      "date": "2018-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.1
+    },
+    {
+      "date": "2018-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.6
+    },
+    {
+      "date": "2018-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.1
+    },
+    {
+      "date": "2018-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.7
+    },
+    {
+      "date": "2018-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106
+    },
+    {
+      "date": "2018-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.1
+    },
+    {
+      "date": "2018-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.3
+    },
+    {
+      "date": "2018-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.6
+    },
+    {
+      "date": "2018-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.8
+    },
+    {
+      "date": "2018-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.9
+    },
+    {
+      "date": "2018-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.8
+    },
+    {
+      "date": "2018-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.8
+    },
+    {
+      "date": "2019-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.7
+    },
+    {
+      "date": "2019-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.7
+    },
+    {
+      "date": "2019-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.4
+    },
+    {
+      "date": "2019-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.8
+    },
+    {
+      "date": "2019-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.9
+    },
+    {
+      "date": "2019-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107
+    },
+    {
+      "date": "2019-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.9
+    },
+    {
+      "date": "2019-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.8
+    },
+    {
+      "date": "2019-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.7
+    },
+    {
+      "date": "2019-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.8
+    },
+    {
+      "date": "2019-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.2
+    },
+    {
+      "date": "2019-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.6
+    },
+    {
+      "date": "2020-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.5
+    },
+    {
+      "date": "2020-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.1
+    },
+    {
+      "date": "2020-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.3
+    },
+    {
+      "date": "2020-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.1
+    },
+    {
+      "date": "2020-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.1
+    },
+    {
+      "date": "2020-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 104.3
+    },
+    {
+      "date": "2020-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 103.6
+    },
+    {
+      "date": "2020-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 104.3
+    },
+    {
+      "date": "2020-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 104
+    },
+    {
+      "date": "2020-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 103.7
+    },
+    {
+      "date": "2020-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.4
+    },
+    {
+      "date": "2020-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.2
+    },
+    {
+      "date": "2021-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 101.7
+    },
+    {
+      "date": "2021-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 101.7
+    },
+    {
+      "date": "2021-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.1
+    },
+    {
+      "date": "2021-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.9
+    },
+    {
+      "date": "2021-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.1
+    },
+    {
+      "date": "2021-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.3
+    },
+    {
+      "date": "2021-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.1
+    },
+    {
+      "date": "2021-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.6
+    },
+    {
+      "date": "2021-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 102.4
+    },
+    {
+      "date": "2021-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 103.1
+    },
+    {
+      "date": "2021-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 104.3
+    },
+    {
+      "date": "2021-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 103.8
+    },
+    {
+      "date": "2022-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 103.6
+    },
+    {
+      "date": "2022-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 103.7
+    },
+    {
+      "date": "2022-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 105.2
+    },
+    {
+      "date": "2022-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 106.1
+    },
+    {
+      "date": "2022-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.9
+    },
+    {
+      "date": "2022-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 107.7
+    },
+    {
+      "date": "2022-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.2
+    },
+    {
+      "date": "2022-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 108.9
+    },
+    {
+      "date": "2022-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.2
+    },
+    {
+      "date": "2022-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 109.8
+    },
+    {
+      "date": "2022-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.4
+    },
+    {
+      "date": "2022-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110
+    },
+    {
+      "date": "2023-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.9
+    },
+    {
+      "date": "2023-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.7
+    },
+    {
+      "date": "2023-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.4
+    },
+    {
+      "date": "2023-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.5
+    },
+    {
+      "date": "2023-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 113.8
+    },
+    {
+      "date": "2023-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 113.8
+    },
+    {
+      "date": "2023-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 113.9
+    },
+    {
+      "date": "2023-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 113.9
+    },
+    {
+      "date": "2023-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 114.1
+    },
+    {
+      "date": "2023-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 113.7
+    },
+    {
+      "date": "2023-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 114.2
+    },
+    {
+      "date": "2023-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.8
+    },
+    {
+      "date": "2024-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.6
+    },
+    {
+      "date": "2024-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.8
+    },
+    {
+      "date": "2024-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.1
+    },
+    {
+      "date": "2024-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.1
+    },
+    {
+      "date": "2024-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.9
+    },
+    {
+      "date": "2024-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 113.4
+    },
+    {
+      "date": "2024-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.8
+    },
+    {
+      "date": "2024-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.1
+    },
+    {
+      "date": "2024-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 110.9
+    },
+    {
+      "date": "2024-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.3
+    },
+    {
+      "date": "2024-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.6
+    },
+    {
+      "date": "2024-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112
+    },
+    {
+      "date": "2025-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.3
+    },
+    {
+      "date": "2025-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 111.7
+    },
+    {
+      "date": "2025-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.3
+    },
+    {
+      "date": "2025-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 112.9
+    },
+    {
+      "date": "2025-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 113.7
+    },
+    {
+      "date": "2025-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 113.5
+    },
+    {
+      "date": "2025-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 114
+    },
+    {
+      "date": "2025-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 114.6
+    },
+    {
+      "date": "2025-09-01",
+      "code": "239",
+      "series": "abs",
+      "value": 114.9
+    },
+    {
+      "date": "2025-10-01",
+      "code": "239",
+      "series": "abs",
+      "value": 114.9
+    },
+    {
+      "date": "2025-11-01",
+      "code": "239",
+      "series": "abs",
+      "value": 115.4
+    },
+    {
+      "date": "2025-12-01",
+      "code": "239",
+      "series": "abs",
+      "value": 115.2
+    },
+    {
+      "date": "2026-01-01",
+      "code": "239",
+      "series": "abs",
+      "value": 115.5
+    },
+    {
+      "date": "2026-02-01",
+      "code": "239",
+      "series": "abs",
+      "value": 116
+    },
+    {
+      "date": "2026-03-01",
+      "code": "239",
+      "series": "abs",
+      "value": 116.3
+    },
+    {
+      "date": "2026-04-01",
+      "code": "239",
+      "series": "abs",
+      "value": 117.4
+    },
+    {
+      "date": "2026-05-01",
+      "code": "239",
+      "series": "abs",
+      "value": 118.1
+    },
+    {
+      "date": "2026-06-01",
+      "code": "239",
+      "series": "abs",
+      "value": 118.3
+    },
+    {
+      "date": "2026-07-01",
+      "code": "239",
+      "series": "abs",
+      "value": 118.8
+    },
+    {
+      "date": "2026-08-01",
+      "code": "239",
+      "series": "abs",
+      "value": 118.8
+    },
+    {
+      "date": "2011-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.432
+    },
+    {
+      "date": "2011-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.611
+    },
+    {
+      "date": "2011-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.721
+    },
+    {
+      "date": "2011-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.411
+    },
+    {
+      "date": "2011-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.904
+    },
+    {
+      "date": "2011-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.893
+    },
+    {
+      "date": "2011-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.896
+    },
+    {
+      "date": "2011-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.295
+    },
+    {
+      "date": "2011-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.789
+    },
+    {
+      "date": "2011-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.586
+    },
+    {
+      "date": "2011-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.571
+    },
+    {
+      "date": "2011-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.96
+    },
+    {
+      "date": "2012-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.759
+    },
+    {
+      "date": "2012-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 4.559
+    },
+    {
+      "date": "2012-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 4.478
+    },
+    {
+      "date": "2012-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 4.374
+    },
+    {
+      "date": "2012-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.245
+    },
+    {
+      "date": "2012-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.54
+    },
+    {
+      "date": "2012-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.036
+    },
+    {
+      "date": "2012-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 4.031
+    },
+    {
+      "date": "2012-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.613
+    },
+    {
+      "date": "2012-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.019
+    },
+    {
+      "date": "2012-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.916
+    },
+    {
+      "date": "2012-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.619
+    },
+    {
+      "date": "2013-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.763
+    },
+    {
+      "date": "2013-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.19
+    },
+    {
+      "date": "2013-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.048
+    },
+    {
+      "date": "2013-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.333
+    },
+    {
+      "date": "2013-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.81
+    },
+    {
+      "date": "2013-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.235
+    },
+    {
+      "date": "2013-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.806
+    },
+    {
+      "date": "2013-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.229
+    },
+    {
+      "date": "2013-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.131
+    },
+    {
+      "date": "2013-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.848
+    },
+    {
+      "date": "2013-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.128
+    },
+    {
+      "date": "2013-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.843
+    },
+    {
+      "date": "2014-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.419
+    },
+    {
+      "date": "2014-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.608
+    },
+    {
+      "date": "2014-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.848
+    },
+    {
+      "date": "2014-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.47
+    },
+    {
+      "date": "2014-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.281
+    },
+    {
+      "date": "2014-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.281
+    },
+    {
+      "date": "2014-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.84
+    },
+    {
+      "date": "2014-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.934
+    },
+    {
+      "date": "2014-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.212
+    },
+    {
+      "date": "2014-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.682
+    },
+    {
+      "date": "2014-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.673
+    },
+    {
+      "date": "2014-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.673
+    },
+    {
+      "date": "2015-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.493
+    },
+    {
+      "date": "2015-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.745
+    },
+    {
+      "date": "2015-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.869
+    },
+    {
+      "date": "2015-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.432
+    },
+    {
+      "date": "2015-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.519
+    },
+    {
+      "date": "2015-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.713
+    },
+    {
+      "date": "2015-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.222
+    },
+    {
+      "date": "2015-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.573
+    },
+    {
+      "date": "2015-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.105
+    },
+    {
+      "date": "2015-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.735
+    },
+    {
+      "date": "2015-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.183
+    },
+    {
+      "date": "2015-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.366
+    },
+    {
+      "date": "2016-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.184
+    },
+    {
+      "date": "2016-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.311
+    },
+    {
+      "date": "2016-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.56
+    },
+    {
+      "date": "2016-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.279
+    },
+    {
+      "date": "2016-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.092
+    },
+    {
+      "date": "2016-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.184
+    },
+    {
+      "date": "2016-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.453
+    },
+    {
+      "date": "2016-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.004
+    },
+    {
+      "date": "2016-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.821
+    },
+    {
+      "date": "2016-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.369
+    },
+    {
+      "date": "2016-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.19
+    },
+    {
+      "date": "2016-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.459
+    },
+    {
+      "date": "2017-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.092
+    },
+    {
+      "date": "2017-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.807
+    },
+    {
+      "date": "2017-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.536
+    },
+    {
+      "date": "2017-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.623
+    },
+    {
+      "date": "2017-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.07
+    },
+    {
+      "date": "2017-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.16
+    },
+    {
+      "date": "2017-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.713
+    },
+    {
+      "date": "2017-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.232
+    },
+    {
+      "date": "2017-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.057
+    },
+    {
+      "date": "2017-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.71
+    },
+    {
+      "date": "2017-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.448
+    },
+    {
+      "date": "2017-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.183
+    },
+    {
+      "date": "2018-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0
+    },
+    {
+      "date": "2018-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.932
+    },
+    {
+      "date": "2018-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.661
+    },
+    {
+      "date": "2018-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -3.116
+    },
+    {
+      "date": "2018-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.574
+    },
+    {
+      "date": "2018-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.392
+    },
+    {
+      "date": "2018-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.642
+    },
+    {
+      "date": "2018-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.648
+    },
+    {
+      "date": "2018-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.466
+    },
+    {
+      "date": "2018-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.106
+    },
+    {
+      "date": "2018-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.928
+    },
+    {
+      "date": "2018-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.287
+    },
+    {
+      "date": "2019-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.2
+    },
+    {
+      "date": "2019-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.094
+    },
+    {
+      "date": "2019-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.283
+    },
+    {
+      "date": "2019-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.041
+    },
+    {
+      "date": "2019-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.849
+    },
+    {
+      "date": "2019-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.848
+    },
+    {
+      "date": "2019-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.293
+    },
+    {
+      "date": "2019-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.188
+    },
+    {
+      "date": "2019-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.094
+    },
+    {
+      "date": "2019-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.094
+    },
+    {
+      "date": "2019-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.562
+    },
+    {
+      "date": "2019-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.187
+    },
+    {
+      "date": "2020-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.187
+    },
+    {
+      "date": "2020-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.562
+    },
+    {
+      "date": "2020-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.034
+    },
+    {
+      "date": "2020-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.592
+    },
+    {
+      "date": "2020-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.684
+    },
+    {
+      "date": "2020-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.523
+    },
+    {
+      "date": "2020-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -3.087
+    },
+    {
+      "date": "2020-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.341
+    },
+    {
+      "date": "2020-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.53
+    },
+    {
+      "date": "2020-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.903
+    },
+    {
+      "date": "2020-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -3.578
+    },
+    {
+      "date": "2020-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -4.128
+    },
+    {
+      "date": "2021-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -4.507
+    },
+    {
+      "date": "2021-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -4.147
+    },
+    {
+      "date": "2021-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -3.039
+    },
+    {
+      "date": "2021-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.093
+    },
+    {
+      "date": "2021-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.854
+    },
+    {
+      "date": "2021-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.918
+    },
+    {
+      "date": "2021-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.448
+    },
+    {
+      "date": "2021-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.63
+    },
+    {
+      "date": "2021-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.538
+    },
+    {
+      "date": "2021-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.579
+    },
+    {
+      "date": "2021-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.855
+    },
+    {
+      "date": "2021-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.566
+    },
+    {
+      "date": "2022-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.868
+    },
+    {
+      "date": "2022-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.967
+    },
+    {
+      "date": "2022-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.036
+    },
+    {
+      "date": "2022-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.11
+    },
+    {
+      "date": "2022-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 5.681
+    },
+    {
+      "date": "2022-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 5.279
+    },
+    {
+      "date": "2022-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 5.975
+    },
+    {
+      "date": "2022-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 6.14
+    },
+    {
+      "date": "2022-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 6.641
+    },
+    {
+      "date": "2022-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 6.499
+    },
+    {
+      "date": "2022-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 5.849
+    },
+    {
+      "date": "2022-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 5.973
+    },
+    {
+      "date": "2023-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 7.046
+    },
+    {
+      "date": "2023-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 7.715
+    },
+    {
+      "date": "2023-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 6.844
+    },
+    {
+      "date": "2023-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 6.032
+    },
+    {
+      "date": "2023-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 5.468
+    },
+    {
+      "date": "2023-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 5.664
+    },
+    {
+      "date": "2023-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 5.268
+    },
+    {
+      "date": "2023-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 4.591
+    },
+    {
+      "date": "2023-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 4.487
+    },
+    {
+      "date": "2023-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.552
+    },
+    {
+      "date": "2023-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.442
+    },
+    {
+      "date": "2023-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.545
+    },
+    {
+      "date": "2024-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.533
+    },
+    {
+      "date": "2024-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.09
+    },
+    {
+      "date": "2024-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.267
+    },
+    {
+      "date": "2024-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.356
+    },
+    {
+      "date": "2024-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.67
+    },
+    {
+      "date": "2024-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.351
+    },
+    {
+      "date": "2024-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.966
+    },
+    {
+      "date": "2024-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -1.58
+    },
+    {
+      "date": "2024-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.805
+    },
+    {
+      "date": "2024-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.111
+    },
+    {
+      "date": "2024-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -2.277
+    },
+    {
+      "date": "2024-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.709
+    },
+    {
+      "date": "2025-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.266
+    },
+    {
+      "date": "2025-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": -0.089
+    },
+    {
+      "date": "2025-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.178
+    },
+    {
+      "date": "2025-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.714
+    },
+    {
+      "date": "2025-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.609
+    },
+    {
+      "date": "2025-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 0.088
+    },
+    {
+      "date": "2025-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 1.064
+    },
+    {
+      "date": "2025-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.23
+    },
+    {
+      "date": "2025-09-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.607
+    },
+    {
+      "date": "2025-10-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.235
+    },
+    {
+      "date": "2025-11-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.405
+    },
+    {
+      "date": "2025-12-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.857
+    },
+    {
+      "date": "2026-01-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 2.85
+    },
+    {
+      "date": "2026-02-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.85
+    },
+    {
+      "date": "2026-03-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.562
+    },
+    {
+      "date": "2026-04-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.986
+    },
+    {
+      "date": "2026-05-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.87
+    },
+    {
+      "date": "2026-06-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 4.229
+    },
+    {
+      "date": "2026-07-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 4.211
+    },
+    {
+      "date": "2026-08-01",
+      "code": "239",
+      "series": "growth_yoy",
+      "value": 3.665
+    }
+  ]
+}

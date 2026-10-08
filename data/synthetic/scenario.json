@@ -1,0 +1,902 @@
+{
+  "meta": {
+    "kind": "synthetic",
+    "seed": 20261054,
+    "startWeek": "2026-W41",
+    "weekCount": 12,
+    "paramsFile": "data/synthetic/params.json",
+    "generator": "src/data/synth.ts",
+    "calibration": {
+      "weeklyNominalCapacityM3": {
+        "value": 18269,
+        "from": "chinhin.aac.capacity.third_plant_addition_m3_year / 52 x availabilityFactor"
+      },
+      "unbilledSalesRM": {
+        "value": 2180000000,
+        "from": "chinhin.pipeline.unbilled_property_rm_billion"
+      },
+      "aacPrecastPbtMargin": {
+        "value": 0.108221,
+        "from": "chinhin.seg.aac_precast.pbt.q2fy26 / chinhin.seg.aac_precast.revenue.q2fy26"
+      },
+      "contributionMarginRatio": {
+        "value": 0.208221,
+        "from": "aacPrecastPbtMargin + margin.fixedCostShareOfRevenue (assumed)"
+      },
+      "demandGrowthYoy": {
+        "value": 0.065,
+        "from": "dosm-gdp-construction-quarterly p4 growth_yoy, latest quarter"
+      },
+      "seasonalIndexQ1": {
+        "value": 0.979984,
+        "from": "dosm-gdp-construction-quarterly p4 abs, years excluding calibrationExcludedYears"
+      },
+      "seasonalIndexQ2": {
+        "value": 0.961779,
+        "from": "dosm-gdp-construction-quarterly p4 abs, years excluding calibrationExcludedYears"
+      },
+      "seasonalIndexQ3": {
+        "value": 1.037301,
+        "from": "dosm-gdp-construction-quarterly p4 abs, years excluding calibrationExcludedYears"
+      },
+      "seasonalIndexQ4": {
+        "value": 1.020936,
+        "from": "dosm-gdp-construction-quarterly p4 abs, years excluding calibrationExcludedYears"
+      }
+    },
+    "notes": [
+      "Synthetic. Not Chin Hin data. Every party is fictional.",
+      "Order sizes, prices and project dates are assumptions (see provenance in params.json); only the items under calibration are anchored to public data.",
+      "There is no public AAC price per m3, so the price is a placeholder; test the demo at several prices.",
+      "Demand tiers (firm / likely / possible) arrive with the intake agent in P2; this scenario holds firm orders and new requests only."
+    ]
+  },
+  "plant": {
+    "id": "plant-s",
+    "name": "Plant S (fictional)",
+    "product": "AAC block"
+  },
+  "capacity": [
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W41",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W42",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W43",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W44",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W45",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W46",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W47",
+      "capacityM3": 12788
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W48",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W49",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W50",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W51",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W52",
+      "capacityM3": 18269
+    }
+  ],
+  "projects": [
+    {
+      "projectId": "project-a",
+      "purchasePriceRM": 300000000,
+      "projectedHandover": "2026-10-12",
+      "handoverDeadline": "2026-09-28",
+      "bufferDays": 0,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 1,
+      "name": "Project A (fictional)"
+    },
+    {
+      "projectId": "project-b",
+      "purchasePriceRM": 118500000,
+      "projectedHandover": "2026-06-21",
+      "handoverDeadline": "2026-09-12",
+      "bufferDays": 45,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.523988,
+      "name": "Project B (fictional)"
+    },
+    {
+      "projectId": "project-c",
+      "purchasePriceRM": 123400000,
+      "projectedHandover": "2027-05-08",
+      "handoverDeadline": "2027-08-31",
+      "bufferDays": 28,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.776947,
+      "name": "Project C (fictional)"
+    },
+    {
+      "projectId": "project-d",
+      "purchasePriceRM": 208400000,
+      "projectedHandover": "2027-01-25",
+      "handoverDeadline": "2027-02-13",
+      "bufferDays": 33,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.681017,
+      "name": "Project D (fictional)"
+    },
+    {
+      "projectId": "project-e",
+      "purchasePriceRM": 137800000,
+      "projectedHandover": "2027-04-18",
+      "handoverDeadline": "2027-07-08",
+      "bufferDays": 13,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.516609,
+      "name": "Project E (fictional)"
+    },
+    {
+      "projectId": "project-f",
+      "purchasePriceRM": 49000000,
+      "projectedHandover": "2026-08-05",
+      "handoverDeadline": "2026-09-01",
+      "bufferDays": 14,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.964792,
+      "name": "Project F (fictional)"
+    },
+    {
+      "projectId": "project-g",
+      "purchasePriceRM": 172300000,
+      "projectedHandover": "2026-08-28",
+      "handoverDeadline": "2026-10-12",
+      "bufferDays": 29,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.655584,
+      "name": "Project G (fictional)"
+    },
+    {
+      "projectId": "project-h",
+      "purchasePriceRM": 66900000,
+      "projectedHandover": "2027-03-20",
+      "handoverDeadline": "2027-06-19",
+      "bufferDays": 45,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.710733,
+      "name": "Project H (fictional)"
+    }
+  ],
+  "customers": [
+    {
+      "customerId": "contractor-a",
+      "pricePerM3RM": 270.740583,
+      "variableCostPerM3RM": 210.092137,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor A (fictional)"
+    },
+    {
+      "customerId": "contractor-b",
+      "pricePerM3RM": 264.393352,
+      "variableCostPerM3RM": 213.218161,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor B (fictional)"
+    },
+    {
+      "customerId": "contractor-c",
+      "pricePerM3RM": 242.393056,
+      "variableCostPerM3RM": 191.022022,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor C (fictional)"
+    },
+    {
+      "customerId": "contractor-d",
+      "pricePerM3RM": 268.043146,
+      "variableCostPerM3RM": 216.099246,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor D (fictional)"
+    },
+    {
+      "customerId": "contractor-e",
+      "pricePerM3RM": 246.911146,
+      "variableCostPerM3RM": 198.882146,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor E (fictional)"
+    },
+    {
+      "customerId": "contractor-f",
+      "pricePerM3RM": 251.423044,
+      "variableCostPerM3RM": 199.138128,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor F (fictional)"
+    },
+    {
+      "customerId": "contractor-g",
+      "pricePerM3RM": 277.425897,
+      "variableCostPerM3RM": 219.692707,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor G (fictional)"
+    },
+    {
+      "customerId": "contractor-h",
+      "pricePerM3RM": 276.9194,
+      "variableCostPerM3RM": 220.604931,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor H (fictional)"
+    },
+    {
+      "customerId": "contractor-i",
+      "pricePerM3RM": 250.993782,
+      "variableCostPerM3RM": 200.966963,
+      "keyAccount": true,
+      "lossRiskRM": 20000,
+      "name": "Contractor I (fictional)"
+    },
+    {
+      "customerId": "contractor-j",
+      "pricePerM3RM": 248.275162,
+      "variableCostPerM3RM": 198.425358,
+      "keyAccount": true,
+      "lossRiskRM": 20000,
+      "name": "Contractor J (fictional)"
+    }
+  ],
+  "firmOrders": [
+    {
+      "id": "firm-2026-W41-01",
+      "week": "2026-W41",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 3350
+    },
+    {
+      "id": "firm-2026-W41-02",
+      "week": "2026-W41",
+      "side": "internal",
+      "partyId": "project-h",
+      "volumeM3": 2870
+    },
+    {
+      "id": "firm-2026-W41-03",
+      "week": "2026-W41",
+      "side": "external",
+      "partyId": "contractor-h",
+      "volumeM3": 4890
+    },
+    {
+      "id": "firm-2026-W41-04",
+      "week": "2026-W41",
+      "side": "external",
+      "partyId": "contractor-g",
+      "volumeM3": 4440
+    },
+    {
+      "id": "firm-2026-W42-01",
+      "week": "2026-W42",
+      "side": "internal",
+      "partyId": "project-c",
+      "volumeM3": 3004
+    },
+    {
+      "id": "firm-2026-W42-02",
+      "week": "2026-W42",
+      "side": "internal",
+      "partyId": "project-f",
+      "volumeM3": 3080
+    },
+    {
+      "id": "firm-2026-W42-03",
+      "week": "2026-W42",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 2376
+    },
+    {
+      "id": "firm-2026-W42-04",
+      "week": "2026-W42",
+      "side": "external",
+      "partyId": "contractor-j",
+      "volumeM3": 2870
+    },
+    {
+      "id": "firm-2026-W42-05",
+      "week": "2026-W42",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 2240
+    },
+    {
+      "id": "firm-2026-W42-06",
+      "week": "2026-W42",
+      "side": "external",
+      "partyId": "contractor-j",
+      "volumeM3": 1640
+    },
+    {
+      "id": "firm-2026-W43-01",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-b",
+      "volumeM3": 1948
+    },
+    {
+      "id": "firm-2026-W43-02",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 1190
+    },
+    {
+      "id": "firm-2026-W43-03",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-a",
+      "volumeM3": 2260
+    },
+    {
+      "id": "firm-2026-W43-04",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-b",
+      "volumeM3": 1190
+    },
+    {
+      "id": "firm-2026-W43-05",
+      "week": "2026-W43",
+      "side": "external",
+      "partyId": "contractor-f",
+      "volumeM3": 6381
+    },
+    {
+      "id": "firm-2026-W43-06",
+      "week": "2026-W43",
+      "side": "external",
+      "partyId": "contractor-j",
+      "volumeM3": 3500
+    },
+    {
+      "id": "firm-2026-W44-01",
+      "week": "2026-W44",
+      "side": "internal",
+      "partyId": "project-b",
+      "volumeM3": 2706
+    },
+    {
+      "id": "firm-2026-W44-02",
+      "week": "2026-W44",
+      "side": "internal",
+      "partyId": "project-g",
+      "volumeM3": 3070
+    },
+    {
+      "id": "firm-2026-W44-03",
+      "week": "2026-W44",
+      "side": "external",
+      "partyId": "contractor-b",
+      "volumeM3": 3944
+    },
+    {
+      "id": "firm-2026-W44-04",
+      "week": "2026-W44",
+      "side": "external",
+      "partyId": "contractor-b",
+      "volumeM3": 2940
+    },
+    {
+      "id": "firm-2026-W44-05",
+      "week": "2026-W44",
+      "side": "external",
+      "partyId": "contractor-c",
+      "volumeM3": 1780
+    },
+    {
+      "id": "firm-2026-W45-01",
+      "week": "2026-W45",
+      "side": "internal",
+      "partyId": "project-c",
+      "volumeM3": 1726
+    },
+    {
+      "id": "firm-2026-W45-02",
+      "week": "2026-W45",
+      "side": "internal",
+      "partyId": "project-h",
+      "volumeM3": 1490
+    },
+    {
+      "id": "firm-2026-W45-03",
+      "week": "2026-W45",
+      "side": "internal",
+      "partyId": "project-g",
+      "volumeM3": 2630
+    },
+    {
+      "id": "firm-2026-W45-04",
+      "week": "2026-W45",
+      "side": "external",
+      "partyId": "contractor-e",
+      "volumeM3": 3008
+    },
+    {
+      "id": "firm-2026-W45-05",
+      "week": "2026-W45",
+      "side": "external",
+      "partyId": "contractor-g",
+      "volumeM3": 1650
+    },
+    {
+      "id": "firm-2026-W45-06",
+      "week": "2026-W45",
+      "side": "external",
+      "partyId": "contractor-h",
+      "volumeM3": 1350
+    },
+    {
+      "id": "firm-2026-W45-07",
+      "week": "2026-W45",
+      "side": "external",
+      "partyId": "contractor-f",
+      "volumeM3": 2760
+    },
+    {
+      "id": "firm-2026-W46-01",
+      "week": "2026-W46",
+      "side": "internal",
+      "partyId": "project-h",
+      "volumeM3": 2045
+    },
+    {
+      "id": "firm-2026-W46-02",
+      "week": "2026-W46",
+      "side": "internal",
+      "partyId": "project-c",
+      "volumeM3": 1400
+    },
+    {
+      "id": "firm-2026-W46-03",
+      "week": "2026-W46",
+      "side": "internal",
+      "partyId": "project-a",
+      "volumeM3": 2340
+    },
+    {
+      "id": "firm-2026-W46-04",
+      "week": "2026-W46",
+      "side": "external",
+      "partyId": "contractor-j",
+      "volumeM3": 3667
+    },
+    {
+      "id": "firm-2026-W46-05",
+      "week": "2026-W46",
+      "side": "external",
+      "partyId": "contractor-f",
+      "volumeM3": 5010
+    },
+    {
+      "id": "firm-2026-W47-01",
+      "week": "2026-W47",
+      "side": "internal",
+      "partyId": "project-a",
+      "volumeM3": 3170
+    },
+    {
+      "id": "firm-2026-W47-02",
+      "week": "2026-W47",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 1690
+    },
+    {
+      "id": "firm-2026-W47-03",
+      "week": "2026-W47",
+      "side": "external",
+      "partyId": "contractor-h",
+      "volumeM3": 4229
+    },
+    {
+      "id": "firm-2026-W47-04",
+      "week": "2026-W47",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 3060
+    },
+    {
+      "id": "firm-2026-W48-01",
+      "week": "2026-W48",
+      "side": "internal",
+      "partyId": "project-f",
+      "volumeM3": 3188
+    },
+    {
+      "id": "firm-2026-W48-02",
+      "week": "2026-W48",
+      "side": "internal",
+      "partyId": "project-h",
+      "volumeM3": 3040
+    },
+    {
+      "id": "firm-2026-W48-03",
+      "week": "2026-W48",
+      "side": "external",
+      "partyId": "contractor-b",
+      "volumeM3": 2913
+    },
+    {
+      "id": "firm-2026-W48-04",
+      "week": "2026-W48",
+      "side": "external",
+      "partyId": "contractor-f",
+      "volumeM3": 6430
+    },
+    {
+      "id": "firm-2026-W49-01",
+      "week": "2026-W49",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2590
+    },
+    {
+      "id": "firm-2026-W49-02",
+      "week": "2026-W49",
+      "side": "internal",
+      "partyId": "project-g",
+      "volumeM3": 3180
+    },
+    {
+      "id": "firm-2026-W49-03",
+      "week": "2026-W49",
+      "side": "external",
+      "partyId": "contractor-e",
+      "volumeM3": 4585
+    },
+    {
+      "id": "firm-2026-W49-04",
+      "week": "2026-W49",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 4070
+    },
+    {
+      "id": "firm-2026-W50-01",
+      "week": "2026-W50",
+      "side": "internal",
+      "partyId": "project-g",
+      "volumeM3": 1037
+    },
+    {
+      "id": "firm-2026-W50-02",
+      "week": "2026-W50",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 1170
+    },
+    {
+      "id": "firm-2026-W50-03",
+      "week": "2026-W50",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 1200
+    },
+    {
+      "id": "firm-2026-W50-04",
+      "week": "2026-W50",
+      "side": "internal",
+      "partyId": "project-a",
+      "volumeM3": 2410
+    },
+    {
+      "id": "firm-2026-W50-05",
+      "week": "2026-W50",
+      "side": "external",
+      "partyId": "contractor-b",
+      "volumeM3": 3345
+    },
+    {
+      "id": "firm-2026-W50-06",
+      "week": "2026-W50",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 3150
+    },
+    {
+      "id": "firm-2026-W50-07",
+      "week": "2026-W50",
+      "side": "external",
+      "partyId": "contractor-f",
+      "volumeM3": 2230
+    },
+    {
+      "id": "firm-2026-W51-01",
+      "week": "2026-W51",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2572
+    },
+    {
+      "id": "firm-2026-W51-02",
+      "week": "2026-W51",
+      "side": "internal",
+      "partyId": "project-a",
+      "volumeM3": 3430
+    },
+    {
+      "id": "firm-2026-W51-03",
+      "week": "2026-W51",
+      "side": "external",
+      "partyId": "contractor-e",
+      "volumeM3": 5634
+    },
+    {
+      "id": "firm-2026-W51-04",
+      "week": "2026-W51",
+      "side": "external",
+      "partyId": "contractor-i",
+      "volumeM3": 3370
+    },
+    {
+      "id": "firm-2026-W52-01",
+      "week": "2026-W52",
+      "side": "internal",
+      "partyId": "project-b",
+      "volumeM3": 1579
+    },
+    {
+      "id": "firm-2026-W52-02",
+      "week": "2026-W52",
+      "side": "internal",
+      "partyId": "project-h",
+      "volumeM3": 1240
+    },
+    {
+      "id": "firm-2026-W52-03",
+      "week": "2026-W52",
+      "side": "internal",
+      "partyId": "project-c",
+      "volumeM3": 1320
+    },
+    {
+      "id": "firm-2026-W52-04",
+      "week": "2026-W52",
+      "side": "internal",
+      "partyId": "project-h",
+      "volumeM3": 1690
+    },
+    {
+      "id": "firm-2026-W52-05",
+      "week": "2026-W52",
+      "side": "external",
+      "partyId": "contractor-g",
+      "volumeM3": 2694
+    },
+    {
+      "id": "firm-2026-W52-06",
+      "week": "2026-W52",
+      "side": "external",
+      "partyId": "contractor-c",
+      "volumeM3": 3680
+    },
+    {
+      "id": "firm-2026-W52-07",
+      "week": "2026-W52",
+      "side": "external",
+      "partyId": "contractor-i",
+      "volumeM3": 2370
+    }
+  ],
+  "requests": [
+    {
+      "id": "req-2026-W41-01",
+      "week": "2026-W41",
+      "side": "internal",
+      "partyId": "project-c",
+      "volumeM3": 1550,
+      "confirmedOn": "2026-09-24"
+    },
+    {
+      "id": "req-2026-W42-01",
+      "week": "2026-W42",
+      "side": "external",
+      "partyId": "contractor-j",
+      "volumeM3": 1200,
+      "confirmedOn": "2026-09-30"
+    },
+    {
+      "id": "req-story-internal",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-a",
+      "volumeM3": 1500,
+      "confirmedOn": "2026-10-16"
+    },
+    {
+      "id": "req-story-external",
+      "week": "2026-W43",
+      "side": "external",
+      "partyId": "contractor-b",
+      "volumeM3": 600,
+      "confirmedOn": "2026-10-07"
+    },
+    {
+      "id": "req-2026-W43-01",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 650,
+      "confirmedOn": "2026-10-09"
+    },
+    {
+      "id": "req-2026-W43-02",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-c",
+      "volumeM3": 1050,
+      "confirmedOn": "2026-10-15"
+    },
+    {
+      "id": "req-2026-W44-01",
+      "week": "2026-W44",
+      "side": "external",
+      "partyId": "contractor-h",
+      "volumeM3": 550,
+      "confirmedOn": "2026-10-14"
+    },
+    {
+      "id": "req-2026-W45-01",
+      "week": "2026-W45",
+      "side": "external",
+      "partyId": "contractor-g",
+      "volumeM3": 650,
+      "confirmedOn": "2026-10-26"
+    },
+    {
+      "id": "req-2026-W45-02",
+      "week": "2026-W45",
+      "side": "internal",
+      "partyId": "project-g",
+      "volumeM3": 1200,
+      "confirmedOn": "2026-11-01"
+    },
+    {
+      "id": "req-2026-W45-03",
+      "week": "2026-W45",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 1550,
+      "confirmedOn": "2026-10-20"
+    },
+    {
+      "id": "req-2026-W46-01",
+      "week": "2026-W46",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 400,
+      "confirmedOn": "2026-10-29"
+    },
+    {
+      "id": "req-2026-W47-01",
+      "week": "2026-W47",
+      "side": "internal",
+      "partyId": "project-c",
+      "volumeM3": 500,
+      "confirmedOn": "2026-11-04"
+    },
+    {
+      "id": "req-2026-W48-01",
+      "week": "2026-W48",
+      "side": "external",
+      "partyId": "contractor-j",
+      "volumeM3": 1450,
+      "confirmedOn": "2026-11-18"
+    },
+    {
+      "id": "req-2026-W49-01",
+      "week": "2026-W49",
+      "side": "external",
+      "partyId": "contractor-i",
+      "volumeM3": 1200,
+      "confirmedOn": "2026-11-22"
+    },
+    {
+      "id": "req-2026-W49-02",
+      "week": "2026-W49",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 1700,
+      "confirmedOn": "2026-11-28"
+    },
+    {
+      "id": "req-2026-W50-01",
+      "week": "2026-W50",
+      "side": "external",
+      "partyId": "contractor-e",
+      "volumeM3": 1050,
+      "confirmedOn": "2026-12-02"
+    },
+    {
+      "id": "req-2026-W50-02",
+      "week": "2026-W50",
+      "side": "internal",
+      "partyId": "project-h",
+      "volumeM3": 850,
+      "confirmedOn": "2026-12-04"
+    },
+    {
+      "id": "req-2026-W50-03",
+      "week": "2026-W50",
+      "side": "external",
+      "partyId": "contractor-h",
+      "volumeM3": 550,
+      "confirmedOn": "2026-11-28"
+    },
+    {
+      "id": "req-2026-W51-01",
+      "week": "2026-W51",
+      "side": "internal",
+      "partyId": "project-g",
+      "volumeM3": 1500,
+      "confirmedOn": "2026-12-05"
+    },
+    {
+      "id": "req-2026-W52-01",
+      "week": "2026-W52",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 1500,
+      "confirmedOn": "2026-12-18"
+    }
+  ]
+}

@@ -1,0 +1,652 @@
+{
+  "meta": {
+    "title": "Chin Hin Group segment results, Q2 FY2026 and first half",
+    "retrieved": "2026-10-08",
+    "licence": "Company disclosure to Bursa Malaysia. Numeric facts recorded with citation; no text of the report is reproduced.",
+    "caveats": [
+      "Segment PBT margin = pbt / revenue. It is a profit-before-tax margin, not a contribution margin.",
+      "Segment boundaries may be re-cut by the company between periods; compare like with like.",
+      "Net profit attributable to owners (RM7.68m in Q2 FY26 vs RM21.26m) is reported by the press but is not in this file."
+    ]
+  },
+  "facts": [
+    {
+      "key": "chinhin.seg.distribution.revenue.q2fy26",
+      "label": "Distribution of building materials and logistics, revenue",
+      "value": 216729,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.distribution.revenue.q2fy25",
+      "label": "Distribution of building materials and logistics, revenue",
+      "value": 224437,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.distribution.revenue.h1fy26",
+      "label": "Distribution of building materials and logistics, revenue",
+      "value": 432614,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.distribution.revenue.h1fy25",
+      "label": "Distribution of building materials and logistics, revenue",
+      "value": 430921,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.distribution.pbt.q2fy26",
+      "label": "Distribution of building materials and logistics, pbt",
+      "value": 2574,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.distribution.pbt.q2fy25",
+      "label": "Distribution of building materials and logistics, pbt",
+      "value": 4464,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.distribution.pbt.h1fy26",
+      "label": "Distribution of building materials and logistics, pbt",
+      "value": 4425,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.distribution.pbt.h1fy25",
+      "label": "Distribution of building materials and logistics, pbt",
+      "value": 8405,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.rmc.revenue.q2fy26",
+      "label": "Ready-mixed concrete, revenue",
+      "value": 79551,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "First contributions after the Chin Hin Concrete (KL) and Durable Group acquisitions; no prior-year revenue."
+    },
+    {
+      "key": "chinhin.seg.rmc.revenue.h1fy26",
+      "label": "Ready-mixed concrete, revenue",
+      "value": 87426,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "First contributions after the Chin Hin Concrete (KL) and Durable Group acquisitions; no prior-year revenue."
+    },
+    {
+      "key": "chinhin.seg.rmc.pbt.q2fy26",
+      "label": "Ready-mixed concrete, pbt",
+      "value": 8161,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.rmc.pbt.q2fy25",
+      "label": "Ready-mixed concrete, pbt",
+      "value": -3,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.rmc.pbt.h1fy26",
+      "label": "Ready-mixed concrete, pbt",
+      "value": 8798,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.rmc.pbt.h1fy25",
+      "label": "Ready-mixed concrete, pbt",
+      "value": -6,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.aac_precast.revenue.q2fy26",
+      "label": "Manufacturing of AAC and precast concrete, revenue",
+      "value": 180972,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.aac_precast.revenue.q2fy25",
+      "label": "Manufacturing of AAC and precast concrete, revenue",
+      "value": 137933,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.aac_precast.revenue.h1fy26",
+      "label": "Manufacturing of AAC and precast concrete, revenue",
+      "value": 323462,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.aac_precast.revenue.h1fy25",
+      "label": "Manufacturing of AAC and precast concrete, revenue",
+      "value": 259180,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.aac_precast.pbt.q2fy26",
+      "label": "Manufacturing of AAC and precast concrete, pbt",
+      "value": 19585,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.aac_precast.pbt.q2fy25",
+      "label": "Manufacturing of AAC and precast concrete, pbt",
+      "value": 13686,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.aac_precast.pbt.h1fy26",
+      "label": "Manufacturing of AAC and precast concrete, pbt",
+      "value": 32882,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.aac_precast.pbt.h1fy25",
+      "label": "Manufacturing of AAC and precast concrete, pbt",
+      "value": 23179,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.safety_glass_roofing.revenue.q2fy26",
+      "label": "Safety glass, door and frame, and metal roofing, revenue",
+      "value": 64806,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "The report's table label was lost in text extraction; identified by arithmetic (the five revenue lines sum exactly to the division subtotal) and by the segment name in the report's PBT section."
+    },
+    {
+      "key": "chinhin.seg.safety_glass_roofing.revenue.q2fy25",
+      "label": "Safety glass, door and frame, and metal roofing, revenue",
+      "value": 76741,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "The report's table label was lost in text extraction; identified by arithmetic (the five revenue lines sum exactly to the division subtotal) and by the segment name in the report's PBT section."
+    },
+    {
+      "key": "chinhin.seg.safety_glass_roofing.revenue.h1fy26",
+      "label": "Safety glass, door and frame, and metal roofing, revenue",
+      "value": 122061,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "The report's table label was lost in text extraction; identified by arithmetic (the five revenue lines sum exactly to the division subtotal) and by the segment name in the report's PBT section."
+    },
+    {
+      "key": "chinhin.seg.safety_glass_roofing.revenue.h1fy25",
+      "label": "Safety glass, door and frame, and metal roofing, revenue",
+      "value": 157714,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "The report's table label was lost in text extraction; identified by arithmetic (the five revenue lines sum exactly to the division subtotal) and by the segment name in the report's PBT section."
+    },
+    {
+      "key": "chinhin.seg.safety_glass_roofing.pbt.q2fy26",
+      "label": "Safety glass, door and frame, and metal roofing, pbt",
+      "value": -7369,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "A loss in Q2 FY26 (includes fair-value effects); the main drag on division PBT."
+    },
+    {
+      "key": "chinhin.seg.safety_glass_roofing.pbt.q2fy25",
+      "label": "Safety glass, door and frame, and metal roofing, pbt",
+      "value": 12415,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "A loss in Q2 FY26 (includes fair-value effects); the main drag on division PBT."
+    },
+    {
+      "key": "chinhin.seg.safety_glass_roofing.pbt.h1fy26",
+      "label": "Safety glass, door and frame, and metal roofing, pbt",
+      "value": 4351,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "A loss in Q2 FY26 (includes fair-value effects); the main drag on division PBT."
+    },
+    {
+      "key": "chinhin.seg.safety_glass_roofing.pbt.h1fy25",
+      "label": "Safety glass, door and frame, and metal roofing, pbt",
+      "value": 20526,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "A loss in Q2 FY26 (includes fair-value effects); the main drag on division PBT."
+    },
+    {
+      "key": "chinhin.seg.wire_mesh.revenue.q2fy25",
+      "label": "Wire mesh manufacturing (disposed; exited in FY2025), revenue",
+      "value": 38565,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.wire_mesh.revenue.h1fy25",
+      "label": "Wire mesh manufacturing (disposed; exited in FY2025), revenue",
+      "value": 78954,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.wire_mesh.pbt.q2fy25",
+      "label": "Wire mesh manufacturing (disposed; exited in FY2025), pbt",
+      "value": 594,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.wire_mesh.pbt.h1fy25",
+      "label": "Wire mesh manufacturing (disposed; exited in FY2025), pbt",
+      "value": 1102,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.building_materials.revenue.q2fy26",
+      "label": "Building materials division, subtotal, revenue",
+      "value": 542058,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.building_materials.revenue.q2fy25",
+      "label": "Building materials division, subtotal, revenue",
+      "value": 477676,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.building_materials.revenue.h1fy26",
+      "label": "Building materials division, subtotal, revenue",
+      "value": 965563,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.building_materials.revenue.h1fy25",
+      "label": "Building materials division, subtotal, revenue",
+      "value": 926769,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.building_materials.pbt.q2fy26",
+      "label": "Building materials division, subtotal, pbt",
+      "value": 22925,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "Depressed by fair-value losses on investments in Q2 FY26."
+    },
+    {
+      "key": "chinhin.seg.building_materials.pbt.q2fy25",
+      "label": "Building materials division, subtotal, pbt",
+      "value": 30918,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "Depressed by fair-value losses on investments in Q2 FY26."
+    },
+    {
+      "key": "chinhin.seg.building_materials.pbt.h1fy26",
+      "label": "Building materials division, subtotal, pbt",
+      "value": 50368,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "Depressed by fair-value losses on investments in Q2 FY26."
+    },
+    {
+      "key": "chinhin.seg.building_materials.pbt.h1fy25",
+      "label": "Building materials division, subtotal, pbt",
+      "value": 52699,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "Depressed by fair-value losses on investments in Q2 FY26."
+    },
+    {
+      "key": "chinhin.seg.property.revenue.q2fy26",
+      "label": "Property development, revenue",
+      "value": 254109,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.property.revenue.q2fy25",
+      "label": "Property development, revenue",
+      "value": 184129,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.property.revenue.h1fy26",
+      "label": "Property development, revenue",
+      "value": 487186,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.property.revenue.h1fy25",
+      "label": "Property development, revenue",
+      "value": 371419,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.construction.revenue.q2fy26",
+      "label": "Construction, revenue",
+      "value": 223337,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.construction.revenue.q2fy25",
+      "label": "Construction, revenue",
+      "value": 176534,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.construction.revenue.h1fy26",
+      "label": "Construction, revenue",
+      "value": 427916,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.construction.revenue.h1fy25",
+      "label": "Construction, revenue",
+      "value": 350709,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.eliminations.revenue.q2fy26",
+      "label": "Group adjustments and eliminations, revenue",
+      "value": -173599,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "All inter-segment trade, not only building materials to construction."
+    },
+    {
+      "key": "chinhin.seg.eliminations.revenue.q2fy25",
+      "label": "Group adjustments and eliminations, revenue",
+      "value": -147652,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "All inter-segment trade, not only building materials to construction."
+    },
+    {
+      "key": "chinhin.seg.eliminations.revenue.h1fy26",
+      "label": "Group adjustments and eliminations, revenue",
+      "value": -336470,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "All inter-segment trade, not only building materials to construction."
+    },
+    {
+      "key": "chinhin.seg.eliminations.revenue.h1fy25",
+      "label": "Group adjustments and eliminations, revenue",
+      "value": -279808,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary",
+      "note": "All inter-segment trade, not only building materials to construction."
+    },
+    {
+      "key": "chinhin.seg.group.revenue.q2fy26",
+      "label": "Group, revenue",
+      "value": 1052620,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.group.revenue.q2fy25",
+      "label": "Group, revenue",
+      "value": 954526,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.group.revenue.h1fy26",
+      "label": "Group, revenue",
+      "value": 1984581,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.group.revenue.h1fy25",
+      "label": "Group, revenue",
+      "value": 1906475,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.group.pbt.q2fy26",
+      "label": "Group, pbt",
+      "value": 50436,
+      "unit": "RM thousand",
+      "period": "2026-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.group.pbt.q2fy25",
+      "label": "Group, pbt",
+      "value": 59969,
+      "unit": "RM thousand",
+      "period": "2025-Q2",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.group.pbt.h1fy26",
+      "label": "Group, pbt",
+      "value": 118485,
+      "unit": "RM thousand",
+      "period": "2026-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.seg.group.pbt.h1fy25",
+      "label": "Group, pbt",
+      "value": 127089,
+      "unit": "RM thousand",
+      "period": "2025-H1",
+      "sourceName": "Chin Hin Group Berhad, interim financial report, second quarter ended 30 June 2026 (Bursa Malaysia)",
+      "sourceUrl": "https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR",
+      "reliability": "primary"
+    }
+  ]
+}

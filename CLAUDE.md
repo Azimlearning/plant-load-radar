@@ -77,7 +77,7 @@ Work is rolling and flexible (user, 2026-10-08). Don't invent deadlines, target 
 | Tests / lint | vitest, ESLint, `tsc --noEmit` |
 | Offline data pipeline (optional) | Python + uv in `pipeline/`, only if a trained model is actually used (D-06). It emits files into `data/` with manifest rows; the web app never imports it. |
 
-**Installed 2026-10-08 (P0 Task 1):** Next.js 16.4.0, React 19.3.0, TypeScript 5, Tailwind 4, ESLint 9, vitest 5. Next 16 differs from older versions — `AGENTS.md` says to read `node_modules/next/dist/docs/` before writing Next.js code, and to check current docs rather than recall APIs. zod, the LLM layer and the agents are not installed yet (P0 Task 2, P2).
+**Installed 2026-10-08 (P0 Task 1):** Next.js 16.4.0, React 19.3.0, TypeScript 5, Tailwind 4, ESLint 9, vitest 5. Next 16 differs from older versions — `AGENTS.md` says to read `node_modules/next/dist/docs/` before writing Next.js code, and to check current docs rather than recall APIs. zod 4.6.5 and tsx 4.23.15 (script runner) are installed. The LLM layer and the agents are not installed yet (P2).
 
 ## Surfaces
 
@@ -92,6 +92,8 @@ Single app. Everything lives in the repo root. `refdocs/context/` is documentati
 | Lint | `npm run lint` | ESLint. Verified 2026-10-08 |
 | Type check | `npm run typecheck` | Runs `next typegen` first (generates the global `LayoutProps` types), then `tsc --noEmit`. Plain `tsc` fails on a fresh clone. Verified 2026-10-08 |
 | Build | `npm run build` | Verified 2026-10-08 (static placeholder page) |
+| Regenerate demo data | `npm run generate:synthetic` | Rewrites `data/synthetic/scenario.json` from `params.json` + public data (tsx). A test fails if the committed file is stale, so run this after changing the generator or params. Verified 2026-10-08 |
+| Refresh public data | `npm run fetch:public` | Re-downloads the two DOSM series into `data/public/` (CC BY 4.0). Then update the manifest row's retrieved date by hand. Verified 2026-10-08 |
 | Hard-coded figures | `npm run check:literals` | Fails if a numeric literal (3+ digits or a fraction) appears in `src/core` or `src/app` outside a named SCREAMING_CASE constant. Verified 2026-10-08 |
 | Dev server | `npm run dev` | Placeholder page only until P1; not run yet |
 | Agents smoke test | *not yet defined* | P2 |

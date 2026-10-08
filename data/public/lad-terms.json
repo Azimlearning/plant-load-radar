@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "Late-handover liquidated damages (Housing Development Act statutory contracts)",
+    "retrieved": "2026-10-08",
+    "licence": "Statutory terms and a court holding, recorded as facts with citations; no text of the instruments is reproduced.",
+    "caveats": [
+      "Whether a materials shortage extends the developer's period (extension of time) was NOT verified. Do not state that a materials delay causes LAD.",
+      "LAD is owed per purchaser and only after each unit's own deadline."
+    ]
+  },
+  "facts": [
+    {
+      "key": "lad.rate_per_year",
+      "label": "Liquidated damages for late vacant possession, as a fraction of purchase price per year, counted daily",
+      "value": 0.1,
+      "unit": "fraction per year",
+      "period": "statutory contract",
+      "sourceName": "Housing Development (Control and Licensing) Regulations 1989, Schedule H clause 25 (via National House Buyers Association)",
+      "sourceUrl": "https://www.hba.org.my/laws/housing_reg/2002/schedule_h.htm",
+      "reliability": "primary",
+      "note": "Same 10 percent in Schedule G. Counted 'from day to day'. PropertyGuru's worked example divides by 365."
+    },
+    {
+      "key": "lad.days_per_year",
+      "label": "Day count used in worked examples",
+      "value": 365,
+      "unit": "days",
+      "period": "worked example",
+      "sourceName": "PropertyGuru, How much LAD can I claim",
+      "sourceUrl": "https://www.propertyguru.com.my/property-guides/how-much-lad-can-i-claim-and-how-to-calculate-16823",
+      "reliability": "secondary"
+    },
+    {
+      "key": "lad.landed.delivery_months",
+      "label": "Time allowed to deliver vacant possession, landed property (Schedule G)",
+      "value": 24,
+      "unit": "months",
+      "period": "statutory contract",
+      "sourceName": "Thomas Philip Advocates, quoting Schedule G clause 24(1)",
+      "sourceUrl": "https://www.thomasphilip.com.my/articles/liquidated-ascertained-damages-for-late-delivery-of-property/",
+      "reliability": "secondary"
+    },
+    {
+      "key": "lad.strata.delivery_months",
+      "label": "Time allowed to deliver vacant possession, strata or subdivided property (Schedule H)",
+      "value": 36,
+      "unit": "months",
+      "period": "statutory contract",
+      "sourceName": "Housing Development Regulations 1989, Schedule H (via NHBA)",
+      "sourceUrl": "https://www.hba.org.my/laws/housing_reg/2002/schedule_h.htm",
+      "reliability": "primary"
+    },
+    {
+      "key": "lad.common_facilities.basis_fraction",
+      "label": "Common facilities late: damages are 10 percent a year of this fraction of the purchase price",
+      "value": 0.2,
+      "unit": "fraction of purchase price",
+      "period": "statutory contract",
+      "sourceName": "Housing Development Regulations 1989, Schedule H clause 27(2) (via NHBA)",
+      "sourceUrl": "https://www.hba.org.my/laws/housing_reg/2002/schedule_h.htm",
+      "reliability": "primary",
+      "note": "The last 20 percent of the purchase price."
+    },
+    {
+      "key": "lad.clock_starts",
+      "label": "When the delivery period starts running",
+      "value": "date the purchaser paid the booking fee, not the date printed on the agreement",
+      "unit": "rule",
+      "period": "Federal Court, 19 Jan 2021",
+      "sourceName": "PJD Regency Sdn Bhd v Tribunal Tuntutan Pembeli Rumah (Federal Court summary of grounds)",
+      "sourceUrl": "https://www.kehakiman.gov.my/sites/default/files/documents/Ringkasan_Media/2021/Re%20PJD%20Regency%20Sdn%20Bhd%20and%20Tribunal%20Tuntutan%20Pembeli%20Rumah%20%26%20Anor%20and%20other%20appeals.pdf",
+      "reliability": "primary"
+    }
+  ]
+}

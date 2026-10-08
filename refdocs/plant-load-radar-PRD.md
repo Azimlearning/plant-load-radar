@@ -165,6 +165,7 @@ Canonical one-line list. Load-bearing entries are expanded as ADRs in `changelog
 | D-11 | Demo/MVP for the pitch only; plan by order and exit criteria, never dates | User: "just a demo/MVP for the pitching itself"; "rolling and flexible, don't focus on timing" |
 | D-12 | Pitch framing defaults: no "shortage today" claim; product sits beside the ERP; third plant not claimed as running; RM82k/day is a labelled upper bound; adopt the autonomy-ladder framing (demo builds Stage 1 only) | Team could not answer OQ-13/14/16/17; research shows these are the safest honest readings |
 | D-13 | Rule implementation semantics: value = RM lost by one more week of deferral; schedule-sensitivity factor; close-call band relative to the current maximum; weekly, whole-request, work-conserving; reservations lapse | Removes ambiguities in the context example; all tested (P0 Tasks 6–7) |
+| D-14 | No trained model for demo data; seeded synthetic generator calibrated to public series | P0 Task 4 found no order-level or other defensible public training data; only aggregates exist (resolves OQ-10, OQ-11) |
 
 ---
 
@@ -181,9 +182,9 @@ Unresolved. Anything marked `ASSUMED:` is a working assumption, not a confirmed 
 - **OQ-07 Idle site cost and carrying rate.** Carrying rate 20–30% (Fishbowl citing ISM/APQC) is public; idle site cost has no source yet. See `refdocs/research/`.
 - **OQ-08 Surname spelling.** Slides use "Mardzukie", the Kabel form says "Mardukie" (context D24). Verify against IC.
 - **OQ-09 Toolchain across the team.** `ASSUMED:` Node and npm installable on all five machines; confirmed only on the lead's (Node 24.11.0, npm 11.6.1).
-- **OQ-10 Is any order-level or plant-level public data findable at all?** Low confidence. Expect aggregates only; the order stream will be `model-generated` or `synthetic`. Deep research is the first job of P0 Task 4.
-- **OQ-11 Is a trained model justified?** The user allows data "from a model we trained". It needs a defensible public training source; if research finds none, skip it and use plain synthetic data (rule 8).
 - **OQ-12 Ledger persistence on a hosted deploy.** Serverless filesystems are ephemeral; decide with the deploy target (D-09).
+*Resolved 2026-10-08 by D-14 (P0 Task 4): OQ-10 — order-level public data is not findable; OQ-11 — a trained model is not justified.*
+
 *Defaulted 2026-10-08 by D-12 (team unsure): OQ-13 (capacity story), OQ-14 (ERP positioning), OQ-17 (autonomy ladder) — adopted; override by superseding D-12.*
 
 - **OQ-15 Is the third Serendah AAC plant commissioned?** A fact. Targets moved from 31 May to July 2026; no confirmation found. Until known, the pitch does not claim 2.2M m³ is running (D-12). `data-steward` to check company releases and the next Bursa quarterly report.

@@ -1,0 +1,253 @@
+{
+  "meta": {
+    "title": "DOSM construction statistics, Q2 2026 (value of work done)",
+    "retrieved": "2026-10-08",
+    "licence": "Malaysian Government Open Data Terms of Use 1.0: reuse including commercial use is permitted with attribution to the Department of Statistics Malaysia.",
+    "caveats": [
+      "Value of work done (nominal, main contractors) is a different measure from the real GDP construction series in dosm-gdp-construction-quarterly.json; growth rates differ (8.8 vs 6.5 percent for Q2 2026).",
+      "Shares are as published and may not sum to exactly 100 because of rounding."
+    ]
+  },
+  "facts": [
+    {
+      "key": "dosm.construction.workdone.total",
+      "label": "Value of work done, construction sector",
+      "value": 47.8,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.total.yoy",
+      "label": "Growth in value of work done, year on year",
+      "value": 8.8,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.h1",
+      "label": "Value of work done, first half 2026",
+      "value": 94.3,
+      "unit": "RM billion",
+      "period": "2026-H1",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.h1.yoy",
+      "label": "Growth in first-half value of work done",
+      "value": 8.7,
+      "unit": "percent",
+      "period": "2026-H1",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.subsector.civil",
+      "label": "Value of work done, Civil engineering",
+      "value": 16.7,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.subsector.civil.share",
+      "label": "Share of work done, Civil engineering",
+      "value": 35.0,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.subsector.nonresidential",
+      "label": "Value of work done, Non-residential buildings",
+      "value": 14.0,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.subsector.nonresidential.share",
+      "label": "Share of work done, Non-residential buildings",
+      "value": 29.3,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.subsector.residential",
+      "label": "Value of work done, Residential buildings",
+      "value": 10.9,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.subsector.residential.share",
+      "label": "Share of work done, Residential buildings",
+      "value": 22.8,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.subsector.specialtrade",
+      "label": "Value of work done, Special trade activities",
+      "value": 6.2,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.subsector.specialtrade.share",
+      "label": "Share of work done, Special trade activities",
+      "value": 12.9,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.owner.private",
+      "label": "Value of work done, Private sector",
+      "value": 31.4,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.owner.private.share",
+      "label": "Share of work done, Private sector",
+      "value": 65.8,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.owner.public",
+      "label": "Value of work done, Public sector",
+      "value": 16.4,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.owner.public.share",
+      "label": "Share of work done, Public sector",
+      "value": 34.2,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.state.selangor",
+      "label": "Value of work done, Selangor",
+      "value": 12.2,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.state.selangor.share",
+      "label": "Share of work done, Selangor",
+      "value": 25.5,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.state.johor",
+      "label": "Value of work done, Johor",
+      "value": 9.4,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.state.johor.share",
+      "label": "Share of work done, Johor",
+      "value": 19.6,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.state.wp",
+      "label": "Value of work done, Federal Territories (Kuala Lumpur, Putrajaya, Labuan)",
+      "value": 5.2,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.state.wp.share",
+      "label": "Share of work done, Federal Territories (Kuala Lumpur, Putrajaya, Labuan)",
+      "value": 10.8,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.state.sarawak",
+      "label": "Value of work done, Sarawak",
+      "value": 4.7,
+      "unit": "RM billion",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "dosm.construction.workdone.state.sarawak.share",
+      "label": "Share of work done, Sarawak",
+      "value": 9.9,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "sourceName": "DOSM, Quarterly Construction Statistics Q2 2026 (media statement, 13 Aug 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf",
+      "reliability": "primary"
+    }
+  ]
+}

@@ -125,6 +125,13 @@ There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`
 - *Strict priority (never serve a lower-ranked request first)*: can strand capacity; rejected in favour of work-conserving.
 - *Weekly granularity*: ready-mix is dispatched daily and precast by mould slot; the same code can run on days or slots by changing the label, but only weekly AAC is shown.
 
+## D-14 — No trained model for demo data; seeded synthetic generator calibrated to public series (2026-10-08, P0 Task 4)
+
+**Decision:** The demo's order stream and cards are produced by a plain, seeded, config-driven generator (`synthetic`), calibrated to the public series in `data/public/`. No model is trained and `pipeline/` is not created. The `model-generated` data kind stays legal in the manifest for a future case.
+**Why:** The OQ-11 gate (D-06) required a defensible public training source. Task 4 found none: no public plant-, order- or utilisation-level data exists (see the manifest's "Searched and not found" table), and the public series that do exist are aggregates — 46 quarterly points of construction GDP and about 390 monthly points of one price index. A model trained on 46 points would add a Python toolchain and a model card while adding no information a seeded generator with documented parameters does not already carry, and it would be harder to explain to a panel. Rule 8: prefer the cheaper option.
+**Trade-offs:** The generator's demand dynamics are assumptions anchored to public aggregates (scale, regional split, seasonality, price trend), not learned from data; the pitch says so. Revisit only if a genuine order-level public dataset appears.
+**OQ-10 verdict:** order-level data is not findable. **OQ-11 verdict:** a trained model is not justified.
+
 ---
 
 ## Working assumptions (`ASSUMED:`)
@@ -140,5 +147,5 @@ Not decisions — guesses made to keep moving. Each one must be confirmed or kil
 7. **ASSUMED: the 6 Oct pre-interview was passed and the team is formed** (user: "passed, I have a team"); Kabel's next dates are unknown and deliberately not planned around.
 8. **ASSUMED: platform deliverables (proposal PDF + 3–5 min video, 16 Oct) are still not required** (context D14, pre-interview); unconfirmed now (OQ-03).
 9. **ASSUMED: ordinary laptops, no GPU.** If a trained model is built (D-06) it must be small enough to train on CPU or on a free notebook tier.
-10. **ASSUMED: a defensible public training source for a generative demand model may not exist.** If research finds none, the order stream is plain synthetic, calibrated to public aggregates — and that is fine.
+10. ~~ASSUMED: a defensible public training source may not exist.~~ **Resolved by D-14:** none exists; plain synthetic data it is.
 11. **ASSUMED: external order value = contribution margin + loss risk (full margin treated as at risk when deferred).** Pessimistic; see D-13.

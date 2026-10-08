@@ -26,14 +26,23 @@ One row per file, path relative to `data/`:
 
 | file | kind | source URL / code path | licence | retrieved / seed | note |
 |---|---|---|---|---|---|
+| public/dosm-gdp-construction-quarterly.json | public | https://storage.dosm.gov.my/gdp/gdp_qtr_real_supply_sub.csv (via scripts/fetch-public-data.mjs) | CC BY 4.0 (data.gov.my); attribution: Department of Statistics Malaysia | 2026-10-08 | Quarterly REAL GDP for construction (p4) and subsectors, 2015 Q1 to 2026 Q2, RM million constant prices, plus yoy growth. Filtered from the raw file (SHA-256 in the file's meta). Measures value added, not value of work done; growth differs from the work-done series. |
+| public/dosm-ppi-group239-monthly.json | public | https://storage.dosm.gov.my/ppi/ppi_3d.csv (via scripts/fetch-public-data.mjs) | CC BY 4.0 (data.gov.my); attribution: Department of Statistics Malaysia | 2026-10-08 | Monthly Producer Price Index for group 239 (other non-metallic mineral products, which includes cement and concrete articles), 2010 to Aug 2026. A coarse price-TREND proxy only; it is an index, not a cement or AAC price. |
+| public/dosm-construction-q2-2026.json | public | https://www.dosm.gov.my/uploads/release-content/file_20260813095536.pdf | Malaysian Government Open Data Terms of Use 1.0 (reuse incl. commercial, with attribution) | 2026-10-08 | Value of work done Q2 2026 by subsector, owner and state, as published in the DOSM media statement. Hand-curated numeric facts; each carries its source. Checked against the full DOSM PDF on 2026-10-08. |
+| public/material-prices-2026.json | public | https://www.dosm.gov.my/uploads/release-content/file_20260910090830.pdf and https://convince.cidb.gov.my/ | DOSM figures: Open Data Terms 1.0. CIDB and press figures: licence not stated; single price facts cited | 2026-10-08 | Cement, steel and ready-mix prices mid-2026. No AAC or precast RM per m3 price exists in public sources. One conflicting cement figure seen in an excerpt was excluded (see the file's caveats). |
+| public/lad-terms.json | public | https://www.hba.org.my/laws/housing_reg/2002/schedule_h.htm and the Federal Court PJD Regency summary | Statutory terms and a court holding recorded as facts with citation | 2026-10-08 | 10 percent a year of purchase price, counted daily; 24 and 36 months; common-facilities rule; clock starts at the booking fee. Whether materials shortages extend the period is NOT verified. |
+| public/chinhin-segments-q2fy26.json | public | https://insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=26239000069303&sReportType=QR | Company disclosure to Bursa Malaysia; numeric facts cited, no text reproduced | 2026-10-08 | Segment revenue and PBT, Q2 and H1 FY26 with prior-year comparatives, RM thousand. Revenue sub-segments reconcile EXACTLY to the division subtotal in all four periods (tested). Checked against the full Bursa PDF on 2026-10-08. PBT margins, not contribution margins. |
+| public/chinhin-capacity-statements.json | public | https://www.chinhingroup.com/news/chin-hin-to-procure-aac-machinery-from-shanghai-listed-jiangsu-teeyer-intelligent-for-its-third-manufacturing-plant/ and the FY2025 results release | Company statements recorded as facts with citation | 2026-10-08 | Nameplate AAC, precast and drymix capacity and the third-plant dates. Commissioning of the third plant is NOT confirmed. Utilisation is not public. |
+| public/carrying-cost-range.json | public | https://supplychainmath.com/en/carrying-cost-impact.html and two other calculator sites | Rule-of-thumb ranges; no text reproduced | 2026-10-08 | Generic 20 to 30 percent carrying-cost range and components. LOW authority; carry as a low/base/high band with this tag. Sources disagree on the capital component. |
+| synthetic/params.json | synthetic | src/data/synth.ts (configuration for the generator) | MIT (project code and config) | seed 20261054 | Generator configuration. Every parameter has a provenance note (a test enforces it); unsourced values are labelled ASSUMED or illustrative. Not data about any real plant. |
+| synthetic/scenario.json | synthetic | src/data/synth.ts via `npm run generate:synthetic`; config synthetic/params.json | MIT (generated) | seed 20261054 | One fictional plant (AAC), 12 weeks from 2026-W41: capacity, 8 projects, 10 customers, firm orders, new requests. Calibrated to public series (capacity, seasonality, growth, project sizing, margin ratio; see meta.calibration). Week 43 is shaped to be 2,000 m3 short, as in the deck. Prices are a placeholder: no public AAC price exists. All parties fictional. |
 
-*No data files yet. First rows arrive in P0 Task 4 (deep research) and Task 5 (synthetic generator).*
 
 ## Searched and not found
 
 Record what was looked for and where, so nobody repeats the search. Expected: plant- and order-level data is private by nature (PRD OQ-10).
 
-Preliminary results from the 2026-10-08 secondary research (`refdocs/research/`). No files were downloaded; `data-steward` re-does these properly in P0 Task 4.
+Preliminary results from the 2026-10-08 secondary research (`refdocs/research/`). Files were downloaded afterwards in P0 Task 4; this table records what was searched and not found.
 
 | Item | Searched | Outcome |
 |---|---|---|
@@ -47,3 +56,5 @@ Preliminary results from the 2026-10-08 secondary research (`refdocs/research/`)
 | LAD terms | Statute text (Schedule G/H), Federal Court summary | **Found.** Candidate `public` row (text). |
 | Carrying-cost range | Calculator sites citing APICS/CSCMP-style benchmarks | **Found, low authority.** Use as a labelled range only. |
 | Idle site cost | Web search | **Not found.** |
+| A public dataset that could train a model of building-material order streams | DOSM/data.gov.my catalogue (290 datasets listed 2026-10-08), web search | **Not found.** The only relevant public series are aggregates: 46 quarterly construction GDP points and ~390 monthly PPI points per series. See ADR D-14: no trained model. |
+| Cement or concrete-products production volumes | data.gov.my catalogue lists Industrial Production Index series (`ipi_3d`, `ipi_5d`) | **Lead, not downloaded.** The catalogue shows them ending in 2024; check whether a cement/concrete-articles line exists and whether it is current. Index only, not m3. |

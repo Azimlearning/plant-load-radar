@@ -43,6 +43,7 @@ Installed in P0 Task 1: Next.js, TypeScript, Tailwind, ESLint, vitest (versions 
 | zod | Schemas and validation; also the agents' extraction schema | https://zod.dev/ | MIT | Installed 4.6.5 (2026-10-08); API read from the docs; v4 syntax (`import * as z`, `z.iso.date()`, `z.prettifyError`) in use |
 | vitest | Unit tests | https://vitest.dev/ | MIT | Chosen (D-05) |
 | ESLint | Lint | https://eslint.org/docs/ | MIT | Chosen (D-05) |
+| tsx | Runs TypeScript scripts (`generate:synthetic`), understands the `@/` alias | https://tsx.is/ | MIT | Installed 4.23.15 (2026-10-08) |
 | LangGraph.js *or* Vercel AI SDK | Agent orchestration — decide in P2 after reading current docs; LangGraph is the deck's named orchestrator | https://langchain-ai.github.io/langgraphjs/ · https://ai-sdk.dev/docs | MIT / Apache-2.0 | Undecided (ADR in P2); API unverified |
 | Python + uv (optional `pipeline/`) | Only if a trained data model is justified (D-06) | https://docs.astral.sh/uv/ | MIT / Apache-2.0 | Conditional on P0 Task 4 verdict (OQ-11) |
 

@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "title": "Generic inventory carrying-cost benchmarks",
+    "retrieved": "2026-10-08",
+    "licence": "Rule-of-thumb ranges quoted by calculator websites; no text reproduced. Low authority: use only as a labelled range.",
+    "caveats": [
+      "Generic across industries. AAC is durable and low-obsolescence, so the true rate is probably at the low end; Chin Hin's own rate is not public.",
+      "Always carry the rate as a low/base/high band with this source tag; never as a single literal."
+    ]
+  },
+  "facts": [
+    {
+      "key": "carrying.total.low",
+      "label": "Inventory carrying cost, typical range, low end",
+      "value": 0.2,
+      "unit": "fraction of inventory value per year",
+      "period": "generic benchmark",
+      "sourceName": "supplychainmath.com carrying-cost calculator",
+      "sourceUrl": "https://supplychainmath.com/en/carrying-cost-impact.html",
+      "reliability": "low-authority",
+      "note": "Also quoted by aislestock.com as 20 to 30 percent."
+    },
+    {
+      "key": "carrying.total.high",
+      "label": "Inventory carrying cost, typical range, high end",
+      "value": 0.3,
+      "unit": "fraction of inventory value per year",
+      "period": "generic benchmark",
+      "sourceName": "supplychainmath.com carrying-cost calculator",
+      "sourceUrl": "https://supplychainmath.com/en/carrying-cost-impact.html",
+      "reliability": "low-authority"
+    },
+    {
+      "key": "carrying.component.capital.low",
+      "label": "Capital cost component, low",
+      "value": 0.06,
+      "unit": "fraction per year",
+      "period": "generic benchmark",
+      "sourceName": "warehousingcosts.com calculator (6 to 12 percent)",
+      "sourceUrl": "https://warehousingcosts.com/tools/inventory-carrying-cost-calculator",
+      "reliability": "low-authority",
+      "note": "supplychainmath.com says 10 to 15 percent; sources disagree."
+    },
+    {
+      "key": "carrying.component.capital.high",
+      "label": "Capital cost component, high",
+      "value": 0.15,
+      "unit": "fraction per year",
+      "period": "generic benchmark",
+      "sourceName": "supplychainmath.com carrying-cost calculator (10 to 15 percent)",
+      "sourceUrl": "https://supplychainmath.com/en/carrying-cost-impact.html",
+      "reliability": "low-authority"
+    },
+    {
+      "key": "carrying.component.storage.low",
+      "label": "Storage and handling, low",
+      "value": 0.05,
+      "unit": "fraction per year",
+      "period": "generic benchmark",
+      "sourceName": "supplychainmath.com",
+      "sourceUrl": "https://supplychainmath.com/en/carrying-cost-impact.html",
+      "reliability": "low-authority"
+    },
+    {
+      "key": "carrying.component.storage.high",
+      "label": "Storage and handling, high",
+      "value": 0.1,
+      "unit": "fraction per year",
+      "period": "generic benchmark",
+      "sourceName": "supplychainmath.com",
+      "sourceUrl": "https://supplychainmath.com/en/carrying-cost-impact.html",
+      "reliability": "low-authority"
+    },
+    {
+      "key": "carrying.component.insurance.low",
+      "label": "Insurance, low",
+      "value": 0.01,
+      "unit": "fraction per year",
+      "period": "generic benchmark",
+      "sourceName": "aislestock.com",
+      "sourceUrl": "https://aislestock.com/carrying-cost",
+      "reliability": "low-authority"
+    },
+    {
+      "key": "carrying.component.insurance.high",
+      "label": "Insurance, high",
+      "value": 0.03,
+      "unit": "fraction per year",
+      "period": "generic benchmark",
+      "sourceName": "aislestock.com",
+      "sourceUrl": "https://aislestock.com/carrying-cost",
+      "reliability": "low-authority"
+    },
+    {
+      "key": "carrying.component.obsolescence.low",
+      "label": "Obsolescence and shrinkage, low",
+      "value": 0.02,
+      "unit": "fraction per year",
+      "period": "generic benchmark",
+      "sourceName": "supplychainmath.com",
+      "sourceUrl": "https://supplychainmath.com/en/carrying-cost-impact.html",
+      "reliability": "low-authority"
+    },
+    {
+      "key": "carrying.component.obsolescence.high",
+      "label": "Obsolescence and shrinkage, high",
+      "value": 0.08,
+      "unit": "fraction per year",
+      "period": "generic benchmark",
+      "sourceName": "supplychainmath.com",
+      "sourceUrl": "https://supplychainmath.com/en/carrying-cost-impact.html",
+      "reliability": "low-authority"
+    }
+  ]
+}

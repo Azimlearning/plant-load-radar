@@ -1,0 +1,99 @@
+{
+  "seed": 20261054,
+  "startWeek": "2026-W41",
+  "weekCount": 12,
+  "plant": { "id": "plant-s", "name": "Plant S (fictional)", "product": "AAC block" },
+  "capacity": {
+    "availabilityFactor": 0.95,
+    "maxCommittedShareOfCapacity": 0.95,
+    "maintenance": [{ "week": "2026-W47", "capacityFactor": 0.7 }]
+  },
+  "demand": {
+    "baselineUtilisation": 0.8,
+    "weeklyNoise": 0.05,
+    "internalShare": 0.4,
+    "firmOrdersPerSidePerWeek": { "min": 2, "max": 4 },
+    "calibrationExcludedYears": [2020, 2021]
+  },
+  "requests": {
+    "perWeek": { "min": 1, "max": 3 },
+    "volumeM3": { "min": 300, "max": 1800 },
+    "volumeStepM3": 50,
+    "confirmLeadDays": { "min": 1, "max": 14 }
+  },
+  "projects": {
+    "count": 8,
+    "shareOfUnbilledSales": { "min": 0.02, "max": 0.1 },
+    "deadlineOffsetDays": { "min": -45, "max": 540 },
+    "projectedFloatDays": { "min": -20, "max": 120 },
+    "bufferDays": { "min": 0, "max": 45 },
+    "idleSiteCostPerDayRM": 0,
+    "scheduleSensitivity": { "min": 0.5, "max": 1 }
+  },
+  "customers": {
+    "count": 10,
+    "keyAccountCount": 2,
+    "pricePerM3RM": 260,
+    "priceSpread": 0.08,
+    "lossRiskRMKeyAccount": 20000
+  },
+  "margin": { "fixedCostShareOfRevenue": 0.1, "customerNoise": 0.02 },
+  "story": {
+    "week": "2026-W43",
+    "shortfallM3": 2000,
+    "internalRequestM3": 1500,
+    "externalRequestM3": 600,
+    "featuredProject": {
+      "name": "Project A (fictional)",
+      "purchasePriceRM": 300000000,
+      "deadlineDaysBeforeWeek": 21,
+      "projectedDaysAfterDeadline": 14,
+      "bufferDays": 0,
+      "scheduleSensitivity": 1
+    }
+  },
+  "provenance": {
+    "seed": "MECHANICAL: chosen by scanning 60 consecutive seeds from 20261001 for a scenario where week 43 is the only contested week (most seeds add stray one-order squeezes in other weeks). Change it for a different but equally valid scenario, then re-check the committed-scenario tests in synth.test.ts.",
+    "startWeek": "Illustrative: the deck's story runs in weeks 41 to 46 of 2026.",
+    "weekCount": "Illustrative: long enough for the story week plus slack and a maintenance week.",
+    "plant.id": "Fictional plant label. No real plant is represented.",
+    "plant.name": "Fictional. The deck calls it 'Plant S' and marks it illustrative.",
+    "plant.product": "JUDGEMENT: AAC is the product the pitch builds first; it can be stocked (context 03).",
+    "capacity.availabilityFactor": "ASSUMED: share of nameplate actually available after routine stops. No public utilisation data exists.",
+    "capacity.maxCommittedShareOfCapacity": "ASSUMED: planners do not firm-commit above this share of a week's capacity.",
+    "capacity.maintenance": "ASSUMED: one planned maintenance week at reduced capacity, to make a short week without a story. Illustrative.",
+    "demand.baselineUtilisation": "ASSUMED: typical firm-order utilisation outside the story week. No public plant data; the deck's illustrative weeks sit near 80 to 110 percent.",
+    "demand.weeklyNoise": "ASSUMED: random week-to-week variation in firm demand.",
+    "demand.internalShare": "Illustrative: the deck's week 41 splits 6,500 internal to 9,800 external, about 40 percent internal.",
+    "demand.firmOrdersPerSidePerWeek": "ASSUMED: how many separate firm orders make up a week's committed volume.",
+    "demand.calibrationExcludedYears": "Judgement: 2020 and 2021 are excluded when estimating seasonality from construction GDP because the pandemic distorts them.",
+    "requests.perWeek": "ASSUMED: new competing requests per week outside the story week.",
+    "requests.volumeM3": "ASSUMED: request sizes; the deck's examples are 600 to 1,500 m3.",
+    "requests.volumeStepM3": "MECHANICAL: rounding step so volumes look like real orders.",
+    "requests.confirmLeadDays": "ASSUMED: how many days before its week a request was confirmed.",
+    "projects.count": "ASSUMED: number of fictional internal projects.",
+    "projects.shareOfUnbilledSales": "Derived: each project is sized as a share of Chin Hin's RM2.18bn unbilled property sales (public). The shares themselves are assumed.",
+    "projects.deadlineOffsetDays": "ASSUMED: handover deadlines fall between 45 days before the scenario starts and about 18 months after.",
+    "projects.projectedFloatDays": "ASSUMED: days between the projected handover and the deadline; negative means already projected past the deadline.",
+    "projects.bufferDays": "ASSUMED: float after the deadline before damages start.",
+    "projects.idleSiteCostPerDayRM": "No public source for idle site cost (PRD OQ-07); set to zero rather than invented.",
+    "projects.scheduleSensitivity": "ASSUMED: days of handover slip per day of material delay (ADR D-13); between half and all.",
+    "customers.count": "ASSUMED: number of fictional outside customers.",
+    "customers.keyAccountCount": "ASSUMED: how many are flagged as key accounts.",
+    "customers.pricePerM3RM": "ASSUMED PLACEHOLDER: no public AAC price per m3 exists (data/MANIFEST.md, searched and not found). Run results at several prices before quoting anything.",
+    "customers.priceSpread": "ASSUMED: customer-to-customer price variation.",
+    "customers.lossRiskRMKeyAccount": "ASSUMED: extra RM at stake if a key account is lost. Illustrative.",
+    "margin.fixedCostShareOfRevenue": "ASSUMED: share of revenue that is fixed cost. Contribution margin ratio = public AAC and precast PBT margin + this share.",
+    "margin.customerNoise": "ASSUMED: customer-to-customer variation in margin ratio.",
+    "story.week": "Illustrative: the deck's contested week is 43.",
+    "story.shortfallM3": "Illustrative: the deck says week 43 is 2,000 m3 short.",
+    "story.internalRequestM3": "Illustrative: the deck's Project A request is 1,500 m3.",
+    "story.externalRequestM3": "Illustrative: the deck's Contractor B order is 600 m3.",
+    "story.featuredProject.name": "Fictional project standing in for the deck's Project A.",
+    "story.featuredProject.purchasePriceRM": "Illustrative: the deck's RM300m block. A labelled upper-bound example (ADR D-12), not a Chin Hin figure.",
+    "story.featuredProject.deadlineDaysBeforeWeek": "Illustrative: the deadline has already passed in the story week.",
+    "story.featuredProject.projectedDaysAfterDeadline": "Illustrative: handover is projected past the deadline, so a week of waiting costs damages.",
+    "story.featuredProject.bufferDays": "Illustrative: no float, as in the deck's example.",
+    "story.featuredProject.scheduleSensitivity": "Illustrative: 1 reproduces the deck's per-day figure (ADR D-13)."
+  }
+}

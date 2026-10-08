@@ -52,7 +52,9 @@
 
 **Verify:** `npm test -- loaders` — one test loads a manifested fixture (passes), one asks for an unmanifested file (throws the named error), one rejects kind `real`.
 
-### Task 4 — Deep public-data research (parallel) — ⬜ NEXT
+### Task 4 — Deep public-data research (parallel) — ✅ DONE 2026-10-08
+
+> Done inline by the main session (not the `data-steward` subagent). Two DOSM series are fetched by `npm run fetch:public` (`scripts/fetch-public-data.mjs`); six hand-curated fact files carry per-fact source URLs and reliability. Verdicts: OQ-10 not findable; OQ-11 no trained model (ADR D-14). Leads not yet followed: DOSM Industrial Production Index lines for cement/concrete articles (catalogue shows them ending 2024), and the full Chin Hin annual-report PDFs.
 
 **Owner:** `data-steward` subagent. **Files:** `data/public/*`, `data/MANIFEST.md`, findings appended to `refdocs/plant-load-radar-sources.md`. **Start from** `refdocs/research/` and `refdocs/context/04_RESEARCH.md` — do not redo what is already sourced.
 
@@ -63,7 +65,9 @@
 
 **Verify:** every file under `data/` has a manifest row (a test or script lists unmanifested files → empty); each item in step 1 has either a `public` row or a "not found" row; OQ-10 and OQ-11 have a recorded verdict.
 
-### Task 5 — Synthetic generator (and trained model, only if Task 4 justifies it) — ⬜ after Task 4
+### Task 5 — Synthetic generator (no trained model: ADR D-14) — ✅ DONE 2026-10-08
+
+> `npm run generate:synthetic` (tsx) writes `data/synthetic/scenario.json` from `data/synthetic/params.json` + the public data. Beyond the plan: every parameter carries a provenance note with a category tag (a test enforces it); the story week is shaped so the deck's example works by construction; a freshness test fails if the committed file differs from what the generator would produce now; `src/data/scenario.ts` bridges a scenario to the core's inputs and prices each request in ringgit (internal = marginal cost of one more week of slip, external = margin + loss risk). Seed 20261054 was chosen by scanning 80 seeds.
 
 **Files:** `data/synthetic/params.json` (config), `src/data/synth.ts`, `src/data/synth.test.ts`. Only if justified: `pipeline/` (Python + uv, own README) and `data/model/*` with a model card.
 

@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "Building material prices, mid-2026",
+    "retrieved": "2026-10-08",
+    "licence": "DOSM figures: Malaysian Government Open Data Terms of Use 1.0 (attribution). CIDB and press figures: single price facts cited with source; no text reproduced.",
+    "caveats": [
+      "No public price per cubic metre for AAC blocks or precast was found (see data/MANIFEST.md, searched and not found).",
+      "An earlier DOSM excerpt appeared to show an ordinary Portland cement price of about RM55 per 50 kg bag in a different release; the series was unclear and the figure is excluded here. Prefer the two sources above (about RM26).",
+      "Prices are national averages, not Chin Hin's selling prices."
+    ]
+  },
+  "facts": [
+    {
+      "key": "dosm.price.opc_50kg.2026-08",
+      "label": "Ordinary Portland cement, average price per 50 kg bag",
+      "value": 25.8,
+      "unit": "RM per 50 kg bag",
+      "period": "2026-08",
+      "sourceName": "DOSM, Special Release: Building and Structural Works, August 2026 (10 Sep 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260910090830.pdf",
+      "reliability": "primary",
+      "note": "Up 0.3 percent on July (RM25.70). Cement unit price index up 0.6 to 6.7 percent year on year across areas."
+    },
+    {
+      "key": "dosm.price.steel_tonne.2026-08",
+      "label": "Steel (mild steel round bars and Mycon 60 high tensile bars), average price",
+      "value": 3484.2,
+      "unit": "RM per tonne",
+      "period": "2026-08",
+      "sourceName": "DOSM, Special Release: Building and Structural Works, August 2026 (10 Sep 2026)",
+      "sourceUrl": "https://www.dosm.gov.my/uploads/release-content/file_20260910090830.pdf",
+      "reliability": "primary",
+      "note": "Down 0.3 percent on July (RM3,496.10)."
+    },
+    {
+      "key": "cidb.price.rmc_g30.2026-07",
+      "label": "Ready-mixed concrete, normal mix, Grade 30, granite",
+      "value": 413.73,
+      "unit": "RM per cubic metre",
+      "period": "2026-07",
+      "sourceName": "CIDB CONVINCE, average material prices as of July 2026",
+      "sourceUrl": "https://convince.cidb.gov.my/",
+      "reliability": "primary",
+      "note": "Government price portal; licence not stated on the page. Single price fact, cited."
+    },
+    {
+      "key": "cidb.price.opc_50kg.2026-07",
+      "label": "Ordinary Portland cement, 50 kg bag",
+      "value": 25.98,
+      "unit": "RM per 50 kg bag",
+      "period": "2026-07",
+      "sourceName": "CIDB CONVINCE, average material prices as of July 2026",
+      "sourceUrl": "https://convince.cidb.gov.my/",
+      "reliability": "primary"
+    },
+    {
+      "key": "mbam.price.rmc_g30.2026-08",
+      "label": "Ready-mixed concrete Grade 30N, as cited by contractor associations",
+      "value": 402,
+      "unit": "RM per cubic metre",
+      "period": "2026-08",
+      "sourceName": "Free Malaysia Today, 17 Aug 2026, citing MBAM and PKBM",
+      "sourceUrl": "https://www.freemalaysiatoday.com/category/nation/2026/08/17/rising-costs-hitting-sector-harder-than-data-suggests-works-minister-told",
+      "reliability": "secondary",
+      "note": "Reported as up 15 percent; the CIDB figure for July differs by about 3 percent."
+    }
+  ]
+}

@@ -27,4 +27,4 @@ Status vocabulary: `Draft` · `In progress` · `Done` · `Blocked` · `Supersede
 
 | File | Description | Status |
 |---|---|---|
-| [2026-10-08-p0-foundation.md](2026-10-08-p0-foundation.md) | P0 Foundation — skeleton, schemas, data + provenance, rule calculator | Draft |
+| [2026-10-08-p0-foundation.md](2026-10-08-p0-foundation.md) | P0 Foundation — skeleton, schemas, data + provenance, rule calculator | Done |

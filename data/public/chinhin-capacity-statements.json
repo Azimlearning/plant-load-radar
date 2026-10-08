@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "title": "Chin Hin Group capacity and pipeline statements",
+    "retrieved": "2026-10-08",
+    "licence": "Company statements recorded as facts with citation; no text reproduced.",
+    "caveats": [
+      "Nameplate capacity only. Utilisation by plant, stock levels and orders are not public.",
+      "Historic statements (full capacity and 4-5 month lead times in 2016-17; about 30 percent utilisation at Kota Tinggi at end-2019) are in refdocs/research/ and are not repeated here because the 2019 figure was not re-verified."
+    ]
+  },
+  "facts": [
+    {
+      "key": "chinhin.aac.capacity.existing_m3_year",
+      "label": "AAC production capacity, two existing plants (Serendah and Kota Tinggi), approximate",
+      "value": 1200000,
+      "unit": "m3 per year",
+      "period": "June 2025",
+      "sourceName": "Chin Hin Group news release, 12 Jun 2025",
+      "sourceUrl": "https://www.chinhingroup.com/news/chin-hin-to-procure-aac-machinery-from-shanghai-listed-jiangsu-teeyer-intelligent-for-its-third-manufacturing-plant/",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.aac.capacity.third_plant_addition_m3_year",
+      "label": "AAC capacity added by the third Serendah plant, 'over' this figure",
+      "value": 1000000,
+      "unit": "m3 per year",
+      "period": "planned",
+      "sourceName": "Chin Hin Group news release, 12 Jun 2025",
+      "sourceUrl": "https://www.chinhingroup.com/news/chin-hin-to-procure-aac-machinery-from-shanghai-listed-jiangsu-teeyer-intelligent-for-its-third-manufacturing-plant/",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.aac.capacity.total_after_third_m3_year",
+      "label": "AAC total capacity once the third plant is running, 'over' this figure",
+      "value": 2200000,
+      "unit": "m3 per year",
+      "period": "planned",
+      "sourceName": "Chin Hin Group news release, 12 Jun 2025",
+      "sourceUrl": "https://www.chinhingroup.com/news/chin-hin-to-procure-aac-machinery-from-shanghai-listed-jiangsu-teeyer-intelligent-for-its-third-manufacturing-plant/",
+      "reliability": "primary",
+      "note": "Nameplate. The third plant's commissioning was NOT confirmed as of 2026-10-08."
+    },
+    {
+      "key": "chinhin.aac.third_plant.target_full_production",
+      "label": "Third AAC plant, target date for full production (MOU)",
+      "value": "2026-05-31",
+      "unit": "date",
+      "period": "target set June 2025",
+      "sourceName": "Chin Hin Group news release, 12 Jun 2025",
+      "sourceUrl": "https://www.chinhingroup.com/news/chin-hin-to-procure-aac-machinery-from-shanghai-listed-jiangsu-teeyer-intelligent-for-its-third-manufacturing-plant/",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.aac.third_plant.target_commissioning",
+      "label": "Third AAC plant, commissioning target (FY2025 results release)",
+      "value": "July 2026",
+      "unit": "month",
+      "period": "target set February 2026",
+      "sourceName": "Chin Hin Group FY2025 results release, 26 Feb 2026",
+      "sourceUrl": "https://www.chinhingroup.com/news/chin-hin-group-revenue-surges-25-past-rm4-billion-as-gp-jumps-47-and-pbt-ri/",
+      "reliability": "primary",
+      "note": "The target moved from end-May to July. No later confirmation found."
+    },
+    {
+      "key": "chinhin.aac.third_plant.capex_rm_million",
+      "label": "Third AAC plant investment",
+      "value": 80,
+      "unit": "RM million",
+      "period": "FY2025 results",
+      "sourceName": "Chin Hin Group FY2025 results release, 26 Feb 2026",
+      "sourceUrl": "https://www.chinhingroup.com/news/chin-hin-group-revenue-surges-25-past-rm4-billion-as-gp-jumps-47-and-pbt-ri/",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.precast.plants",
+      "label": "Precast manufacturing plants",
+      "value": 6,
+      "unit": "plants",
+      "period": "FY2025 annual report",
+      "sourceName": "Chin Hin Group Annual Report 2025 (text excerpt)",
+      "sourceUrl": "https://newsfile.moomoo.com/public/NN-PersistNoticeAttachment/7781/20260430/MYX/MYX_3662020_252122.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.precast.capacity_tonnes_year",
+      "label": "Precast capacity across plants",
+      "value": 600000,
+      "unit": "tonnes per year",
+      "period": "FY2025 annual report",
+      "sourceName": "Chin Hin Group Annual Report 2025 (text excerpt)",
+      "sourceUrl": "https://newsfile.moomoo.com/public/NN-PersistNoticeAttachment/7781/20260430/MYX/MYX_3662020_252122.pdf",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.drymix.capacity_tonnes_year",
+      "label": "Starken Drymix rated capacity, Bidor",
+      "value": 240000,
+      "unit": "tonnes per year",
+      "period": "FY2024 annual report",
+      "sourceName": "Chin Hin Group Annual Report 2024, management discussion",
+      "sourceUrl": "https://www.insage.com.my/ir/cmn/downloading.aspx?sCompanyCode=CHINHIN&sFileName=213268&sReportType=OR",
+      "reliability": "primary"
+    },
+    {
+      "key": "chinhin.pipeline.total_rm_billion",
+      "label": "Combined pipeline: unbilled property sales + construction orders + SIB backlog",
+      "value": 5.29,
+      "unit": "RM billion",
+      "period": "February 2026",
+      "sourceName": "Chin Hin Group FY2025 results release, 26 Feb 2026",
+      "sourceUrl": "https://www.chinhingroup.com/news/chin-hin-group-revenue-surges-25-past-rm4-billion-as-gp-jumps-47-and-pbt-ri/",
+      "reliability": "primary",
+      "note": "Made up of RM2.18bn unbilled property sales, RM1.81bn construction orders and RM1.28bn SIB backlog."
+    },
+    {
+      "key": "chinhin.pipeline.unbilled_property_rm_billion",
+      "label": "Unbilled property sales",
+      "value": 2.18,
+      "unit": "RM billion",
+      "period": "February 2026",
+      "sourceName": "Chin Hin Group FY2025 results release, 26 Feb 2026",
+      "sourceUrl": "https://www.chinhingroup.com/news/chin-hin-group-revenue-surges-25-past-rm4-billion-as-gp-jumps-47-and-pbt-ri/",
+      "reliability": "primary",
+      "note": "Used to size the synthetic internal projects."
+    }
+  ]
+}

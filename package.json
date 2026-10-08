@@ -10,7 +10,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "next typegen && tsc --noEmit",
-    "check:literals": "node scripts/check-literals.mjs"
+    "check:literals": "node scripts/check-literals.mjs",
+    "fetch:public": "node scripts/fetch-public-data.mjs",
+    "generate:synthetic": "tsx scripts/generate-synthetic.ts"
   },
   "dependencies": {
     "next": "16.4.0",
@@ -26,6 +28,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^5.0.3"
   }

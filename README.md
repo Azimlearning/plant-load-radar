@@ -37,6 +37,7 @@ Copy `.env.example` to `.env` and fill in the values. Nothing needs a key until 
 npm test              # run the tests
 npm run lint          # lint
 npm run typecheck     # type check
+npm run generate:synthetic   # regenerate the demo scenario (after changing data/synthetic/params.json)
 npm run dev           # dev server (placeholder page until phase P1)
 ```
 
