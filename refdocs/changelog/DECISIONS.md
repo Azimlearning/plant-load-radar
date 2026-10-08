@@ -1,0 +1,124 @@
+# Architectural Decisions — Plant Load Radar
+
+> Record decisions here so they aren't re-debated in future sessions.
+> Format: **Decision** → **Why** → **Trade-offs / what was rejected**.
+> Canonical one-line list lives in `refdocs/plant-load-radar-PRD.md` §7; this file expands the load-bearing ones under the same id.
+
+An ADR is worth writing when the decision (a) is expensive to reverse, (b) will look arbitrary to a future reader, or (c) had a real alternative someone will propose again. Everything else is just a commit message.
+
+Pitch-phase decisions (context D01–D24) are in `refdocs/context/05_DECISIONS.md` and are not duplicated here; the ones that bind the build are re-stated below under project ids.
+
+D-05, D-06, D-08 and D-09 were first written earlier on 2026-10-08 and **revised the same day** after the user corrected the stack, data and timing assumptions. The superseded wording is described in each entry's "Revision" line and in the changelog.
+
+---
+
+## D-01 — The solution is Plant Load Radar 2.0 (2026-10-08, from context D13/D18/D20)
+
+**Decision:** Build the rule + decision rights + board + 4-agent AI layer described in `context/03_PROJECT_PLANT_LOAD_RADAR.md`. Serve whichever request has more ringgit at stake; scheduler applies it weekly; 30-minute huddle for exceptions; one board of committed demand vs capacity.
+**Why:** The real brief is about allocation, decision rights, messy data and cash outcomes — not forecasting. Won council rounds 2–4.
+**Trade-offs / rejected:** Forecast dashboard (ignores the conflict; data too messy); knowledge-graph copilot (premature with paper/WhatsApp data); order-promising agent that decides (accountability); pricing/demand shaping (needs a transfer-price policy the brief rules out). See `context/06_COUNCIL_DEBATES.md`.
+
+## D-02 — Forecasting and AI-decides-allocation are out of scope (2026-10-08, from context D19/D20)
+
+**Decision:** No forecasting model and no automatic AI allocation in the MVP. The deck tells the panel both are "still premature"; the build must not contradict the deck.
+**Why:** Data is on paper, WhatsApp and spreadsheets; someone must stay accountable for allocation.
+**Trade-offs:** Less "wow" than a forecast chart. Mitigation: the agent layer and the "ask the board" Q&A carry the AI story. **Note:** D-06 allows a *trained model that generates realistic demo data*; that is data tooling, not a forecasting feature, and its output is never presented as a forecast.
+
+## D-03 — Only the deterministic calculator produces displayed numbers (2026-10-08, from context D20)
+
+**Decision:** Every ringgit / m³ / day figure shown to a user is computed by `src/core/`. LLMs write the words around numbers they are handed. A test (P3) asserts that numbers in agent output are a subset of calculator output.
+**Why:** The pitch's central promise: "agents do the legwork, a calculator does the maths, people make the call." A model-produced figure would break it.
+**Trade-offs:** Agents need tool-calling plumbing; free-text answers are constrained. Worth it.
+
+## D-04 — Human checkpoint on every send and every ledger entry (2026-10-08, from context D20)
+
+**Decision:** No auto-send, no auto-approve flag. The scheduler approves outgoing messages and ledger writes.
+**Why:** Accountability; it is the guardrail the pitch showed (slide 7).
+**Trade-offs:** One extra click per decision. Accepted.
+
+## D-05 — MVP stack: a web app — Next.js + TypeScript, pure-TS core, file-based data (2026-10-08, revised same day; CONFIRMED)
+
+**Decision:** Next.js (App Router) + TypeScript on Node, with npm. `src/core/` is pure TypeScript (no framework, no network, no LLM). Data are JSON/CSV files in `data/`, validated by zod at load time; the ledger is an append-only file. Tests with vitest; lint with ESLint and `tsc --noEmit`. Agent orchestration library (LangGraph.js vs the Vercel AI SDK) is chosen in P2 after reading current docs, with its own ADR. An optional Python + uv `pipeline/` exists only if a trained model is actually used (D-06). Power Apps / Excel / SharePoint / Power Automate remain the **production path** the deck describes, not part of the MVP.
+**Why:** The user said they are unsure of the stack, that nothing is tied to Power Apps, and that "maybe it is simpler to use webapp tech stack". A web app is the simplest thing that gives a scheduler-grade screen and can be shown from a link; one language for core, agents and UI is cheaper for a team of 5 with unknown skills than two. Node 24.11.0, npm 11.6.1 and pnpm 10.12.1 are present on the lead's machine (checked 2026-10-08). The core being pure TS keeps it trivially testable and unable to call a model.
+**Revision:** the first version of this ADR chose Python + uv + LangGraph + Streamlit. Replaced because the user prefers a web-app stack; Streamlit would also have pinned the team to Python for the UI.
+**Trade-offs / rejected:**
+- *Python + Streamlit:* fastest to a first screen for a data person, but a weaker "real product" feel and a Python-only team assumption. Rejected for the user's web-app preference.
+- *Follow the deck exactly (Power Apps + SharePoint + Power Automate):* most faithful to slides 3 and 9, but licence- and tenant-dependent and hard for five people to parallelise. **Tension:** the deck says "built in Excel and Power Apps" — see PRD OQ-04.
+- *Next.js front-end + Python (FastAPI) back-end:* clean split, but two deploys and two toolchains for a demo. Rejected (rule 8).
+- *Database:* not needed for a demo on file data. **Caveat:** serverless hosts (including Vercel) have ephemeral/read-only filesystems, so an append-only ledger *file* will not persist when hosted. For the demo, either keep the ledger in memory/browser storage, or pick storage in P4 alongside D-09.
+- *pnpm over npm:* pnpm is installed on the lead's machine, but npm ships with Node so teammates need nothing extra (rule 8).
+**Confirmed:** user, 2026-10-08: "for solution or tech stack just use most suitable." Claude's judgement is Next.js + TypeScript; no longer provisional. Reopen only with a new ADR (for example if it emerges that the team cannot work in TypeScript).
+
+## D-06 — Data policy: Chin Hin gives no data; public, model-generated or synthetic only; no hard-coded data; manifest enforced (2026-10-08, revised same day)
+
+**Decision:** Chin Hin has provided no data whatsoever and none is assumed. Every dataset in the project is one of:
+- **`public`** — public information found by deep research (government statistics, filings, published rates, press), with URL, licence and retrieved date;
+- **`model-generated`** — produced by a model *we* trained on public data, recorded with the model's training sources, code path, seed and limits;
+- **`synthetic`** — seeded, config-driven, realistic data, recorded with its seed, config file and what it was calibrated to.
+
+There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`; loaders refuse unmanifested files; no figure is hard-coded in code, prompts or UI. `data-steward` owns the manifest and does the research. The pitch must say plainly that the demo does not run on Chin Hin's data.
+**Revision:** the first version preferred "real" data, reserved a gitignored `data/private/` for Chin Hin files, and treated Chin Hin sharing data as a possibility (old OQ-06). All of that is removed.
+**Why:** User, 2026-10-08: "Chin Hin has given no data whatsoever; everything we will use will either be public information (you will deep research) or data from a model we trained or synthetic data." Honesty with the panel matters more than realism claims.
+**Trade-offs:** Order-level plant data does not exist publicly, so the order stream will be model-generated or synthetic and the demo proves the *logic*, not the numbers. Mitigation: calibrate to public aggregates and say so. A trained model adds a Python/data toolchain and a model card to maintain — only build it if the research shows a defensible training source (rule 8).
+
+## D-07 — One repo, one surface; pitch pack kept as read-only context (2026-10-08)
+
+**Decision:** Single repo, single app. The 16 pitch-pack files are unzipped to `refdocs/context/` and treated as read-only founding context. When it conflicts with the PRD, the PRD wins and the conflict is surfaced.
+**Why:** User asked to unzip the docs for the project; the PRD paraphrases them and paraphrase loses detail.
+**Trade-offs:** Context files can go stale (e.g. interview date). Accepted; they are history, not status.
+
+## D-08 — LLM behind one provider interface in `src/llm/`; cheapest workable model; provider ASSUMED Anthropic (2026-10-08, revised same day)
+
+**Decision:** A single TypeScript module `src/llm/` is the only place that talks to a provider; the model name comes from `PLR_LLM_MODEL`; default to the cheapest model that passes the P2 extraction tests. Provider `ASSUMED:` Anthropic (`ANTHROPIC_API_KEY`); swappable. The key is read server-side only — never in a `NEXT_PUBLIC_*` variable or a client component.
+**Revision:** was `llm.py` under the Python stack.
+**Why:** User chose "small pay-per-use budget"; no provider was stated. Anthropic is a placeholder pending the team's call.
+**Trade-offs:** The abstraction is more code than calling an SDK directly; it is small and keeps the budget lever and a provider switch open.
+
+## D-09 — Deploy target deferred (2026-10-08, revised same day)
+
+**Decision:** Build first; keep the app runnable locally with `npm run dev`; choose the deploy target in P4. A web app makes a hosted demo link straightforward (Vercel is the obvious candidate), but nothing is committed to it now.
+**Why:** User: "decide later, build first."
+**Trade-offs:** A hosted demo may take a day to set up late, and the ledger persistence caveat in D-05 must be solved then. Mitigation: keep the app stateless apart from files, and record a backup demo in P4.
+
+## D-10 — Seven subagents (2026-10-08)
+
+**Decision:** doc-keeper, feature-planner, test-runner, ui-reviewer (standard), plus **data-steward** (deep research on public data, the trained-model/synthetic pipeline, no hard-coding, owns `MANIFEST.md`), **ceo-pitch-advisor** (business side, best pitcher and advisor to win) and **idea-catalyst** (sharp ideas and honest feedback), as the user requested.
+**Why:** Matches the work: a 5-person team, a data-honesty rule, and a pitch that decides the outcome.
+**Trade-offs:** The catalog advises 2–4 because each definition costs context every session. Seven exceeds that; if the cost bites, drop `ui-reviewer` and `test-runner` first (tests run via plain `npm test`).
+
+## D-11 — This is a demo/MVP for the pitch, and planning is by order, not by date (2026-10-08)
+
+**Decision:** The product exists to make a convincing, honest pitch. Scope is the week-43 walk-through end to end on public / model-generated / synthetic data. Production concerns (auth, multi-tenancy, real WhatsApp or Power Automate integration, multi-plant, hardening) are out. Planning uses phase order and exit criteria only — no target dates, no deadline arguments.
+**Why:** User, 2026-10-08: "its also just a demo/MVP for the pitching itself" and "its all rolling and flexible basis so don't focus on timing."
+**Trade-offs:** Nothing forces a stop; scope creep is guarded instead by the hard constraints, PRD §5 Non-Goals and the "never build the second thing before the first is green" rule. If the team ever needs a date, the user supplies it.
+
+## D-12 — Pitch framing defaults from the secondary research (2026-10-08)
+
+**Decision:** Because the team could not answer OQ-13/14/16/17 (user: "not sure how to answer any of them"), these defaults apply until someone with better information overrides them:
+
+1. **Capacity story (OQ-13):** never claim Chin Hin has a shortage today. Say: *"when capacity binds — in a specific plant, product or week — here is how the decision is made, and the same comparison tells you what to do with slack."* This combines framings 1 (scarcity is local) and 3 (the rule also directs spare capacity) from `research/01` §2. Framing 2 (ramp-up) is mentioned only if the third plant is confirmed as ramping.
+2. **ERP (OQ-14):** present Plant Load Radar as the capture-and-decision layer *beside* the ERP: it handles WhatsApp/paper orders the ERP never sees, decides, and hands clean order lines and a decision ledger to whatever system of record Chin Hin uses. Never imply the ERP is Microsoft; never claim to replace or compete with Kingdee's AI Quotation Agent.
+3. **Third plant (OQ-15):** do not state that 2.2M m³ is running. Say "once the third line is at full rate" and use the 1.2M m³ figure for anything described as today.
+4. **LAD (OQ-16):** present RM82k/day only as a labelled upper-bound illustration. Do not state that a materials delay *causes* LAD; say it *can* contribute where a unit's handover would pass its deadline. Add a schedule-sensitivity factor to the delay-cost card in P0.
+5. **Autonomy ladder (OQ-17):** adopt it. Stage 1 (the demo): agents prepare, a person approves. Stage 2 (shown as roadmap only): auto-approve inside a ringgit threshold once the ledger shows the rule matches human choices. Stage 3: autonomous within guardrails. The demo builds Stage 1 only (consistent with D-02/D-04); Stages 2–3 are a slide, not code.
+
+**Why:** the research (`refdocs/research/`) shows each default is the safest honest reading of public evidence: capacity is being added into a soft market (so a shortage claim is attackable); Chin Hin is deploying a Kingdee ERP with AI agents; the third plant's status is unconfirmed; LAD mechanics are per buyer and post-deadline; and Chin Hin's own AI ladder ends in agentic workflows, so "premature" reads better as a stage gate.
+**Trade-offs:** (1) is less dramatic than "plants are overloaded"; (4) weakens the biggest number on slide 4 — a judge who attacks it finds it already caveated; (5) promises a roadmap the team won't build. All are cheaper than being caught overclaiming.
+**Still open (facts, not choices):** whether the third plant is commissioned (OQ-15) and whether materials shortages extend LAD (OQ-16) — find out via `data-steward` (company releases, Bursa filings) and, for LAD, a short legal read or a Chin Hin question at the pitch.
+
+---
+
+## Working assumptions (`ASSUMED:`)
+
+Not decisions — guesses made to keep moving. Each one must be confirmed or killed before anything load-bearing is built on it. When one is resolved, delete it here and write a real ADR above.
+
+1. **ASSUMED: team of 5 (Azim as lead); roles and skills unknown.** Module ownership waits on this (PRD OQ-02).
+2. **ASSUMED: LLM provider is Anthropic** (D-08); budget figure unknown (OQ-05).
+3. **ASSUMED: hosted LLM APIs may see any project data.** The user said so earlier; it is now low-stakes because the project holds only public, model-generated and synthetic data.
+4. **ASSUMED: the web-app MVP satisfies the panel** although the deck promises Power Apps (OQ-04).
+5. **ASSUMED: Node (current LTS or later) and npm are installable on all five machines** (OQ-09). Confirmed only on the lead's: Node 24.11.0, npm 11.6.1.
+6. **ASSUMED: no auth, multi-tenancy or database needed** — demo scope (D-11).
+7. **ASSUMED: the 6 Oct pre-interview was passed and the team is formed** (user: "passed, I have a team"); Kabel's next dates are unknown and deliberately not planned around.
+8. **ASSUMED: platform deliverables (proposal PDF + 3–5 min video, 16 Oct) are still not required** (context D14, pre-interview); unconfirmed now (OQ-03).
+9. **ASSUMED: ordinary laptops, no GPU.** If a trained model is built (D-06) it must be small enough to train on CPU or on a free notebook tier.
+10. **ASSUMED: a defensible public training source for a generative demand model may not exist.** If research finds none, the order stream is plain synthetic, calibrated to public aggregates — and that is fine.
