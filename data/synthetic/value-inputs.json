@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "kind": "synthetic",
+    "note": "Assumed bands for the /value business-case page. Invented by the project to make a worked example; none of these is a Chin Hin figure and none was measured. Each says what real data would replace it."
+  },
+  "excessStockWeeksOfOutput": {
+    "low": 0.5,
+    "base": 1,
+    "high": 2,
+    "unit": "weeks of the plant's average output",
+    "why": "The brief says plants hold excess stock in one place and miss orders in another, but gives no quantity. One week of output is a round, easy-to-challenge middle; half and double bracket it.",
+    "replaceWith": "Stock levels by plant and week (units and value), and what the plant considers a normal buffer."
+  },
+  "shortWeeksPerYear": {
+    "low": 2,
+    "base": 4,
+    "high": 8,
+    "unit": "weeks a year when demand exceeds free capacity",
+    "why": "The demo scenario has one short week in twelve, which is about four a year. The bands halve and double that. The demo scenario is itself invented, so this is a consistency choice, not evidence.",
+    "replaceWith": "Weekly output, downtime and committed orders for the pilot plant over the last 12 months."
+  },
+  "outsideM3LostPerShortWeek": {
+    "low": 0,
+    "base": 300,
+    "high": 600,
+    "unit": "m3 of outside orders lost in a short week",
+    "why": "The deck's story has an outside order of 600 m3 losing out. Not every short week costs an order (some customers will wait), so the base is half of that and the high is the full story order.",
+    "replaceWith": "Recent allocation decisions, including WhatsApp and paper, showing which outside orders were refused, delayed or lost and what they were worth."
+  },
+  "delayDaysPerYear": {
+    "low": 0,
+    "base": 7,
+    "high": 14,
+    "unit": "days a year that a project is pushed past its handover deadline because materials were late",
+    "why": "Late-handover damages only start after the deadline (and it is not known whether a materials shortage extends the deadline). So the low is zero. Seven days is one week of slip on the largest project; the high is two.",
+    "replaceWith": "Projects' handover deadlines, buffer days and any logged material delays, and legal advice on whether a materials shortage extends the deadline."
+  }
+}

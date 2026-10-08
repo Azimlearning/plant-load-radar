@@ -30,3 +30,5 @@ If reality diverges from the doc mid-build, **edit the doc** and note it in the 
 |---|---|---|
 | [2026-10-08-p0-foundation.md](2026-10-08-p0-foundation.md) | [../plans/2026-10-08-p0-foundation.md](../plans/2026-10-08-p0-foundation.md) | Done |
 | [2026-10-08-p1-board.md](2026-10-08-p1-board.md) | [../plans/2026-10-08-p1-board.md](../plans/2026-10-08-p1-board.md) | Done |
+| [2026-10-08-p2-capture.md](2026-10-08-p2-capture.md) | [../plans/2026-10-08-p2-capture.md](../plans/2026-10-08-p2-capture.md) | Offline path done (Tasks 5-6 deferred) |
+| [2026-10-08-p2b-value.md](2026-10-08-p2b-value.md) | [../plans/2026-10-08-p2b-value.md](../plans/2026-10-08-p2b-value.md) | Tasks 1-2 done; Task 3 (review) done; carrying-rate split open |

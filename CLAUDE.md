@@ -16,6 +16,8 @@
 6. `refdocs/plant-load-radar-sources.md` — **raw research** (external references, repos, APIs).
 7. `refdocs/context/00–15_*.md` — **founding context** (the pitch pack: brief, research, deck, script, decisions made *before* the build). Read-only history; it is not updated as the build moves. When it conflicts with the PRD, the PRD wins — but say so.
 
+8. `refdocs/Docs/` — **the submitted pitch materials** (slides `.pptx`/`.pdf`, slide script, study notes; user, 2026-10-08: "the version going to be used for the prelim submission", may change for the final). Read-only for us: it is what the audience has seen, so the prototype must not contradict it. It matches the deck in `context/` on every figure checked (RM82k/day, RM18k, 2,000 m3, RM246k). If the prototype differs from a slide, say so in the demo notes, don't edit the slide.
+
 If two docs disagree, stop and ask. Don't pick one and move on.
 
 ---

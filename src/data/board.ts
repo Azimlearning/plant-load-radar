@@ -22,6 +22,11 @@ export class Figures {
     this.seen.add(s);
     return s;
   }
+  /** A number with up to `digits` decimals, trailing zeros dropped ("0.5", "1"). Every part is recorded. */
+  dec(x: number, digits = 1): string {
+    const s = Number(x.toFixed(digits)).toString();
+    return this.text(s);
+  }
   m3(x: number): string {
     return `${this.n(x)} m³`;
   }
@@ -34,6 +39,12 @@ export class Figures {
   /** "Week 43" from "2026-W43". */
   week(w: Week): string {
     return `Week ${this.n(Number(w.slice(-2)))}`;
+  }
+  /** Text read out of a message (a quantity, a PO number, a thickness). These are data we quoted, not calculator
+   *  output; registering them lets the honesty test tell them apart from a number nobody can account for. */
+  text(s: string): string {
+    for (const m of s.matchAll(/\d{1,3}(?:,\d{3})+|\d+/g)) this.seen.add(m[0]);
+    return s;
   }
   all(): string[] {
     return [...this.seen].sort();
@@ -139,7 +150,13 @@ export function niceStep(max: number, target: number = TICK_TARGET): number {
   return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * pow; // standard 1-2-5 rounding
 }
 
-export function buildBoard(s: SyntheticScenario): BoardModel {
+/** What the capture pipeline found, for the board's "Orders to check" tile. */
+export interface CaptureSummary {
+  needsPerson: number;
+  lines: number;
+}
+
+export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary): BoardModel {
   const fig = new Figures();
   const weeks = toWeekCapacities(s);
   const reqs = toPricedRequests(s);
@@ -257,6 +274,16 @@ export function buildBoard(s: SyntheticScenario): BoardModel {
       value: worst && worst.spareM3 < 0 ? fig.m3(worst.spareM3) : fig.m3(0),
       note: worst && worst.spareM3 < 0 ? fig.week(worst.week) : "no week is short",
     },
+    ...(capture
+      ? [
+          {
+            id: "orders-to-check",
+            label: "Orders to check",
+            value: fig.n(capture.needsPerson),
+            note: `of ${fig.n(capture.lines)} order lines read from the sample messages (rules reader); see the orders inbox`,
+          },
+        ]
+      : []),
   ];
 
   // Table twin of the chart ---------------------------------------------------------------------------
@@ -283,7 +310,7 @@ export function buildBoard(s: SyntheticScenario): BoardModel {
     focus,
     weekTable,
     actionsNote: "Switched off in this build. Approving will write to the ledger in a later phase, and only a person can approve.",
-    notBuilt: "Not built yet: the orders inbox, approval and ledger, and ask-the-board arrive in later phases. Approve and Change are switched off in this build.",
+    notBuilt: "Not built yet: approval and ledger, and ask-the-board arrive in later phases. Approve and Change are switched off in this build.",
     allowedFigures: fig.all(),
   };
 }

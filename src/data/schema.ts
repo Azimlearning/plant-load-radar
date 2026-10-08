@@ -302,3 +302,85 @@ export type SynthParams = z.output<typeof SynthParamsSchema>;
 export type FirmOrder = z.output<typeof FirmOrderSchema>;
 export type ScenarioRequest = z.output<typeof RequestSchema>;
 export type SyntheticScenario = z.output<typeof SyntheticScenarioSchema>;
+
+// ---- Inbox samples (data/synthetic/inbox-samples.json) -------------------------------------------
+// Invented, WhatsApp-style messages with hand-written expected readings ("gold"). The rules and the gold are
+// written by the same author, so agreement proves behaviour, not real-world accuracy (ADR D-16).
+
+const Cell = <T extends z.ZodType>(value: T) => z.tuple([value.nullable(), ConfidenceSchema]);
+
+export const GoldLineSchema = z.object({
+  customer: Cell(z.string()),
+  product: Cell(z.string()),
+  volumeM3: Cell(z.number()),
+  neededBy: Cell(IsoDateSchema),
+  reference: Cell(z.string()),
+  tier: TierSchema,
+  /** A phrase that must appear in the stated reason for the tier. */
+  tierReasonIncludes: z.string().min(1),
+  /** The known party this should resolve to, or null when it must stay ambiguous. */
+  partyId: z.string().min(1).nullable(),
+  partyCandidates: z.array(z.string().min(1)).optional(),
+  /** Set when a plain rules extractor is expected to be unable to read this line correctly (documented, not hidden). */
+  expectRulesLimit: z.string().min(1).optional(),
+});
+
+export const InboxMessageSchema = z.object({
+  id: z.string().min(1),
+  channel: z.enum(["whatsapp", "excel"]),
+  receivedAt: IsoDateTimeSchema,
+  sender: z.string().min(1),
+  text: z.string().min(1),
+  gold: z.object({
+    lines: z.array(GoldLineSchema),
+    needsPerson: z.boolean(),
+    relatesTo: z.object({ id: z.string().min(1), kind: z.enum(["duplicate", "confirms"]) }).optional(),
+    flags: z.array(z.string().min(1)).optional(),
+  }),
+});
+
+export const InboxFileSchema = z
+  .object({
+    meta: z.object({
+      kind: z.literal("synthetic"),
+      note: z.string().min(1),
+    }),
+    messages: z.array(InboxMessageSchema).min(1),
+  })
+  .superRefine((f, ctx) => {
+    const ids = f.messages.map((m) => m.id);
+    if (new Set(ids).size !== ids.length) ctx.addIssue({ code: "custom", path: ["messages"], message: "Duplicate message id" });
+    f.messages.forEach((m, i) => {
+      if (m.gold.relatesTo && !ids.includes(m.gold.relatesTo.id)) {
+        ctx.addIssue({ code: "custom", path: ["messages", i, "gold", "relatesTo"], message: `Unknown message ${m.gold.relatesTo.id}` });
+      }
+    });
+  });
+
+export type GoldLine = z.output<typeof GoldLineSchema>;
+export type InboxMessageRecord = z.output<typeof InboxMessageSchema>;
+export type InboxFile = z.output<typeof InboxFileSchema>;
+
+// ---- Business-case inputs (data/synthetic/value-inputs.json) ---------------------------------------
+// Assumed low/base/high bands for the /value worked example. Each says why and what real data replaces it.
+
+const AssumedBand = z
+  .object({
+    low: z.number().nonnegative(),
+    base: z.number().nonnegative(),
+    high: z.number().nonnegative(),
+    unit: z.string().min(1),
+    why: z.string().min(1),
+    replaceWith: z.string().min(1),
+  })
+  .refine((b) => b.low <= b.base && b.base <= b.high, { message: "Band must satisfy low <= base <= high" });
+
+export const ValueInputsSchema = z.object({
+  meta: z.object({ kind: z.literal("synthetic"), note: z.string().min(1) }),
+  excessStockWeeksOfOutput: AssumedBand,
+  shortWeeksPerYear: AssumedBand,
+  outsideM3LostPerShortWeek: AssumedBand,
+  delayDaysPerYear: AssumedBand,
+});
+
+export type ValueInputs = z.output<typeof ValueInputsSchema>;

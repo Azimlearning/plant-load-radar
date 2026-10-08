@@ -127,3 +127,27 @@ tbody th { font-weight: 600; white-space: normal; min-width: 7rem; } /* names wr
 @media (max-width: 42rem) { th, td { padding-right: 0.45rem; font-size: 0.82rem; } }
 td { font-variant-numeric: tabular-nums; } /* tabular figures only where numbers align in a column */
 .footer { color: var(--ink-2); font-size: 0.82rem; }
+
+/* ---- navigation and orders inbox --------------------------------------------------------------- */
+.nav { display: flex; gap: 1rem; font-size: 0.9rem; }
+.nav a { color: var(--ink); text-underline-offset: 0.2em; }
+.nav a[aria-current="page"] { font-weight: 650; }
+.msg { display: flex; flex-direction: column; gap: 0.6rem; }
+.msg-head { display: flex; gap: 0.5rem; align-items: baseline; flex-wrap: wrap; color: var(--ink-2); font-size: 0.85rem; }
+.msg-text { border-left: 3px solid var(--border); padding-left: 0.8rem; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg-text mark { background: var(--wash); color: var(--ink); border-bottom: 2px solid var(--axis); border-radius: 0.15rem; padding: 0 0.1rem; }
+.flag { color: var(--ink); background: var(--banner-bg); border: 1px solid var(--border); border-radius: 0.4rem; padding: 0.3rem 0.6rem; font-size: 0.85rem; }
+.order { border-top: 1px solid var(--border); padding-top: 0.6rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.chips { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.5rem; }
+.chip { border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.35rem 0.6rem; background: var(--background); }
+.chip-field { color: var(--ink-2); font-size: 0.75rem; }
+.chip-value { font-weight: 600; overflow-wrap: anywhere; }
+.chip-state { font-size: 0.78rem; color: var(--ink-2); }
+.chip-state .icon { display: inline-block; width: 1.1em; font-weight: 700; color: var(--ink); }
+.chip-ok { border-left: 3px solid var(--spare); }
+.chip-warn { border-left: 3px solid var(--short); }
+.tierline { display: flex; gap: 0.5rem; align-items: baseline; flex-wrap: wrap; font-size: 0.9rem; }
+.check { font-weight: 650; }
+.reasons { list-style: disc; margin: 0; padding-left: 1.1rem; color: var(--ink-2); font-size: 0.85rem; }
+.result-row th, .result-row td { font-weight: 650; border-top: 2px solid var(--axis); }
+td.wrap { white-space: normal; min-width: 14rem; }

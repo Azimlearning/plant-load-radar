@@ -2,6 +2,7 @@
 // It performs no arithmetic and formats no numbers; every figure it prints is a string from src/data/board.ts,
 // which records them (see board.test.tsx, the "every figure comes from the model" check).
 
+import Link from "next/link";
 import type { Bar, BoardModel, Chart, Line, RecommendationView } from "@/data/board";
 
 // ---- chart geometry (pixels in the SVG's own coordinate system; not data) ----------------------------
@@ -183,6 +184,14 @@ export function Board({ model }: { model: BoardModel }) {
       <div className="banner" role="note">
         {model.banner}
       </div>
+
+      <nav className="nav" aria-label="Pages">
+        <Link href="/" aria-current="page">
+          Board
+        </Link>
+        <Link href="/inbox">Orders inbox</Link>
+        <Link href="/value">Cost of today</Link>
+      </nav>
 
       <header className="header">
         <h1 className="title">{model.title}</h1>

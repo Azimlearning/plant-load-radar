@@ -145,6 +145,30 @@ There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`
 **Why:** the pitch's promises are "numbers come from the calculator" and "people make the call"; each choice above keeps the screen from quietly breaking one of them, and the plan's own risk table named the pre-build question as the thing most likely to make the demo dishonest.
 **Trade-offs / rejected:** a chart library (more weight, harder to verify); a client-side week selector (the page would stop being static and the honesty check would need a browser); showing pre-build's stock cost in ringgit (needs a placeholder price and a low-authority carrying rate, so it would overstate precision); stubbing the two missing KPIs (fabrication). The phone layout scrolls the chart sideways (with a hint) rather than shrinking text to unreadable size.
 
+## D-16 — How capture is built: rules first, model second, grounding always; no framework; photos deferred (2026-10-08, P2 plan)
+
+**Decision:**
+1. **Offline-first, rules before model.** A deterministic extractor handles clean messages and is the baseline and the fallback. A model extractor (behind a one-method client interface in `src/llm/`) handles what rules cannot. Both emit the same typed output.
+2. **Grounding is a separate, mandatory step after every extractor.** A field may be `confirmed` only if its value can be found in the message text; otherwise it is downgraded to `inferred` or `missing`. It never raises confidence. This is what makes "if the AI isn't sure, it asks; it never guesses" mechanical.
+3. **No orchestration framework in the MVP.** The pipeline is four plain, typed steps (extract, ground, match, decide-needs-a-person). The deck's "LangGraph or Microsoft Foundry" stays the production path (the same honest-framing rule as PRD OQ-04: say the demo is a hand-built pipeline and the production path is a graph or Foundry).
+4. **Photos of paper delivery orders are deferred.** There is no real photo corpus, no key to run a vision model, and synthetic images would prove nothing; the text path emits the schema a vision step would later feed. PRD §6 P2 exit criteria are amended accordingly.
+5. **No live-model claims without a live run.** There is no API key in this environment. The model path is tested against a scripted fake (plumbing, validation, grounding, caps, cache); `npm run eval:llm` is a separate command that refuses to run without a key and reports differences, never a headline accuracy. Until it has run, STATUS says "live path not run".
+6. **Cheapest model first, hard spend caps, a cache** (rule 8, D-08). The model id and structured-output method are chosen in P2 Task 5 from the current docs, not from memory.
+
+**Why:** the project's own constraints (no hard-coded numbers, nothing sent or committed without a person, honest data) apply to the AI layer too, and a model that cannot be checked offline cannot be trusted on stage. A framework adds a dependency and a learning curve for four steps; a vision pipeline with no real images adds a claim with no evidence.
+**Trade-offs / rejected:** LangGraph.js or the Vercel AI SDK now (more weight than the problem needs; revisit in production); model-only extraction (cannot be run or tested without a key, and costs per message); trusting the model's own confidence labels (the point of grounding is to not rely on them); synthetic photos (look like evidence, are not). **Known weakness:** the rules and the gold labels share an author, so accuracy on the samples is optimistic; results are reported as behaviour checks, not accuracy.
+
+## D-17 — Prototype first, business side next: re-scope P2 and add a business-case phase (2026-10-08)
+
+**Decision:** The end goal is a **working prototype for the pitch**, and the business side is what needs refining (user, 2026-10-08). So:
+1. **P2 is cut to the demo-critical path:** rules-based intake, the grounding check, matching, the pipeline, the inbox screen and the board's "Orders to check" tile. All of it works offline.
+2. **Deferred until an API key exists:** the LLM client, spend caps, cache, the model extractor and the eval harness (P2 Tasks 5 and 6). They cannot be demonstrated without a key, and building more unverifiable machinery is gold-plating. The inbox labels its reader honestly as a rules reader; the model path is described as the next step, not shown.
+3. **New phase P2b, the business case:** a `/value` page that quantifies what today's arrangement costs (working capital in excess stock, margin lost on missed outside orders, project delay days), using the calculator, the public parameters in `data/public/`, and low/base/high bands — the brief's "quantify it and show your working" ask, which the prototype does not yet answer. Then a business-side refinement pass with the CEO/pitch advisor agent (business case, pilot plan, success measures, Q&A).
+4. **Engineering stops short of polish.** From here each task must serve either the demo walk-through or the business case.
+
+**Why:** the pitch is judged on the decision, the owner, the board and the business outcome, and on honesty about data. A live-looking model integration with no key adds risk and no pitch value; the missing quantification is a direct gap against the brief.
+**Trade-offs:** the demo's Intake is not an LLM, so the pitch must say so plainly ("a rules reader today; a model reader is the next step"), which slightly weakens the "agentic" slide; the cost is smaller than being caught implying a live model. If the team gets a key, Tasks 5 and 6 are still specified in the P2 execution doc and can be built then.
+
 ---
 
 ## Working assumptions (`ASSUMED:`)

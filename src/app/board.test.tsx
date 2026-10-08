@@ -141,6 +141,17 @@ describe("structure and accessibility", () => {
   });
 });
 
+describe("the Orders to check tile", () => {
+  it("is absent without a capture source, and present, sourced and honest with one", () => {
+    expect(model.kpis.some((k) => k.id === "orders-to-check")).toBe(false);
+    const withCapture = buildBoard(scenario, { needsPerson: 19, lines: 22 });
+    const tile = withCapture.kpis.find((k) => k.id === "orders-to-check")!;
+    expect(tile).toMatchObject({ label: "Orders to check", value: "19" });
+    expect(tile.note).toContain("rules reader");
+    expect(unexplainedFigures(render(withCapture), withCapture.allowedFigures)).toEqual([]);
+  });
+});
+
 describe("states", () => {
   it("renders a plain message when no week needs a decision", () => {
     const quiet = render({ ...model, recommendations: [], focus: null });

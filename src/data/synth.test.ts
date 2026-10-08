@@ -217,9 +217,9 @@ describe("provenance and honesty", () => {
     }
   });
 
-  it("both synthetic files are in the manifest as kind 'synthetic' (never 'real')", () => {
+  it("every synthetic file is in the manifest as kind 'synthetic' (never 'real')", () => {
     const rows = loadManifest(dir).filter((e) => e.file.startsWith("synthetic/"));
-    expect(rows.map((r) => r.file).sort()).toEqual([PARAMS_FILE, SCENARIO_FILE]);
+    expect(rows.map((r) => r.file).sort()).toEqual(["synthetic/inbox-samples.json", PARAMS_FILE, SCENARIO_FILE, "synthetic/value-inputs.json"].sort());
     expect(rows.every((r) => r.kind === "synthetic")).toBe(true);
   });
 
