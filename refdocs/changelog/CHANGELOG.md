@@ -28,6 +28,10 @@ Rules that make this file worth keeping:
 
 ## [Unreleased]
 
+### 2026-10-09 (verify) — Dev mode and phone width
+- **Verified:** `npm run dev` started and `/`, `/inbox`, `/decisions`, `/ledger`, `/ask`, `/value` all returned 200 with nothing logged as an error; `/ledger`, `/ask` and `/decisions` viewed at 390 px after the restyle (navigation strip, forms and cards fit; nothing clipped). Closes the two gaps noted in the P4a entry.
+- **Known issues / next steps:** nothing blocking in the app. Open items outside the code: deploy (needs the Vercel connector authorised, or the GitHub import in `refdocs/guides/deploy.md`), and the `.env.example` line for `PLR_LEDGER_PATH`, which this environment blocks Claude from editing.
+
 ### 2026-10-09 (pitch) — Demo notes, Q&A sheet, and the platform's AI review of the submission
 - **Reported:** user shared a screenshot of the platform's AI analysis of the submission (submitted 9 Oct 2026): 91/100 (clarity 23, relevance 24, innovation 21, feasibility 23). Weaknesses: reliance on accurate, current project schedule inputs; the 10% tie-breaker could meet resistance from outside clients if internal jobs keep winning; pre-build limits (yard space, curing cycle) not fully modelled. Red flag: late call-offs could force sudden high-penalty capacity overrides.
 - **Changed:** Added `refdocs/pitch/demo-notes-and-qa.md`: a nine-step live walk-through with the figures to expect, the plain-framing lines, a deck-versus-prototype table (Contractor B RM18k vs RM30,705; Week 44 4,100 vs 3,279 m3 spare; six weeks vs twelve; "3 orders" vs 18; "RM246k protected" vs "at stake"; Week 42 shortfall), answers to the review's four points checked against the prototype, ten hard questions, and what is not built. The build-ahead card now says that yard space and the autoclave's curing cycle are not modelled.
