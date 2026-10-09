@@ -181,7 +181,8 @@ function Prebuild({ rec, area }: { rec: RecommendationView; area?: string }) {
         )}
         <p className="rule-note">
           The stock limit is an assumption, set by the team: a larger limit can make the shortage disappear, and stock
-          ties up cash. It is shown here so the choice is visible.
+          ties up cash. It is shown here so the choice is visible. Yard space and the autoclave&apos;s curing cycle are not
+          modelled; a plant would replace this single limit with its real constraints.
         </p>
           </section>
   );
