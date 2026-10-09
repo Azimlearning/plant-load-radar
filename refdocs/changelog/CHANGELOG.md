@@ -28,6 +28,11 @@ Rules that make this file worth keeping:
 
 ## [Unreleased]
 
+### 2026-10-09 (repo) — Repository made public
+- **Reported:** user: "why private, make it public pls" (it was created private as a cautious default).
+- **Changed:** `gh repo edit --visibility public`; `deploy.md` now says the repo is public and what that exposes.
+- **Noted, not changed:** before the switch the tracked files were scanned for secrets (none found) and personal data: the user's own email, one Kabel organiser's email address and first name, and the pitch pack's communications, calendar and interview-prep notes are in `refdocs/context/` and `refdocs/Docs/`, and in the git history. Left as is because the user asked for public; removing them would need a history rewrite, which this project's settings block (no force push).
+
 ### 2026-10-09 (verify) — Dev mode and phone width
 - **Verified:** `npm run dev` started and `/`, `/inbox`, `/decisions`, `/ledger`, `/ask`, `/value` all returned 200 with nothing logged as an error; `/ledger`, `/ask` and `/decisions` viewed at 390 px after the restyle (navigation strip, forms and cards fit; nothing clipped). Closes the two gaps noted in the P4a entry.
 - **Known issues / next steps:** nothing blocking in the app. Open items outside the code: deploy (needs the Vercel connector authorised, or the GitHub import in `refdocs/guides/deploy.md`), and the `.env.example` line for `PLR_LEDGER_PATH`, which this environment blocks Claude from editing.

@@ -36,7 +36,7 @@ Authorise the connector in claude.ai (Settings → Connectors → Vercel). Once 
 - Open it on a phone and on a laptop. The navigation becomes a scrolling strip on narrow screens.
 - Walk the flow in `/decisions` once yourself, then press "Start the demo again" so your own cookie is clean.
 - The page opens with the synthetic-data notice on purpose: it must not be removed.
-- A private repo is fine for a deployed demo; judges see the deployed site, not the code. If you also want to share the code, make the repo public first and check nothing in `refdocs/Docs/` should stay private (it holds your slides and study notes).
+- The repo is public (changed on 2026-10-09 at the user's request), so the code, `refdocs/` and `refdocs/Docs/` (slides, script, study notes) are visible to anyone. The pitch pack in `refdocs/context/` includes organiser contact details and interview-prep notes.
 
 ## Known limits of the hosted version
 
