@@ -1,6 +1,6 @@
 # Deploying the demo (Vercel) so judges can open it
 
-> Status 2026-10-09: **not deployed yet.** The Vercel connector in Claude Code is not authorised in the session that built this, and the Vercel CLI is not installed or logged in. The repo is ready; the steps below take about five minutes. ADR D-19.
+> Status 2026-10-09: **deployed.** Production URL: <https://plant-load-radar.vercel.app> (Vercel project `plant-load-radar`, account `azimlearning`, connected to the GitHub repo, so every push to `main` redeploys). It was deployed with the Vercel CLI after the user approved the browser login; the Vercel connector in Claude Code was still unauthorised. The options below remain for redeploying or moving it. ADR D-19.
 
 ## What is already set up for hosting
 

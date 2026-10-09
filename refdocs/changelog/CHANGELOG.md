@@ -28,6 +28,13 @@ Rules that make this file worth keeping:
 
 ## [Unreleased]
 
+### 2026-10-09 (deploy) — Deployed to Vercel
+- **Reported:** user: "try again" after approving the Vercel browser login.
+- **Changed:** `vercel link` (project `plant-load-radar`, connected to the GitHub repo) and `vercel --prod`; `.gitignore` gained `.vercel`; the GitHub repo's homepage is set to the production URL; `deploy.md` and STATUS updated.
+- **Decided:** deployed with the Vercel CLI because the Vercel connector was still unauthorised in this session. The production alias `plant-load-radar.vercel.app` is open to the public; the per-deployment URL sits behind Vercel's default login, which is normal and does not affect judges.
+- **Verified:** against the live site with real requests: all six pages return 200; the board shows Week 43 short 2,000 m3 and 18 orders to check; blank name refused; approval recorded (RM575,342 at stake, named approver); a second browser saw an empty ledger; a second approval refused; reset cleared it. (The cookie ledger works on Vercel.) Not checked: the live site on a real phone.
+- **Known issues / next steps:** none blocking. Pushes to `main` now redeploy automatically.
+
 ### 2026-10-09 (repo) — Repository made public
 - **Reported:** user: "why private, make it public pls" (it was created private as a cautious default).
 - **Changed:** `gh repo edit --visibility public`; `deploy.md` now says the repo is public and what that exposes.

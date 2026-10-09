@@ -54,3 +54,6 @@ wandb/
 
 # Decision ledger (runtime state, written by the Approve action; ADR D-18)
 .ledger/
+
+.vercel
+.env*
