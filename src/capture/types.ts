@@ -47,7 +47,7 @@ export interface ExtractedLine {
 /** The message an extractor reads. `receivedAt` is an ISO UTC instant; dates are resolved in Malaysia time (UTC+8). */
 export interface InboxMessage {
   id: string;
-  channel: "whatsapp" | "excel";
+  channel: "whatsapp" | "excel" | "photo";
   receivedAt: string;
   sender: string;
   text: string;

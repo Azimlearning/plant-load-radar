@@ -5,7 +5,7 @@ import { recommend } from "@/core/planner";
 import type { Refusal } from "@/ledger/decide";
 import { templateDrafter, type Drafter, type Drafts } from "@/writer/drafter";
 import { Figures, lineFormatter, type Line, type RecommendationView } from "./board";
-import { toPricedRequests, toWeekCapacities } from "./scenario";
+import { toPlannedWeekCapacities, toPricedRequests } from "./scenario";
 import type { LedgerLine, LedgerRow, SyntheticScenario } from "./schema";
 
 /** Fixed messages by refusal code. The page never prints text taken from the address bar. */
@@ -53,7 +53,7 @@ export interface DecisionsModel {
 
 export function buildDecisions(s: SyntheticScenario, ledger: readonly LedgerRow[], error: string | null, drafter: Drafter = templateDrafter): DecisionsModel {
   const fig = new Figures();
-  const weeks = toWeekCapacities(s);
+  const weeks = toPlannedWeekCapacities(s);
   const reqs = toPricedRequests(s);
   const decided = new Set(ledger.map((r) => r.week));
   const fmt = lineFormatter(s, fig);

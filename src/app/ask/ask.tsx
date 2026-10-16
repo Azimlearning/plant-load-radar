@@ -2,13 +2,28 @@
 // the address and answers it server-side with the calculator. No client code, no free-text understanding.
 
 import type { AskModel } from "@/data/ask";
-import { Shell } from "../shell";
+import { Shell, type NavCounts } from "../shell";
 
-export function Ask({ model }: { model: AskModel }) {
+export function Ask({ model, counts }: { model: AskModel; counts?: NavCounts }) {
   return (
-    <Shell current="/ask" banner={model.banner} title={model.title} lede={<>
+    <Shell counts={counts} current="/ask" banner={model.banner} title={model.title} kicker="Sales executive" lede={<>
         <p>{model.intro}</p>
       </>}>
+
+      <section className="card" aria-labelledby="ask-words">
+        <h2 id="ask-words" className="card-title">
+          Ask in your own words
+        </h2>
+        <form className="form" method="get" action="/ask">
+          <label>
+            Your question
+            <input type="text" name="q" defaultValue={model.question} maxLength={model.example.maxChars} placeholder={model.example.text} />
+          </label>
+          <div className="actions">
+            <button type="submit">Ask</button>
+          </div>
+        </form>
+      </section>
 
       <section className="card" aria-labelledby="ask-form">
         <h2 id="ask-form" className="card-title">
@@ -54,6 +69,13 @@ export function Ask({ model }: { model: AskModel }) {
               <li key={d}>{d}</li>
             ))}
           </ul>
+          {model.reply ? (
+            <>
+              <h3 className="col-title">Draft reply for the customer</h3>
+              <pre className="draft">{model.reply}</pre>
+              <p className="muted">Words only. Nothing is sent; a person copies it or sends it from the decisions page after approving.</p>
+            </>
+          ) : null}
         </section>
       ) : null}
 

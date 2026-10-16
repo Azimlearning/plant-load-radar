@@ -2,10 +2,12 @@
 // <form> that posts to a server action passed in by the page. It performs no arithmetic and formats no numbers.
 // The form carries text fields only (week, mode, chosen request, name, note): no figure is ever sent to the server.
 
+import Link from "next/link";
 import type { Line } from "@/data/board";
 import type { DecisionsModel, PendingView } from "@/data/decisions";
 import { MAX_NAME, MAX_NOTE } from "@/ledger/decide";
-import { Shell } from "../shell";
+import { MAX_DRAFT_CHARS } from "@/ledger/outbox";
+import { Shell, type NavCounts } from "../shell";
 
 function LineItem({ line }: { line: Line }) {
   return (
@@ -87,29 +89,41 @@ function Pending({ p, action, approverNote }: { p: PendingView; action: (formDat
           </label>
         </div>
         <p className="muted">{approverNote}</p>
+        <div className="alt">
+          <h3 className="col-title">Drafts for this decision (edit before you send)</h3>
+          <label>
+            Huddle brief for the plant manager
+            <textarea name="draft:brief" className="draft-edit" rows={9} maxLength={MAX_DRAFT_CHARS} defaultValue={p.drafts.brief} />
+          </label>
+          {p.drafts.replies.map((r, i) => (
+            <label key={r.to}>
+              Reply to {r.to}
+              <textarea name={`draft:reply:${i}`} className="draft-edit" rows={5} maxLength={MAX_DRAFT_CHARS} defaultValue={r.text} />
+            </label>
+          ))}
+          <p className="muted">
+            Approve and send puts these in the simulated outbox, under your name. Only the words can change; who they go to is fixed by the rule. If you choose Change, the decision is recorded and nothing is queued, because these drafts describe the recommendation.
+          </p>
+        </div>
         <div className="actions">
-          <button type="submit">Record decision</button>
+          <button type="submit" name="send" value="1">
+            Approve and send
+          </button>
+          <button type="submit" name="send" value="0" className="secondary">
+            Record decision only
+          </button>
+          <Link className="button secondary" href={`/huddle#week-${p.week}`}>
+            Send to the huddle
+          </Link>
         </div>
       </form>
-
-      <div className="alt">
-        <h3 className="col-title">Drafts for this decision</h3>
-        <h4 className="sub-title">Huddle brief for the plant manager</h4>
-        <pre className="draft">{p.drafts.brief}</pre>
-        {p.drafts.replies.map((r) => (
-          <div key={r.to}>
-            <h4 className="sub-title">Reply to {r.to}</h4>
-            <pre className="draft">{r.text}</pre>
-          </div>
-        ))}
-      </div>
     </section>
   );
 }
 
-export function Decisions({ model, action, resetAction }: { model: DecisionsModel; action: (formData: FormData) => void | Promise<void>; resetAction?: () => void | Promise<void> }) {
+export function Decisions({ model, action, resetAction, counts }: { model: DecisionsModel; action: (formData: FormData) => void | Promise<void>; resetAction?: () => void | Promise<void>; counts?: NavCounts }) {
   return (
-    <Shell current="/decisions" banner={model.banner} title={model.title} lede={<>
+    <Shell counts={counts} current="/decisions" banner={model.banner} title={model.title} lede={<>
         <p>{model.intro}</p>
       </>}>
       {model.error ? (

@@ -3,7 +3,7 @@
 
 import type { Line } from "@/data/board";
 import type { LedgerModel } from "@/data/decisions";
-import { Shell } from "../shell";
+import { Shell, type NavCounts } from "../shell";
 
 function Row({ line }: { line: Line }) {
   return (
@@ -23,9 +23,9 @@ function Row({ line }: { line: Line }) {
   );
 }
 
-export function Ledger({ model, resetAction }: { model: LedgerModel; resetAction?: () => void | Promise<void> }) {
+export function Ledger({ model, resetAction, counts }: { model: LedgerModel; resetAction?: () => void | Promise<void>; counts?: NavCounts }) {
   return (
-    <Shell current="/ledger" banner={model.banner} title={model.title} lede={<>
+    <Shell counts={counts} current="/ledger" banner={model.banner} title={model.title} lede={<>
         <p>{model.intro}</p>
       </>}>
 

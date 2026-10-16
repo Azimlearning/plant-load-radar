@@ -170,6 +170,9 @@ Canonical one-line list. Load-bearing entries are expanded as ADRs in `changelog
 | D-15 | Board design: view-model with a figure registry and a rendered-HTML honesty test; only sourced KPIs; inert Approve/Change; pre-build shown as a labelled alternative with an assumed visible stock cap; hand SVG chart | Keeps the screen from breaking hard constraints 1 and 2 (P1) |
 | D-16 | Capture: rules-first extractor + model extractor behind one interface; mandatory grounding step; four plain typed steps, no framework; photos deferred; no live-model claims without a live run | No API key here; keeps "never guesses" checkable; hand-built pipeline vs the deck's LangGraph/Foundry production path (P2 plan) |
 | D-17 | Prototype first, business side next: P2 cut to the offline demo path (rules intake, grounding, matching, inbox); LLM client/extractor/eval deferred until a key exists; new phase P2b (`/value` business case) | User: end goal is a working prototype; the business side needs refining (P2b answers the brief's "quantify it" ask) |
+| D-20 | Align the demo to the revised deck: deck-story scenario (weeks 41 to 46, RM145k a day, RM18k margin at the public 10.8% PBT margin); short weeks fully covered by building ahead are not decisions | User, 2026-10-16: revised 15-slide deck; "yes" to aligning the numbers (ADR D-20) |
+| D-21 | Model layer: `src/llm/` provider interface, Claude Haiku 5.5 by default, off unless configured, every output behind grounding or a number-subset guard; no trained model for the MVP; deck-green/hatched-coral chart colours | User: small pay-per-use LLM budget, 'suggest a trained model if needed' (ADR D-21) |
+| D-22 | Demo state beyond the ledger: scenario as-of date, seeded reserved slots, call-offs (four or more weeks ahead), simulated outbox, seeded decision history; all per-visitor, none sends anything | Slide 6 and 7 promises needed working analogues for TRL 3 (ADR D-22) |
 
 ---
 

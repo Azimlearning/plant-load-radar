@@ -2,7 +2,7 @@
 // It performs no arithmetic and formats no numbers; the quoted message words and every figure are strings from
 // src/data/inbox.ts, which records them (see inbox.test.tsx).
 
-import { Shell } from "../shell";
+import { Shell, type NavCounts } from "../shell";
 import type { Chip, InboxModel, LineView, MessageView } from "@/data/inbox";
 
 function ChipItem({ chip }: { chip: Chip }) {
@@ -52,7 +52,7 @@ function Order({ line }: { line: LineView }) {
   );
 }
 
-function Message({ m }: { m: MessageView }) {
+export function Message({ m }: { m: MessageView }) {
   return (
     <article className="card msg" aria-label={`Message from ${m.sender}`}>
       <div className="msg-head">
@@ -76,9 +76,9 @@ function Message({ m }: { m: MessageView }) {
   );
 }
 
-export function Inbox({ model }: { model: InboxModel }) {
+export function Inbox({ model, counts }: { model: InboxModel; counts?: NavCounts }) {
   return (
-    <Shell current="/inbox" banner={model.banner} title={model.title} lede={<>
+    <Shell counts={counts} current="/inbox" banner={model.banner} title={model.title} lede={<>
         <p>{model.summary}</p>
         <p>{model.readerNote}</p>
       </>}>

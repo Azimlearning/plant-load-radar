@@ -4,7 +4,7 @@
 
 import { DecisionError, recommendationFor, recommendationWithChoice } from "@/core/decision";
 import type { Recommendation } from "@/core/planner";
-import { toPricedRequests, toWeekCapacities } from "@/data/scenario";
+import { toPlannedWeekCapacities, toPricedRequests } from "@/data/scenario";
 import type { LedgerLine, LedgerRow, SyntheticScenario } from "@/data/schema";
 import type { Store } from "./store";
 
@@ -40,7 +40,7 @@ export function linesOf(s: SyntheticScenario, rec: Recommendation): { served: Le
 
 /** The weeks the rule has to settle that no person has decided yet. */
 export function pendingWeeks(s: SyntheticScenario, decided: readonly string[]): string[] {
-  const weeks = toWeekCapacities(s);
+  const weeks = toPlannedWeekCapacities(s);
   const reqs = toPricedRequests(s);
   const all = [...new Set(weeks.map((w) => w.week))].filter((w) => {
     try {
@@ -66,7 +66,7 @@ export function recordDecision(s: SyntheticScenario, input: DecisionInput, store
 
   if (store.read().some((r) => r.week === week)) return refuse("already-decided", `${week} already has a decision in the ledger.`);
 
-  const weeks = toWeekCapacities(s);
+  const weeks = toPlannedWeekCapacities(s);
   const reqs = toPricedRequests(s);
   let rec: Recommendation;
   try {

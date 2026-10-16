@@ -43,7 +43,7 @@ function replies(rec: RecommendationView): ReplyDraft[] {
     .map((l) => ({
       to: l.who,
       text: l.to && l.to !== "no free week in this horizon"
-        ? `Hi ${l.who}, thanks for your request for ${l.volume} in ${rec.weekName}. We cannot supply it that week. We can offer ${l.to} instead. Please let us know if that works for you.\n${NOT_SENT}`
+        ? `Hi ${l.who}, thanks for your request for ${l.volume} in ${rec.weekName}. ${rec.weekName} is fully booked. We can deliver from ${l.toDate ?? l.to} (${l.to}). Shall I lock that in?\n${NOT_SENT}`
         : `Hi ${l.who}, thanks for your request for ${l.volume} in ${rec.weekName}. We cannot supply it that week and have no confirmed alternative yet. We will come back to you with the next available week.\n${NOT_SENT}`,
     }));
 }

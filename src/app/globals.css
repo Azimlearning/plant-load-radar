@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Light theme only (ADR D-19). Palette from the pitch deck's own slides: ink, brand green, dark green, red, cream.
-   Chart colours stay blue/red (validated for colour-blindness); green is used for navigation and buttons. */
+   Chart colours: dark green above the line, hatched coral below it, validated for colour-blindness (ADR D-21). */
 :root {
   color-scheme: light;
   --canvas: #f4f5f1;
@@ -18,8 +18,9 @@
   --brand-line: #c7d9cd;
   --alert: #b03a2e; /* 5.9:1 against white */
   --alert-tint: #f8e7e4;
-  --spare: #2a78d6; /* chart: diverging pole 1 */
-  --short: #e34948; /* chart: diverging pole 2 */
+  --spare: #16402b; /* chart: spare = the deck's dark green */
+  --short: #e8756b; /* chart: short = coral, hatched; protan/deutan/tritan distance 32.5/49.0/90.6 (ADR D-21) */
+  --short-line: #b03a2e;
   --notice-bg: #fff8e6;
   --notice-line: #ecd9a0;
   --notice-ink: #5a4710;
@@ -49,7 +50,7 @@ a { color: var(--brand); }
   text-align: center;
 }
 .topbar {
-  background: var(--brand-dark);
+  background: linear-gradient(135deg, #0d3b29 0%, #16402b 45%, #1c6b46 100%);
   color: #fff;
   display: flex;
   align-items: center;
@@ -72,6 +73,9 @@ a { color: var(--brand); }
   flex-direction: column;
   gap: 0.2rem;
 }
+.sidenav-group { display: flex; flex-direction: column; gap: 0.2rem; margin-bottom: 0.6rem; }
+.nav-count { font-weight: 500; opacity: 0.85; }
+.kicker { color: var(--brand); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 .sidenav-label { font-size: 0.72rem; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 0.4rem 0.75rem; }
 .sidenav a { display: block; padding: 0.55rem 0.75rem; border-radius: 0.5rem; color: var(--ink); text-decoration: none; font-weight: 500; }
 .sidenav a:hover { background: var(--wash); }
@@ -87,6 +91,7 @@ a { color: var(--brand); }
   .frame { display: block; }
   .sidenav { flex-direction: row; overflow-x: auto; padding: 0.4rem 0.6rem; border-right: 0; border-bottom: 1px solid var(--line); gap: 0.2rem; position: sticky; top: 0; z-index: 2; }
   .sidenav-label { display: none; }
+  .sidenav-group { flex-direction: row; margin-bottom: 0; }
   .sidenav a { white-space: nowrap; padding: 0.45rem 0.7rem; }
   .content { padding: 1rem 1rem 2.5rem; }
 }
@@ -129,7 +134,7 @@ a.button:hover, .form button:hover { background: var(--brand-dark); border-color
 .legend li { display: flex; align-items: center; gap: 0.45rem; }
 .swatch { width: 0.8rem; height: 0.8rem; border-radius: 0.2rem; display: inline-block; }
 .swatch-spare { background: var(--spare); }
-.swatch-short { background: var(--short); }
+.swatch-short { background: repeating-linear-gradient(135deg, var(--short) 0 3px, #fff 3px 5px); border: 1px solid var(--short-line); }
 .chart-scroll { overflow-x: auto; }
 .scroll-hint { display: none; color: var(--muted); font-size: 0.8rem; }
 @media (max-width: 42rem) { .scroll-hint { display: block; } }
@@ -141,7 +146,7 @@ a.button:hover, .form button:hover { background: var(--brand-dark); border-color
 .chart-svg .decision-tag { fill: var(--alert); font-size: 11px; font-weight: 650; }
 .chart-svg .wash { fill: var(--alert-tint); opacity: 0.7; }
 .chart-svg .bar-spare { fill: var(--spare); }
-.chart-svg .bar-short { fill: var(--short); }
+.chart-svg .bar-short { fill: url(#hatch-short); stroke: var(--short-line); stroke-width: 1.25; }
 
 /* ---- decision lines ------------------------------------------------------------------------------ */
 .lines, .moves { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
@@ -201,3 +206,48 @@ td.wrap { white-space: normal; min-width: 14rem; }
 .answer { border-left: 4px solid var(--brand); }
 .answer.maybe { border-left-color: #c58a00; }
 .answer.no { border-left-color: var(--alert); }
+.chart-svg .covered-tag { fill: var(--brand); font-size: 11px; font-weight: 650; }
+.chart-svg .hatch-bg { fill: var(--short); }
+.chart-svg .hatch-line { stroke: var(--short-line); stroke-width: 2.5; }
+.draft-edit { font: inherit; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.5; padding: 0.55rem 0.75rem; border-radius: 0.4rem; border: 1px solid var(--line-strong); background: #fff; color: var(--ink); width: 100%; resize: vertical; }
+.timer { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.timer-clock { font-size: 2.1rem; font-weight: 650; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.timer button { font: inherit; font-weight: 600; padding: 0.4rem 1rem; border-radius: 0.4rem; border: 1px solid var(--brand); background: #fff; color: var(--brand); cursor: pointer; }
+.timer button:hover { background: var(--brand-tint); }
+.blocks { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.4rem 1rem; font-size: 0.9rem; }
+.stack { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* ---- overview page: the deck's title slide and cards -------------------------------------------- */
+.hero { background: linear-gradient(135deg, #0a3322 0%, #16402b 40%, #1c7048 100%); color: #fff; border-radius: 0.9rem; padding: 2.4rem 2rem 2rem; display: flex; flex-direction: column; gap: 0.8rem; box-shadow: var(--shadow); }
+.hero-kicker { color: #bfd9c8; font-size: 0.85rem; }
+.hero-title { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 750; letter-spacing: -0.02em; line-height: 1.05; }
+.hero-title span { color: #a9d3b8; }
+.hero-tagline { max-width: 46rem; font-size: 1.1rem; line-height: 1.5; color: #e9f3ec; }
+a.button.light { background: #fff; color: var(--brand-dark); border-color: #fff; }
+a.button.light:hover { background: var(--brand-tint); border-color: var(--brand-tint); }
+a.button.ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.6); }
+a.button.ghost:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; }
+.section-title { font-size: 1.25rem; font-weight: 700; color: var(--brand-dark); }
+.people { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.75rem; }
+.person { background: var(--brand-tint); border-color: var(--brand-line); }
+.wants-label { color: var(--brand); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.3rem; }
+.wants-label.no { color: var(--alert); }
+.person .button { align-self: flex-start; margin-top: auto; font-size: 0.85rem; }
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0.6rem; counter-reset: step; }
+.steps li { background: var(--brand-tint); border: 1px solid var(--brand-line); border-radius: var(--radius); padding: 0.6rem 0.75rem; display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.85rem; counter-increment: step; }
+.steps li strong { color: var(--brand-dark); }
+.steps li strong::before { content: counter(step) ". "; }
+.flag { color: var(--notice-ink); background: var(--notice-bg); border: 1px solid var(--notice-line); border-radius: 0.4rem; padding: 0.4rem 0.7rem; font-size: 0.875rem; }
+.trace { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.7rem; counter-reset: trace; }
+.trace > li { border-left: 3px solid var(--brand-line); padding-left: 0.8rem; }
+.trace-head { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.trace-line { font-size: 0.875rem; color: var(--ink-2); margin: 0.15rem 0; overflow-wrap: anywhere; }
+.photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0.9rem; }
+.photo { margin: 0; display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; }
+.photo img { width: 100%; height: auto; border: 1px solid var(--line-strong); border-radius: 0.4rem; background: #fff; }
+.refs { margin: 0; padding-left: 1.4rem; display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.875rem; }
+.assumptions { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0.6rem 1.2rem; margin: 0; }
+.assumptions dt { font-weight: 650; color: var(--brand-dark); font-size: 0.875rem; }
+.assumptions dd { margin: 0; color: var(--ink-2); font-size: 0.85rem; }
+.form select, .form input[type="text"], .form input[type="number"], .form textarea { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+.form label { min-width: 0; }

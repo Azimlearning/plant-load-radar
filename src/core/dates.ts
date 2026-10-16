@@ -27,3 +27,12 @@ export function addDays(iso: string, days: number): string {
   if (!Number.isInteger(days)) throw new Error(`addDays needs a whole number, got ${days}`);
   return new Date(parseIsoDate(iso) + days * MS_PER_DAY).toISOString().slice(0, 10);
 }
+
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] as const;
+
+/** "Mon 26 Oct": how the deck writes a delivery date. Computed in UTC from the ISO date. */
+export function formatDayShort(iso: string): string {
+  const d = new Date(parseIsoDate(iso));
+  return `${DAY_NAMES[d.getUTCDay()]} ${d.getUTCDate()} ${MONTH_NAMES[d.getUTCMonth()]}`;
+}

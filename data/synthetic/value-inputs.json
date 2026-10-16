@@ -16,7 +16,7 @@
     "base": 4,
     "high": 8,
     "unit": "weeks a year when demand exceeds free capacity",
-    "why": "The demo scenario has one short week in twelve, which is about four a year. The bands halve and double that. The demo scenario is itself invented, so this is a consistency choice, not evidence.",
+    "why": "The 12-week generated scenario has one short week in twelve, which is about four a year; the deck's six-week story has two short weeks, one of them covered by building ahead. The bands halve and double the four. The scenarios are themselves invented, so this is a consistency choice, not evidence.",
     "replaceWith": "Weekly output, downtime and committed orders for the pilot plant over the last 12 months."
   },
   "outsideM3LostPerShortWeek": {

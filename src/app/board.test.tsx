@@ -85,7 +85,7 @@ describe("the board cannot decide anything: approval happens on the decisions pa
   });
 
   it("the page and component have no client directive and no write path", () => {
-    for (const file of ["src/app/board.tsx", "src/app/page.tsx"]) {
+    for (const file of ["src/app/board.tsx", "src/app/board/page.tsx"]) {
       const src = readFileSync(join(process.cwd(), file), "utf8");
       expect(src, file).not.toMatch(/["']use client["']|useState|useEffect|onClick|onSubmit|fetch\(|writeFile|appendFile|appendRow|recordDecision|localStorage/);
     }

@@ -2,7 +2,7 @@
 // It performs no arithmetic and formats no numbers; every figure is a string from src/data/value.ts, which records
 // them (see value.test.tsx, the "every figure comes from the model" check).
 
-import { Shell } from "../shell";
+import { Shell, type NavCounts } from "../shell";
 import type { LineView, ValueModel } from "@/data/value";
 
 function Line({ line }: { line: LineView }) {
@@ -40,9 +40,9 @@ function Line({ line }: { line: LineView }) {
   );
 }
 
-export function Value({ model }: { model: ValueModel }) {
+export function Value({ model, counts }: { model: ValueModel; counts?: NavCounts }) {
   return (
-    <Shell current="/value" banner={model.banner} title={model.title} lede={<>
+    <Shell counts={counts} current="/value" banner={model.banner} title={model.title} lede={<>
         <p>{model.intro}</p>
         <p className="scroll-hint">{model.scrollHint}</p>
       </>}>

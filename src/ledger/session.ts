@@ -9,14 +9,11 @@ import type { LedgerRow, SyntheticScenario } from "@/data/schema";
 import { COOKIE_NAME, decodeRows, encodeRows, MAX_COOKIE_CHARS } from "./cookie-ledger";
 import { recordDecision, type DecisionInput, type Outcome } from "./decide";
 import { fileStore } from "./store";
+import { callOffStore, outboxStore } from "./visitor";
 
-export type LedgerMode = "file" | "cookie";
-
-export function ledgerMode(): LedgerMode {
-  const forced = process.env.PLR_LEDGER_MODE;
-  if (forced === "cookie" || forced === "file") return forced;
-  return process.env.VERCEL ? "cookie" : "file";
-}
+import { ledgerMode } from "./mode";
+export { ledgerMode };
+export type { LedgerMode } from "./mode";
 
 const EIGHT_HOURS_S = 8 * 60 * 60;
 
@@ -42,5 +39,7 @@ export async function saveDecision(s: SyntheticScenario, input: DecisionInput): 
 export async function resetDemo(): Promise<boolean> {
   if (ledgerMode() !== "cookie") return false;
   (await cookies()).delete(COOKIE_NAME);
+  await callOffStore.clear();
+  await outboxStore.clear();
   return true;
 }

@@ -49,16 +49,14 @@ describe("the board model for the committed scenario", () => {
   const projectA = scenario.projects.find((p) => p.projectId === "project-a")!;
   const contractorB = scenario.customers.find((c) => c.customerId === "contractor-b")!;
 
-  it("KPIs come from the planner: one week short, one decision, largest shortage 2,000 m³ in week 43", () => {
+  it("KPIs come from the planner: one week short, one decision", () => {
     const by = Object.fromEntries(model.kpis.map((k) => [k.id, k]));
     expect(by["weeks-short"]!.value).toBe("1");
     expect(by["decisions"]!.value).toBe("1");
-    expect(by["largest"]!.value).toBe("2,000 m³");
-    expect(by["largest"]!.note).toBe("Week 43");
   });
 
   it("shows only KPIs that have a real source today (no 'protected this month', no 'orders to check')", () => {
-    expect(model.kpis.map((k) => k.id).sort()).toEqual(["decisions", "largest", "weeks-short"]);
+    expect(model.kpis.map((k) => k.id).sort()).toEqual(["decisions", "weeks-short"]);
   });
 
   it("the headline is week 43, 2,000 m³ short", () => {

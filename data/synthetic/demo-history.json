@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "kind": "synthetic",
+    "note": "A seeded, invented history of earlier weekly decisions, so the board's 'delay cost avoided' tile and the finance view have something to show, as slide 9 does. Nothing here was measured or comes from Chin Hin. The ringgit is computed by the calculator from each project's and customer's card; the days and volumes below are the only inputs."
+  },
+  "entries": [
+    {
+      "id": "hist-2026-W37",
+      "week": "2026-W37",
+      "decidedOn": "2026-09-09",
+      "approvedBy": "Siti (scheduler)",
+      "servedSide": "internal",
+      "projectId": "project-c",
+      "daysAvoided": 2,
+      "customerId": "contractor-a",
+      "volumeM3": 400,
+      "note": "Project served first; the outside order was offered the next week."
+    },
+    {
+      "id": "hist-2026-W38",
+      "week": "2026-W38",
+      "decidedOn": "2026-09-16",
+      "approvedBy": "Siti (scheduler)",
+      "servedSide": "internal",
+      "projectId": "project-b",
+      "daysAvoided": 2,
+      "customerId": "contractor-c",
+      "volumeM3": 600,
+      "note": "Project served first; the outside order moved a week."
+    },
+    {
+      "id": "hist-2026-W39",
+      "week": "2026-W39",
+      "decidedOn": "2026-09-23",
+      "approvedBy": "Hakim (scheduler)",
+      "servedSide": "external",
+      "projectId": "project-f",
+      "daysAvoided": 0,
+      "customerId": "contractor-d",
+      "volumeM3": 600,
+      "note": "The project had float, so waiting cost it nothing and the outside order went first."
+    },
+    {
+      "id": "hist-2026-W40",
+      "week": "2026-W40",
+      "decidedOn": "2026-10-01",
+      "approvedBy": "Siti (scheduler)",
+      "servedSide": "internal",
+      "projectId": "project-e",
+      "daysAvoided": 3,
+      "customerId": "contractor-e",
+      "volumeM3": 500,
+      "note": "Project served first; the outside order moved a week."
+    },
+    {
+      "id": "hist-2026-W41",
+      "week": "2026-W41",
+      "decidedOn": "2026-10-08",
+      "approvedBy": "Hakim (scheduler)",
+      "servedSide": "external",
+      "projectId": "project-h",
+      "daysAvoided": 0,
+      "customerId": "contractor-c",
+      "volumeM3": 500,
+      "note": "The project had float, so the outside order went first."
+    }
+  ],
+  "provenance": {
+    "entries": "ILLUSTRATIVE: five decisions in the five weeks before the story. The days avoided on the three where a project went first (2 + 2 + 3) were chosen so the calculator's total rounds to the RM246k the deck's slide 9 shows; the two where an outside order went first show the rule serving the outside side when the project has float. Approvers, volumes and customers are invented."
+  }
+}

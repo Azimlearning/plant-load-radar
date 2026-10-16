@@ -5,7 +5,7 @@
 import { Figures, type CaptureSummary } from "./board";
 import { loadJsonDataset } from "./loaders";
 import { InboxFileSchema, SyntheticScenarioSchema } from "./schema";
-import { SCENARIO_FILE } from "./synth";
+import { ACTIVE_SCENARIO_FILE } from "./active";
 import type { KnownParty } from "@/capture/matching";
 import { receivedLocalDate } from "@/capture/normalise";
 import { processInbox, type InboxResult, type ProcessedLine, type ProcessedMessage } from "@/capture/pipeline";
@@ -109,30 +109,33 @@ function lineView(p: ProcessedLine, fig: Figures, names: Map<string, string>): L
   };
 }
 
+/** One message as the screen shows it: highlighted words, the chips for each line, and what needs a person. */
+export function messageView(pm: ProcessedMessage, fig: Figures, names: Map<string, string>): MessageView {
+  const spans = pm.lines.flatMap((p) =>
+    (["customer", "product", "volumeM3", "neededBy", "reference"] as const).flatMap((name) => {
+      const src = p.line[name].source;
+      return src ? [{ ...src, field: FIELD_LABEL[name] }] : [];
+    }),
+  );
+  fig.text(pm.message.text);
+  return {
+    key: pm.message.id,
+    sender: pm.message.sender,
+    channel: pm.message.channel === "whatsapp" ? "WhatsApp" : pm.message.channel === "photo" ? "Photo of a paper DO" : "Excel",
+    received: receivedLocalDate(pm.message.receivedAt),
+    segments: segmentsOf(pm.message.text, spans),
+    flags: pm.flags.map(() => "Contains instructions aimed at the reader. They were ignored."),
+    lines: pm.lines.map((p) => lineView(p, fig, names)),
+    ignored: pm.ignored,
+    needsPerson: pm.needsPerson,
+  };
+}
+
 /** Build the screen model from a processed inbox. Pure. */
 export function buildInbox(result: InboxResult, known: KnownParty[]): InboxModel {
   const fig = new Figures();
   const names = new Map(known.map((k) => [k.id, k.name] as const));
-  const view = (pm: ProcessedMessage): MessageView => {
-    const spans = pm.lines.flatMap((p) =>
-      (["customer", "product", "volumeM3", "neededBy", "reference"] as const).flatMap((name) => {
-        const src = p.line[name].source;
-        return src ? [{ ...src, field: FIELD_LABEL[name] }] : [];
-      }),
-    );
-    fig.text(pm.message.text);
-    return {
-      key: pm.message.id,
-      sender: pm.message.sender,
-      channel: pm.message.channel === "whatsapp" ? "WhatsApp" : "Excel",
-      received: receivedLocalDate(pm.message.receivedAt),
-      segments: segmentsOf(pm.message.text, spans),
-      flags: pm.flags.map(() => "Contains instructions aimed at the reader. They were ignored."),
-      lines: pm.lines.map((p) => lineView(p, fig, names)),
-      ignored: pm.ignored,
-      needsPerson: pm.needsPerson,
-    };
-  };
+  const view = (pm: ProcessedMessage): MessageView => messageView(pm, fig, names);
   const all = result.messages.map(view);
   // Messages that need a person come first; reading order is kept within each group.
   const messages = [...all.filter((m) => m.needsPerson), ...all.filter((m) => !m.needsPerson)];
@@ -149,14 +152,20 @@ export function buildInbox(result: InboxResult, known: KnownParty[]): InboxModel
   };
 }
 
-/** Server-side: read the committed samples and scenario through the manifest-enforcing loader and run the pipeline. */
-export function loadCapture(): { result: InboxResult; known: KnownParty[] } {
+/** Server-side: the committed sample messages and the known parties, read through the manifest-enforcing loader. */
+export function loadCaptureInputs(): { known: KnownParty[]; samples: InboxMessage[] } {
   const file = loadJsonDataset(INBOX_FILE, InboxFileSchema).data;
-  const scenario = loadJsonDataset(SCENARIO_FILE, SyntheticScenarioSchema).data;
+  const scenario = loadJsonDataset(ACTIVE_SCENARIO_FILE, SyntheticScenarioSchema).data;
   const known: KnownParty[] = [
     ...scenario.projects.map((p) => ({ id: p.projectId, name: p.name })),
     ...scenario.customers.map((c) => ({ id: c.customerId, name: c.name })),
   ];
-  const messages: InboxMessage[] = file.messages.map(({ id, channel, receivedAt, sender, text }) => ({ id, channel, receivedAt, sender, text }));
-  return { result: processInbox(messages, known), known };
+  const samples: InboxMessage[] = file.messages.map(({ id, channel, receivedAt, sender, text }) => ({ id, channel, receivedAt, sender, text }));
+  return { known, samples };
+}
+
+/** Server-side: read the committed samples and scenario and run the pipeline. */
+export function loadCapture(): { result: InboxResult; known: KnownParty[] } {
+  const { known, samples } = loadCaptureInputs();
+  return { result: processInbox(samples, known), known };
 }

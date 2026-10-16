@@ -53,9 +53,9 @@ describe("the decisions page", () => {
     expect(unexplainedFigures(renderToStaticMarkup(<Decisions model={bad} action={noop} />), bad.allowedFigures)).toContain("424,242");
   });
 
-  it("the form sends text only: the week, the choice, a name and a note, never a figure", () => {
+  it("the form sends text only: the week, the choice, a name, a note and the words of the drafts, never a figure", () => {
     const names = [...html.matchAll(/<(?:input|select|textarea)[^>]*\bname="([^"]+)"/g)].map((m) => m[1]);
-    expect([...new Set(names)].sort()).toEqual(["approvedBy", "chosenRequestId", "mode", "note", "week"]);
+    expect([...new Set(names)].sort()).toEqual(["approvedBy", "chosenRequestId", "draft:brief", "draft:reply:0", "mode", "note", "week"]);
     expect(html).not.toMatch(/type="number"/);
   });
 
@@ -68,7 +68,7 @@ describe("the decisions page", () => {
     const reply = model.pending[0]!.drafts.replies[0]!;
     expect(reply.to).toContain("Contractor B");
     expect(reply.text).not.toMatch(/RM\d/);
-    expect(reply.text).toMatch(/We can offer Week \d+ instead/);
+    expect(reply.text).toMatch(/fully booked\. We can deliver from \w{3} \d+ \w{3} \(Week \d+\)\. Shall I lock that in\?/);
     expect(text).toMatch(/Nothing has been sent/);
     expect(text).toMatch(/not by a language model/);
     expect(text).not.toMatch(/\bsent to\b|\bmessage sent\b/i);

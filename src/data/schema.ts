@@ -295,8 +295,30 @@ export const SyntheticScenarioSchema = z
     customers: z.array(CustomerCardSchema.extend({ name: z.string().min(1) })).min(2),
     firmOrders: z.array(FirmOrderSchema),
     requests: z.array(RequestSchema),
+    /** The demo's "today" (ISO date): what "next week" means, and which reservations are still active (ADR D-22). */
+    asOf: IsoDateSchema.optional(),
+    /** Capacity held for projects that confirmed call-offs ahead; unused ones are released on `releaseOn` (slide 7). */
+    reservations: z
+      .array(z.object({ id: z.string().min(1), projectId: z.string().min(1), week: WeekSchema, reservedM3: z.number().positive(), releaseOn: IsoDateSchema, callOffConfirmed: z.boolean() }))
+      .optional(),
+    /** Slide 7: call-offs confirmed `aheadWeeks` ahead earn a slot; an unused slot is released `releaseDaysBefore` days before the week. */
+    reservationPolicy: z.object({ aheadWeeks: z.number().int().positive(), releaseDaysBefore: z.number().int().nonnegative() }).optional(),
+    /** The weekly huddle's time frame and agenda blocks (slide 11: under 30 minutes). */
+    huddle: z.object({ minutes: z.number().int().positive(), blocks: z.array(z.object({ id: z.string().min(1), label: z.string().min(1), minutes: z.number().int().positive() })).min(1) }).optional(),
+    /** Optional read-only what-if shown on the board: this project is given this many days of float (ADR D-20). */
+    whatIf: z.object({ projectId: z.string().min(1), floatDays: z.number().int().positive() }).optional(),
   })
   .superRefine((s, ctx) => {
+    (s.reservations ?? []).forEach((r, i) => {
+      if (!s.projects.some((p) => p.projectId === r.projectId)) ctx.addIssue({ code: "custom", path: ["reservations", i, "projectId"], message: `Unknown project ${r.projectId}` });
+      if (!s.capacity.some((c) => c.week === r.week)) ctx.addIssue({ code: "custom", path: ["reservations", i, "week"], message: `Unknown week ${r.week}` });
+    });
+    if (s.huddle && s.huddle.blocks.reduce((t, b) => t + b.minutes, 0) > s.huddle.minutes) {
+      ctx.addIssue({ code: "custom", path: ["huddle", "blocks"], message: "Huddle blocks exceed the huddle's minutes" });
+    }
+    if (s.whatIf && !s.projects.some((p) => p.projectId === s.whatIf!.projectId)) {
+      ctx.addIssue({ code: "custom", path: ["whatIf", "projectId"], message: `Unknown project ${s.whatIf.projectId}` });
+    }
     const weeks = new Set(s.capacity.map((c) => c.week));
     const parties = new Set([...s.projects.map((p) => p.projectId), ...s.customers.map((c) => c.customerId)]);
     s.firmOrders.forEach((o, i) => {
@@ -318,7 +340,103 @@ export const SyntheticScenarioSchema = z
     });
   });
 
+// ---- Deck-story scenario parameters (data/synthetic/deck-story-params.json, ADR D-20) -------------------
+// The deck-story scenario is derived from the generated scenario: these are the numbers the revised deck states.
+
+export const DeckStoryParamsSchema = z.object({
+  startWeek: WeekSchema,
+  weekCount: z.number().int().min(1),
+  /** Weeks copied unchanged from the base scenario (the story week keeps its requests and committed orders). */
+  keepWeeks: z.array(WeekSchema),
+  /** Weeks authored here: free capacity after confirmed orders, and the new requests asking for the week. */
+  scriptedWeeks: z.array(
+    z.object({
+      week: WeekSchema,
+      freeM3: z.number().nonnegative(),
+      requests: z.array(z.object({ partyId: z.string().min(1), side: SideSchema, volumeM3: z.number().positive(), confirmedDaysBefore: z.number().int() })),
+    }),
+  ),
+  firm: z.object({
+    internalShare: z.number().min(0).max(1),
+    splitShares: z.array(z.number().positive()).min(1),
+    internalParties: z.array(z.string().min(1)).min(1),
+    externalParties: z.array(z.string().min(1)).min(1),
+  }),
+  featuredProject: z.object({
+    projectId: z.string().min(1),
+    purchasePriceRM: z.number().positive(),
+    /** Days of handover slip caused by one week of material delay (slide 7: 3 days). */
+    slipDaysPerWeekOfDelay: z.number().positive().max(7),
+  }),
+  featuredCustomer: z.object({ customerId: z.string().min(1), orderValueRM: z.number().positive() }),
+  whatIf: z.object({ projectId: z.string().min(1), floatDays: z.number().int().positive() }),
+  asOf: IsoDateSchema,
+  reservations: z.array(z.object({ id: z.string().min(1), projectId: z.string().min(1), week: WeekSchema, reservedM3: z.number().positive(), releaseOn: IsoDateSchema, callOffConfirmed: z.boolean() })),
+  reservationPolicy: z.object({ aheadWeeks: z.number().int().positive(), releaseDaysBefore: z.number().int().nonnegative() }),
+  huddle: z.object({ minutes: z.number().int().positive(), blocks: z.array(z.object({ id: z.string().min(1), label: z.string().min(1), minutes: z.number().int().positive() })).min(1) }),
+  /** One note per parameter, keyed by its dotted path; a test fails if any parameter lacks one. */
+  provenance: z.record(z.string(), z.string().min(1)),
+});
+
+// ---- Pitch references (data/public/pitch-references.json) -----------------------------------------------
+
+export const PitchReferencesSchema = z.object({
+  meta: z.object({ kind: z.literal("public"), note: z.string().min(1) }),
+  references: z.array(z.object({ id: z.number().int().positive(), citation: z.string().min(1) })).min(1),
+  assumptions: z.array(z.object({ title: z.string().min(1), text: z.string().min(1) })).min(1),
+});
+export type PitchReferences = z.output<typeof PitchReferencesSchema>;
+
+// ---- Per-visitor demo state: call-offs and the simulated outbox ------------------------------------------
+
+export const CallOffSchema = z.object({
+  id: z.string().min(1),
+  createdAt: z.iso.datetime(),
+  projectId: z.string().min(1),
+  week: WeekSchema,
+  volumeM3: z.number().int().positive(),
+  requestedBy: z.string().trim().min(1).max(80),
+});
+export type CallOff = z.output<typeof CallOffSchema>;
+
+export const OutboxRowSchema = z.object({
+  id: z.string().min(1),
+  sentAt: z.iso.datetime(),
+  week: WeekSchema,
+  channel: z.enum(["whatsapp", "teams"]),
+  to: z.string().trim().min(1).max(120),
+  text: z.string().trim().min(1).max(1200),
+  approvedBy: z.string().trim().min(1).max(80),
+});
+export type OutboxRow = z.output<typeof OutboxRowSchema>;
+
+// ---- Seeded demo history (data/synthetic/demo-history.json) -------------------------------------------
+
+export const DemoHistorySchema = z.object({
+  meta: z.object({ kind: z.literal("synthetic"), note: z.string().min(1) }),
+  entries: z.array(
+    z.object({
+      id: z.string().min(1),
+      week: WeekSchema,
+      decidedOn: IsoDateSchema,
+      approvedBy: z.string().trim().min(1).max(80),
+      /** Which side the rule served first. */
+      servedSide: z.enum(["internal", "external"]),
+      projectId: z.string().min(1),
+      /** Internal first: days of handover slip avoided for the project. External first: 0, because the project had float. */
+      daysAvoided: z.number().int().nonnegative(),
+      customerId: z.string().min(1),
+      /** The outside order: pushed back a week when the project went first, served first when the project had float. */
+      volumeM3: z.number().positive(),
+      note: z.string().min(1),
+    }),
+  ),
+  provenance: z.record(z.string(), z.string().min(1)),
+});
+export type DemoHistory = z.output<typeof DemoHistorySchema>;
+
 export type SynthParams = z.output<typeof SynthParamsSchema>;
+export type DeckStoryParams = z.output<typeof DeckStoryParamsSchema>;
 export type FirmOrder = z.output<typeof FirmOrderSchema>;
 export type ScenarioRequest = z.output<typeof RequestSchema>;
 export type SyntheticScenario = z.output<typeof SyntheticScenarioSchema>;

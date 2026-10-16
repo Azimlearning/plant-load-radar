@@ -33,3 +33,5 @@ Status vocabulary: `Draft` · `In progress` · `Done` · `Blocked` · `Supersede
 | [2026-10-08-p3-decide.md](2026-10-08-p3-decide.md) | P3 Decide & write — ledger, approval, templated drafts, ask the board | Built |
 | [2026-10-09-p4-ui-and-deploy.md](2026-10-09-p4-ui-and-deploy.md) | P4a UI rework (light app shell) and shareable deploy (per-browser ledger) | Built; not yet deployed |
 | [2026-10-08-p2b-value.md](2026-10-08-p2b-value.md) | P2b Business case — the /value page: cost of today's arrangement as a labelled worked example | Built and reviewed |
+| [2026-10-16-deck-parity-to-trl3.md](2026-10-16-deck-parity-to-trl3.md) | Deck parity and the road to TRL 3 — gap analysis against the revised 15-slide deck, ideas, phases P5–P11 | Done to TRL 3 on 2026-10-16 (P5 to P11 built; the live model run is left for local work) |
+| [2026-10-16-p5-deck-story.md](2026-10-16-p5-deck-story.md) | P5 Deck-story scenario — the revised deck's numbers on the live board, covered weeks, float what-if | Done 2026-10-16 |

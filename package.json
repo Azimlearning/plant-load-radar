@@ -12,9 +12,14 @@
     "typecheck": "next typegen && tsc --noEmit",
     "check:literals": "node scripts/check-literals.mjs",
     "fetch:public": "node scripts/fetch-public-data.mjs",
-    "generate:synthetic": "tsx scripts/generate-synthetic.ts"
+    "generate:synthetic": "tsx scripts/generate-synthetic.ts",
+    "generate:deck-story": "tsx scripts/generate-deck-story.ts",
+    "eval:rules": "tsx scripts/eval-llm.ts rules",
+    "eval:model": "tsx scripts/eval-llm.ts model",
+    "smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0",
     "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",

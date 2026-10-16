@@ -132,3 +132,40 @@ export function prebuildAlternative(
     outcome: targetAfter.contested ? toRecommendation(targetAfter, after) : null,
   };
 }
+
+export interface CoveredWeek {
+  week: Week;
+  /** How far the week is short before building ahead. */
+  shortM3: number;
+  /** The production moved into earlier weeks that covers it completely. */
+  moves: PrebuildMove[];
+}
+
+/**
+ * Short weeks that building ahead covers completely, within the stock cap (slide 9: "one is already covered by
+ * pre-build, the other needs a call"). Weeks are judged in time order. A week that only partly covers is not listed
+ * and its partial moves are not applied, which only ever leaves more room for later weeks, so a listed week stays
+ * covered. Pure; the cap is an input.
+ */
+export function coveredByPrebuild(weeks: readonly WeekCapacity[], requests: readonly PricedRequest[], stockCapM3: number): CoveredWeek[] {
+  const balances = weekBalances(weeks, requests);
+  const spares: WeekSpare[] = balances.map((b) => ({ week: b.week, spareM3: b.spareM3 }));
+  const { moves, stillShort } = planPrebuild(spares, stockCapM3);
+  const open = new Set(stillShort.map((s) => s.week));
+  return balances
+    .filter((b) => b.spareM3 < 0 && !open.has(b.week))
+    .map((b) => ({ week: b.week, shortM3: -b.spareM3, moves: moves.filter((m) => m.toWeek === b.week) }));
+}
+
+/** The same weeks with the covered weeks' build-ahead applied: stock arrives in the target week, and uses capacity earlier. */
+export function plannedWeeks(weeks: readonly WeekCapacity[], requests: readonly PricedRequest[], stockCapM3: number): WeekCapacity[] {
+  const added = new Map<Week, number>();
+  const used = new Map<Week, number>();
+  for (const c of coveredByPrebuild(weeks, requests, stockCapM3)) {
+    for (const m of c.moves) {
+      added.set(m.toWeek, (added.get(m.toWeek) ?? 0) + m.m3);
+      used.set(m.fromWeek, (used.get(m.fromWeek) ?? 0) + m.m3);
+    }
+  }
+  return weeks.map((w) => ({ week: w.week, capacityM3: w.capacityM3 + (added.get(w.week) ?? 0), committedM3: w.committedM3 + (used.get(w.week) ?? 0) }));
+}

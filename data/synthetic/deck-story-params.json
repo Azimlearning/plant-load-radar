@@ -1,0 +1,153 @@
+{
+  "startWeek": "2026-W41",
+  "weekCount": 6,
+  "keepWeeks": [
+    "2026-W43"
+  ],
+  "scriptedWeeks": [
+    {
+      "week": "2026-W41",
+      "freeM3": 1200,
+      "requests": []
+    },
+    {
+      "week": "2026-W42",
+      "freeM3": 800,
+      "requests": [
+        {
+          "partyId": "project-d",
+          "side": "internal",
+          "volumeM3": 900,
+          "confirmedDaysBefore": 10
+        },
+        {
+          "partyId": "contractor-e",
+          "side": "external",
+          "volumeM3": 600,
+          "confirmedDaysBefore": 8
+        }
+      ]
+    },
+    {
+      "week": "2026-W44",
+      "freeM3": 4700,
+      "requests": [
+        {
+          "partyId": "contractor-c",
+          "side": "external",
+          "volumeM3": 600,
+          "confirmedDaysBefore": 6
+        }
+      ]
+    },
+    {
+      "week": "2026-W45",
+      "freeM3": 2500,
+      "requests": []
+    },
+    {
+      "week": "2026-W46",
+      "freeM3": 1000,
+      "requests": []
+    }
+  ],
+  "firm": {
+    "internalShare": 0.4,
+    "splitShares": [
+      0.6,
+      0.4
+    ],
+    "internalParties": [
+      "project-d",
+      "project-e"
+    ],
+    "externalParties": [
+      "contractor-a",
+      "contractor-d"
+    ]
+  },
+  "featuredProject": {
+    "projectId": "project-a",
+    "purchasePriceRM": 530000000,
+    "slipDaysPerWeekOfDelay": 3
+  },
+  "featuredCustomer": {
+    "customerId": "contractor-b",
+    "orderValueRM": 167000
+  },
+  "whatIf": {
+    "projectId": "project-a",
+    "floatDays": 20
+  },
+  "provenance": {
+    "startWeek": "ILLUSTRATIVE: the revised deck's slide 9 shows weeks 41 to 46 of 2026.",
+    "weekCount": "ILLUSTRATIVE: six weeks, as slide 9's chart.",
+    "keepWeeks": "MECHANICAL: week 43 keeps the base scenario's requests and committed orders, which already give 1,800 m3 free and 3,800 m3 wanted (2,000 m3 short, slide 9) with Project A, Contractor B and two float-rich projects competing.",
+    "scriptedWeeks": "ILLUSTRATIVE: free capacity and requests chosen so that spare capacity (free minus requested) is +1,200, -700, -2,000, +4,100, +2,500, +1,000 in weeks 41 to 46, the figures drawn on slide 9. Week 42 is short by 700 m3 and week 41's spare covers it by building ahead (slide 9: 'one is already covered by pre-build'). Contractor C's 600 m3 in week 44 is slide 9's second inbox row.",
+    "firm.internalShare": "ASSUMED: same 40% internal share as the generated scenario (params.json demand.internalShare); only affects the split of already-committed volume.",
+    "firm.splitShares": "MECHANICAL: how committed volume is divided among a side's firm orders. No effect on spare capacity.",
+    "firm.internalParties": "FICTIONAL: projects that hold the committed internal orders in the scripted weeks.",
+    "firm.externalParties": "FICTIONAL: outside customers that hold the committed outside orders in the scripted weeks.",
+    "featuredProject.projectId": "FICTIONAL: the deck's 'Project A'.",
+    "featuredProject.purchasePriceRM": "ILLUSTRATIVE: RM530m is Avantro's GDV (The Edge Malaysia, Sep 2026), used as an upper bound exactly as slide 7's footnote says: 530m x 10% / 365 = RM145,205 a day, the 'RM145k a day' on slides 3, 7 and 9.",
+    "featuredProject.slipDaysPerWeekOfDelay": "ILLUSTRATIVE: slide 7 prices Project A at 3 days of slip, 'from the project programme, not the model'. A week's wait is therefore 3 days of handover slip (schedule sensitivity 3/7).",
+    "featuredCustomer.customerId": "FICTIONAL: the deck's 'Contractor B'.",
+    "featuredCustomer.orderValueRM": "ILLUSTRATIVE: RM167k is slide 3's and slide 15's illustrative outside order; its margin uses the public 10.8% AAC and precast PBT margin (Q2 FY26), giving about RM18k.",
+    "whatIf.projectId": "ILLUSTRATIVE: slide 7's second example gives Project A 20 days of float.",
+    "whatIf.floatDays": "ILLUSTRATIVE: 20 days, as slide 7's second example.",
+    "asOf": "ILLUSTRATIVE: Monday of week 42, the day slide 10's WhatsApp message arrives (9:42 AM). It fixes what 'next week' means in 'ask the board' (week 43) and which reservations are still active.",
+    "reservations": "ILLUSTRATIVE: two reserved slots for projects that confirmed call-offs ahead (slide 7, guardrail 2): 800 m3 in week 45 released on 26 Oct and 500 m3 in week 46 released on 2 Nov unless the call-off is confirmed. They are part of the committed volume, so free capacity still equals slide 9's +2,500 and +1,000 m3.",
+    "reservationPolicy.aheadWeeks": "ILLUSTRATIVE: slide 7: 'projects that confirm call-offs 4 weeks ahead get reserved slots'.",
+    "reservationPolicy.releaseDaysBefore": "ASSUMED: an unconfirmed reserved slot is released 14 days before its week starts (slide 7 says only that unused slots are released).",
+    "huddle.minutes": "ILLUSTRATIVE: slide 11's target is under 30 minutes a week for the decision huddle.",
+    "huddle.blocks": "ASSUMED: how the 30 minutes might be split: decisions 15, build-ahead plan 5, slots about to lapse 5, orders to check 5. A pilot would set the real agenda."
+  },
+  "asOf": "2026-10-12",
+  "reservations": [
+    {
+      "id": "res-project-e-w45",
+      "projectId": "project-e",
+      "week": "2026-W45",
+      "reservedM3": 800,
+      "releaseOn": "2026-10-26",
+      "callOffConfirmed": false
+    },
+    {
+      "id": "res-project-h-w46",
+      "projectId": "project-h",
+      "week": "2026-W46",
+      "reservedM3": 500,
+      "releaseOn": "2026-11-02",
+      "callOffConfirmed": false
+    }
+  ],
+  "reservationPolicy": {
+    "aheadWeeks": 4,
+    "releaseDaysBefore": 14
+  },
+  "huddle": {
+    "minutes": 30,
+    "blocks": [
+      {
+        "id": "decisions",
+        "label": "Decisions waiting",
+        "minutes": 15
+      },
+      {
+        "id": "covered",
+        "label": "Build-ahead plan to confirm",
+        "minutes": 5
+      },
+      {
+        "id": "reservations",
+        "label": "Reserved slots about to lapse",
+        "minutes": 5
+      },
+      {
+        "id": "orders",
+        "label": "Orders to check",
+        "minutes": 5
+      }
+    ]
+  }
+}

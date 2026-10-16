@@ -129,6 +129,22 @@ export function requireManifested(relPath: string, dir: string = dataDir()): Man
   return entry;
 }
 
+/** Load a binary dataset (an image), but only if it is in the manifest. */
+export function loadBinaryDataset(relPath: string, dir: string = dataDir()): { entry: ManifestEntry; bytes: Buffer } {
+  const entry = requireManifested(relPath, dir);
+  const full = join(/*turbopackIgnore: true*/ dir, entry.file);
+  if (!existsSync(/*turbopackIgnore: true*/ full)) throw new ManifestError(`"${entry.file}" is in the manifest but not on disk`);
+  return { entry, bytes: readFileSync(/*turbopackIgnore: true*/ full) };
+}
+
+/** Load a plain-text dataset (for example a CSV), but only if it is in the manifest. */
+export function loadTextDataset(relPath: string, dir: string = dataDir()): { entry: ManifestEntry; text: string } {
+  const entry = requireManifested(relPath, dir);
+  const full = join(/*turbopackIgnore: true*/ dir, entry.file);
+  if (!existsSync(/*turbopackIgnore: true*/ full)) throw new ManifestError(`"${entry.file}" is in the manifest but not on disk`);
+  return { entry, text: readFileSync(/*turbopackIgnore: true*/ full, "utf8").replace(/\r\n/g, "\n") };
+}
+
 /** Load a JSON dataset, but only if it is in the manifest, then validate it against `schema`. */
 export function loadJsonDataset<S extends z.ZodType>(
   relPath: string,

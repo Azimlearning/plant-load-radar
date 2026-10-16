@@ -196,6 +196,50 @@ There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`
 
 ---
 
+## D-20 — Align the demo to the revised deck's numbers; build-ahead-covered weeks are not decisions (2026-10-16)
+
+**Decision:**
+1. The app's scenario becomes a **deck-story** scenario (`data/synthetic/deck-story.json`), derived from the generated scenario plus `deck-story-params.json`: weeks 41 to 46 with the slide-9 spare figures; Project A from RM530m (an upper bound: Avantro's GDV, as slide 7 says) with a 3-day slip for a week's wait; Contractor B from an illustrative RM167k order; every outside customer at the 10.8% AAC and precast PBT margin (public, Q2 FY26). The 12-week generated scenario stays as the stress case the unit tests use.
+2. **Outside margin is the segment PBT margin**, as slide 15 states, replacing D-13's "PBT plus an assumed fixed-cost share". PBT is the lower number, so it tilts the rule slightly toward internal projects; the float what-if and the ledger show both sides, so the tilt is visible.
+3. **A short week that building ahead fully covers is shown as covered, not as a decision** (slide 9: "one is already covered by pre-build, the other needs a call"). It is a proposed production plan the huddle confirms; this screen changes nothing.
+4. The slide rounds (RM145k × 3 = RM435k); the app shows the exact figure and its working (RM145,205 a day × 3 days = RM435,616).
+
+**Why:** the user asked (2026-10-16) for the prototype to match the revised deck, and a judge who has read the slides must not see different numbers. **Rejected:** keeping the generated numbers and explaining the gap (the user chose alignment); editing the deck (read-only for us).
+**Trade-off:** two scenarios to maintain. Kept cheap by deriving one from the other and testing both.
+**Superseded in part:** D-13 assumption 11 and the fixed-cost share for the demo scenario only; the rule itself is unchanged.
+
+---
+
+## D-21 — The model layer: cheapest model, behind guards, off by default; no trained model for the MVP; chart colours (2026-10-16)
+
+**Decision:**
+1. **`src/llm/` is one provider interface** (`LlmProvider.structured`) with three implementations: the Anthropic SDK (server only), a record wrapper and a replay player. **Default mode is `off`**: the rules reader and the templates are used, so the app never needs a key and never breaks without one. Modes: `off`, `live`, `record`, `replay` (`PLR_LLM_MODE`).
+2. **Model:** `claude-haiku-5-5`, the cheapest current model (CLAUDE.md rule 8; the claude-api skill's default of the most capable model is overridden by the user's "small pay-per-use" and the project rule). Adaptive thinking left at its default (omitted), effort `low`, no sampling parameters, structured outputs via the SDK's `messages.parse`, `refusal` handled. A per-run call cap (`PLR_LLM_MAX_CALLS`, default 60) is the cost brake.
+3. **Guards, in order:** (a) the message is sent as data with fixed instructions; (b) the model returns each field with the exact words it came from; a field is `confirmed` only if those words are in the message; (c) the existing grounding step then demotes any value not found in the text; (d) the tier is set by rules code, not the model; (e) a photo's fields are capped at `inferred`; (f) the writer's text may contain no number that is not already in the template draft, else the template is used. Tests prove each guard with a scripted fake provider.
+4. **No model result is claimed.** No key exists in the build environment: the live path has never run. `scripts/eval-llm.ts model` is the first live check; `scripts/eval-llm.ts rules` ran offline and is committed as the baseline a model must beat (`refdocs/evals/rules-reader.md`).
+5. **Recordings are local files** (`.llm/`, gitignored): they are model output, not data we trained or generated, so committing one needs its own manifest decision.
+6. **A trained model is not needed for the MVP.** The cheap reader is a rules reader plus an API model with grounding; the data is synthetic, so a trained model would learn our own generator. A small model *could* make sense after the pilot's first month, when there are real messages: a token-classification tagger for the five fields (quantity, date, party, product, reference), fine-tuned on a few hundred labelled WhatsApp and paper-DO lines, to cut per-message cost and keep messages on the plant's own machine. **Forecasting stays out of scope** (D19, D20). Revisit when real messages exist and the eval shows the API reader's cost or privacy is a problem.
+7. **Chart colours (supersedes D-19 item 2):** spare is the deck's dark green, short is a coral with a diagonal hatch and a darker outline, so shape and position carry the meaning as well as colour. Measured colour distance under colour-blind simulation (Machado 2009, severity 1): protanopia 32.5, deuteranopia 49.0, tritanopia 90.6 (the deck's own green and red measured 5.8 under protanopia, which is why D-19 kept blue).
+
+**Why:** the deck promises four agents with a human checkpoint and numbers only from tools; this is the smallest layer that makes that true and testable without a key. **Rejected:** a model that outputs figures; LangGraph (a plain typed pipeline is cheaper and readable; the deck says "LangGraph or Foundry"); committing recordings; raw `fetch` (the SDK is the supported path).
+**Trade-off:** the live path is untested against the real API until someone with a key runs the eval.
+
+---
+
+## D-22 — Demo state beyond the ledger: as-of date, reserved slots, call-offs and the simulated outbox (2026-10-16)
+
+**Decision:**
+1. The scenario carries an **as-of date** (Monday of week 42, 9:42 AM, the day slide 10's message arrives). "Next week" in "ask the board" and which reservations are still active are read from it, never from the machine's clock, so the demo gives the same answer on any day.
+2. **Reserved slots** (slide 7, guardrail 2) are committed volume until their release date, using the core's existing `committedForWeek`: free capacity on the board is after reservations. Two are seeded; a visitor can add a call-off only for a week at least `aheadWeeks` (4) ahead, which is Week 46 in the six-week horizon, so a call-off can never change the Week 43 decision. An unconfirmed slot is released 14 days before its week (ASSUMED: the deck says only "unused slots are released").
+3. **Per-visitor stores** for call-offs and the outbox use the same two modes as the ledger (a file next to it locally, a cookie when hosted), are re-validated on every read, and are cleared by "Start the demo again". A cookie store is capped near 3.5 KB; a write that does not fit is refused.
+4. **The outbox is simulated.** Recipients are fixed by the server from its own drafts; a person can change only the words, and the page says nothing was sent (hard constraint 2). "Send to the huddle" is a link to the huddle page, not a stored state.
+5. **A short week that building ahead covers is not a decision** (D-20) and the **seeded history** (five invented decisions) feeds the board tile and the finance view; both are labelled illustrative.
+
+**Why:** each is a slide-6 or slide-7 promise that needed a working analogue for a TRL 3 demo, at the lowest cost (rule 8): no database, no clock, no new rule. **Rejected:** a database (a secret and shared state); letting call-offs touch any week (they could change a recorded decision); real sending.
+**Trade-off:** state is per browser; clearing cookies clears it. The 14-day release is an assumption a plant would replace.
+
+---
+
 ## Working assumptions (`ASSUMED:`)
 
 Not decisions — guesses made to keep moving. Each one must be confirmed or killed before anything load-bearing is built on it. When one is resolved, delete it here and write a real ADR above.

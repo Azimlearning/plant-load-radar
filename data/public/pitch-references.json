@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "kind": "public",
+    "note": "The reference list and assumptions from slide 15 of the pitch deck, transcribed as citations. The project has not re-read each source end to end; where it did (the Chin Hin filings and DOSM statistics) the figures are in the other files in this folder with their own manifest rows. The benchmark items come from other firms and industries and are not claims about Chin Hin."
+  },
+  "references": [
+    {
+      "id": 1,
+      "citation": "Chin Hin Group FY2025 results: revenue RM4.07b, segment figures, RM5.29b pipeline, Serendah AAC plant. Focus Malaysia and The Sun, Feb 2026."
+    },
+    {
+      "id": 2,
+      "citation": "Chin Hin 2QFY2026 results: AAC and precast RM180.97m revenue, RM19.59m PBT. EdgeProp and The Edge Malaysia, 27 to 28 Aug 2026."
+    },
+    {
+      "id": 3,
+      "citation": "Starken AAC third plant: 1.2m to 2.2m m³ a year (Jiangsu Teeyer MoU). The Sun and Focus Malaysia, 2025."
+    },
+    {
+      "id": 4,
+      "citation": "Chin Hin digital transformation: Kingdee ERP, Microsoft 365 and Copilot. Digital News Asia, 5 Nov 2025."
+    },
+    {
+      "id": 5,
+      "citation": "Project GDV: Ayanna RM628m, Avantro RM530m. The Edge Malaysia, Sep 2026."
+    },
+    {
+      "id": 6,
+      "citation": "LAD at 10% a year of purchase price, day by day: HDA Schedules G and H; Amin et al., IRMBR 3(2), 2014."
+    },
+    {
+      "id": 7,
+      "citation": "17.3% of Malaysian projects delayed over 3 months: Shah Ali et al., J. Design and Built Environment, 2010."
+    },
+    {
+      "id": 8,
+      "citation": "Spreadsheet field audits, 49 of 54 with errors: R. Panko, University of Hawaii."
+    },
+    {
+      "id": 9,
+      "citation": "Cost of Delay: D. Reinertsen, The Principles of Product Development Flow, 2009."
+    },
+    {
+      "id": 10,
+      "citation": "S&OP in Asia Pacific: inventory down 30%, forecast accuracy up 52%. IJPDLM 45(9/10), 2015."
+    },
+    {
+      "id": 11,
+      "citation": "Cemex Go: 96% of recurring customers, 45% of global sales. Cemex press release."
+    },
+    {
+      "id": 12,
+      "citation": "AI in supply chain, early adopters: logistics cost 15%, inventory 35%, service 65% better. McKinsey, via SAPinsider."
+    }
+  ],
+  "assumptions": [
+    {
+      "title": "LAD per day",
+      "text": "GDV × 10% ÷ 365. An upper bound: assumes all units sold and the slip reaches handover."
+    },
+    {
+      "title": "Outside margin",
+      "text": "10.8% (2Q FY2026 AAC and precast PBT ÷ revenue) on an illustrative RM167k order."
+    },
+    {
+      "title": "Demo data",
+      "text": "Weeks, volumes, Project A and Contractors B and C are illustrative."
+    },
+    {
+      "title": "Benchmarks",
+      "text": "From other firms and industries; pilot targets are set on the month-1 baseline."
+    }
+  ]
+}

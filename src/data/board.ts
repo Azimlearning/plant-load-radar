@@ -4,9 +4,12 @@
 // model. Every number in those strings is produced through `Figures`, which also records it, so a test
 // can render the page and fail if any figure on screen is missing from `allowedFigures`.
 
-import { prebuildAlternative, recommend, weekBalances, type Recommendation, type WeekBalance } from "@/core/planner";
+import { dailyDelayRateRM } from "@/core/costs";
+import { formatDayShort } from "@/core/dates";
+import { coveredByPrebuild, prebuildAlternative, recommend, weekBalances, type Recommendation, type WeekBalance } from "@/core/planner";
 import type { Week } from "@/core/types";
-import { toPricedRequests, toWeekCapacities } from "./scenario";
+import { weekStart } from "@/core/weeks";
+import { toPlannedWeekCapacities, toPricedRequests, toWeekCapacities, withProjectFloat } from "./scenario";
 import type { SyntheticScenario } from "./schema";
 
 const MINUS = "−"; // a real minus sign, so "-" is never read as a hyphen
@@ -67,6 +70,8 @@ export interface Bar {
   spareM3: number;
   kind: "spare" | "short";
   contested: boolean;
+  /** A short week that building ahead covers completely: shown red (it is short) but not a decision. */
+  covered: boolean;
   /** Direct label: only on short weeks and the largest spare week (never on every bar). */
   label: string | null;
   /** Plain-language description for screen readers and the table twin. */
@@ -90,6 +95,8 @@ export interface Line {
   valueMeaning: string;
   /** Where a moved request ends up. */
   to?: string;
+  /** The Monday that week starts, "Mon 26 Oct", for a reply that promises a date. */
+  toDate?: string;
 }
 
 export interface PrebuildView {
@@ -124,6 +131,22 @@ export interface TableRow {
   detail: string;
 }
 
+export interface CoveredView {
+  weekName: string;
+  headline: string;
+  moves: string[];
+  note: string;
+}
+
+export interface WhatIfView {
+  title: string;
+  intro: string;
+  headline: string;
+  served: Line[];
+  moved: Line[];
+  note: string;
+}
+
 export interface BoardModel {
   title: string;
   plant: string;
@@ -133,6 +156,10 @@ export interface BoardModel {
   kpis: Kpi[];
   chart: Chart;
   recommendations: RecommendationView[];
+  /** Short weeks that building ahead covers completely (slide 9): no decision, a plan the huddle confirms. */
+  covered: CoveredView[];
+  /** Read-only: what the rule would do if a project had float (slide 7's second example), or null. */
+  whatIf: WhatIfView | null;
   /** The requests competing in the first contested week, plus the committed volume beneath them. */
   focus: { weekName: string; committed: string; rows: TableRow[] } | null;
   weekTable: { week: string; capacity: string; committed: string; free: string; wanted: string; spare: string }[];
@@ -160,11 +187,17 @@ export function lineFormatter(s: SyntheticScenario, fig: Figures) {
   const requestById = new Map(s.requests.map((r) => [r.id, r]));
   const who = (requestId: string): string => names.get(requestById.get(requestId)!.partyId) ?? requestId;
   const lossRisk = new Map(s.customers.map((c) => [c.customerId, c.lossRiskRM] as const));
+  const cards = new Map(s.projects.map((p) => [p.projectId, p] as const));
 
   /** What the ringgit figure means for this particular request (it differs for zero-cost and key-account cases). */
   const meaning = (e: { requestId: string; side: "internal" | "external"; valueRM: number }): string => {
     if (e.side === "internal") {
-      return e.valueRM === 0 ? "no extra cost: the project has float to absorb a week" : "extra late-handover cost of one more week's wait";
+      if (e.valueRM === 0) return "no extra cost: the project has float to absorb a week";
+      // Show the working (slide 7: "RM145k a day × 3 days"): the daily late-handover rate, and the days of slip it is charged for.
+      const card = cards.get(requestById.get(e.requestId)!.partyId);
+      const rate = card ? dailyDelayRateRM(card) : 0;
+      const working = rate > 0 ? ` (${fig.rm(rate)} a day × ${fig.dec(e.valueRM / rate)} days of slip)` : "";
+      return `extra late-handover cost of one more week's wait${working}`;
     }
     return (lossRisk.get(requestById.get(e.requestId)!.partyId) ?? 0) > 0 ? "margin plus the risk of losing a key account" : "margin at risk";
   };
@@ -176,6 +209,7 @@ export function lineFormatter(s: SyntheticScenario, fig: Figures) {
     value: fig.rm(e.valueRM),
     valueMeaning: meaning(e),
     ...(to === undefined ? {} : { to: to === null ? "no free week in this horizon" : fig.week(to) }),
+    ...(to ? { toDate: fig.text(formatDayShort(weekStart(to))) } : {}),
   });
   const servedLines = (r: Recommendation): Line[] => r.served.map((e) => line(e));
   const movedLines = (r: Recommendation): Line[] => r.deferred.map((e) => line(e, e.movedTo));
@@ -195,12 +229,40 @@ export interface LedgerSummaryInput {
   rows: readonly { week: string; approvedBy: string; decidedAt: string; mode: string; servedValueRM: number }[];
 }
 
-export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledger: LedgerSummaryInput["rows"] = []): BoardModel {
+/** Slide 7's second example: the same week with a project given float. Read-only; same rule, same calculator. */
+function whatIfView(s: SyntheticScenario, fig: Figures, week: Week | undefined): WhatIfView | null {
+  if (!s.whatIf || !week) return null;
+  const { projectId, floatDays } = s.whatIf;
+  const card = s.projects.find((p) => p.projectId === projectId)!;
+  const changed = withProjectFloat(s, projectId, floatDays);
+  const rec = recommend(toPlannedWeekCapacities(changed), toPricedRequests(changed)).find((r) => r.week === week);
+  if (!rec) return null;
+  const fmt = lineFormatter(changed, fig);
+  return {
+    title: `What if ${card.name} had ${fig.n(floatDays)} days of float?`,
+    intro: "Same week, same rule, same calculator. Only the project's float changes. Nothing here is recorded.",
+    headline: `${fig.week(rec.week)} is still ${fig.m3(rec.shortM3)} short`,
+    served: fmt.servedLines(rec),
+    moved: fmt.movedLines(rec),
+    note: `A project with float can absorb a short wait, so its cost of delay is ${fig.rm(0)} and an outside order can go first. The rule protects outside margin too.`,
+  };
+}
+
+/** The seeded demo history, summed (see src/data/history.ts): shown as a labelled tile, never as a measured result. */
+export interface HistoryInput {
+  count: number;
+  totalRM: number;
+}
+
+export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledger: LedgerSummaryInput["rows"] = [], history?: HistoryInput): BoardModel {
   const fig = new Figures();
   const weeks = toWeekCapacities(s);
   const reqs = toPricedRequests(s);
   const balances = weekBalances(weeks, reqs);
-  const recs = recommend(weeks, reqs);
+  const planned = toPlannedWeekCapacities(s); // the rule runs on the weeks with covered shortages already built ahead (ADR D-20)
+  const recs = recommend(planned, reqs);
+  const coveredWeeks = coveredByPrebuild(weeks, reqs, s.plannerSettings.stockCapM3);
+  const coveredSet = new Set(coveredWeeks.map((c) => c.week));
   const decidedBy = new Map(ledger.map((r) => [r.week, r] as const));
   const waiting = recs.filter((r) => !decidedBy.has(r.week));
 
@@ -223,6 +285,7 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledge
       spareM3: b.spareM3,
       kind: isShort ? "short" : "spare",
       contested: contestedWeeks.has(b.week),
+      covered: coveredSet.has(b.week),
       label: isShort || b.week === biggestSpare?.week ? fig.signed(b.spareM3) : null,
       aria: `${fig.week(b.week)}: ${fig.m3(b.spareM3)} ${isShort ? "short" : "spare"}`,
     };
@@ -245,7 +308,7 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledge
       stockCap: fig.m3(alt.stockCapM3),
       covers: fig.m3(alt.coveredM3),
       stillShort: fig.m3(alt.residualShortM3),
-      moves: alt.moves.map((m) => `Build ${fig.m3(m.m3)} in ${fig.week(m.fromWeek)} to hold for ${fig.week(m.toWeek)}`),
+      moves: alt.moves.filter((m) => m.toWeek === alt.targetWeek).map((m) => `Build ${fig.m3(m.m3)} in ${fig.week(m.fromWeek)} to hold for ${fig.week(m.toWeek)}`),
       possible: alt.moves.length > 0,
       dissolves: alt.outcome === null,
       served: alt.outcome ? servedLines(alt.outcome) : [],
@@ -285,17 +348,9 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledge
     };
   }
 
-  // KPIs: only figures that have a real source today ------------------------------------------------
-  const worst = [...balances].sort((a, b) => a.spareM3 - b.spareM3)[0];
+  // KPIs, in the order slide 9 shows them: weeks short, orders to check, decisions waiting, delay cost avoided.
   const kpis: Kpi[] = [
     { id: "weeks-short", label: "Weeks short", value: fig.n(shortWeeks.length), note: "weeks where demand exceeds free capacity" },
-    { id: "decisions", label: "Decisions waiting", value: fig.n(waiting.length), note: "weeks the rule has to settle that no person has decided yet" },
-    {
-      id: "largest",
-      label: "Largest shortage",
-      value: worst && worst.spareM3 < 0 ? fig.m3(worst.spareM3) : fig.m3(0),
-      note: worst && worst.spareM3 < 0 ? fig.week(worst.week) : "no week is short",
-    },
     ...(capture
       ? [
           {
@@ -303,6 +358,17 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledge
             label: "Orders to check",
             value: fig.n(capture.needsPerson),
             note: `of ${fig.n(capture.lines)} order lines read from the sample messages (rules reader); see the orders inbox`,
+          },
+        ]
+      : []),
+    { id: "decisions", label: "Decisions waiting", value: fig.n(waiting.length), note: "weeks the rule has to settle that no person has decided yet" },
+    ...(history
+      ? [
+          {
+            id: "delay-avoided",
+            label: "Delay cost avoided, earlier weeks",
+            value: fig.rm(history.totalRM),
+            note: `seeded demo history of ${fig.n(history.count)} invented decisions, where a project went first; not measured`,
           },
         ]
       : []),
@@ -339,6 +405,13 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledge
     kpis,
     chart,
     recommendations,
+    covered: coveredWeeks.map((c) => ({
+      weekName: fig.week(c.week),
+      headline: `${fig.week(c.week)} is ${fig.m3(c.shortM3)} short, covered by building ahead`,
+      moves: c.moves.map((m) => `Build ${fig.m3(m.m3)} in ${fig.week(m.fromWeek)} to hold for ${fig.week(m.toWeek)}`),
+      note: `Stock limit ${fig.m3(s.plannerSettings.stockCapM3)}. No request has to wait. This is a proposed production plan for the huddle to confirm; this screen changes nothing.`,
+    })),
+    whatIf: whatIfView(s, fig, recs[0]?.week),
     focus,
     weekTable,
     orders: capture?.preview

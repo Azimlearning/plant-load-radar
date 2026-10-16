@@ -7,7 +7,7 @@ import { totalOf, unitCosts, valueCase, type Band, type Source, type Unit, type 
 import { Figures } from "./board";
 import { loadJsonDataset } from "./loaders";
 import { PublicFactsFileSchema, SyntheticScenarioSchema, ValueInputsSchema, type SyntheticScenario, type ValueInputs } from "./schema";
-import { SCENARIO_FILE } from "./synth";
+import { ACTIVE_SCENARIO_FILE } from "./active";
 
 export const VALUE_INPUTS_FILE = "synthetic/value-inputs.json";
 export const CARRYING_FILE = "public/carrying-cost-range.json";
@@ -141,7 +141,7 @@ const pick = (b: { why: string; replaceWith: string }): { why: string; replaceWi
 
 /** Server-side: read the scenario, the assumed bands and the public carrying-cost range through the manifest-enforcing loader. */
 export function loadValue(): ValueModel {
-  const s = loadJsonDataset(SCENARIO_FILE, SyntheticScenarioSchema).data;
+  const s = loadJsonDataset(ACTIVE_SCENARIO_FILE, SyntheticScenarioSchema).data;
   const assumed = loadJsonDataset(VALUE_INPUTS_FILE, ValueInputsSchema).data;
   const facts = loadJsonDataset(CARRYING_FILE, PublicFactsFileSchema).data.facts;
   const get = (key: string): { value: number; sourceName: string } => {

@@ -56,3 +56,6 @@ wandb/
 .ledger/
 
 .vercel
+
+# Recorded model answers (record/replay in src/llm/recording.ts); model output, not committed
+.llm/

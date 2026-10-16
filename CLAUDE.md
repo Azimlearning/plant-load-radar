@@ -79,6 +79,8 @@ Work is rolling and flexible (user, 2026-10-08). Don't invent deadlines, target 
 | Tests / lint | vitest, ESLint, `tsc --noEmit` |
 | Offline data pipeline (optional) | Python + uv in `pipeline/`, only if a trained model is actually used (D-06). It emits files into `data/` with manifest rows; the web app never imports it. |
 
+**Model layer (2026-10-16):** `@anthropic-ai/sdk` is installed and used only in `src/llm/` (server code). Default model `claude-haiku-5-5`; the model only reads or rewords, behind grounding and a number-subset guard (ADR D-21).
+
 **Installed 2026-10-08 (P0 Task 1):** Next.js 16.4.0, React 19.3.0, TypeScript 5, Tailwind 4, ESLint 9, vitest 5. Next 16 differs from older versions — `AGENTS.md` says to read `node_modules/next/dist/docs/` before writing Next.js code, and to check current docs rather than recall APIs. zod 4.6.5 and tsx 4.23.15 (script runner) are installed. The LLM layer and the agents are not installed yet (P2).
 
 ## Surfaces
@@ -94,11 +96,14 @@ Single app. Everything lives in the repo root. `refdocs/context/` is documentati
 | Lint | `npm run lint` | ESLint. Verified 2026-10-08 |
 | Type check | `npm run typecheck` | Runs `next typegen` first (generates the global `LayoutProps` types), then `tsc --noEmit`. Plain `tsc` fails on a fresh clone. Verified 2026-10-08 |
 | Build | `npm run build` | Verified 2026-10-08 (static placeholder page) |
-| Regenerate demo data | `npm run generate:synthetic` | Rewrites `data/synthetic/scenario.json` from `params.json` + public data (tsx). A test fails if the committed file is stale, so run this after changing the generator or params. Verified 2026-10-08 |
+| Regenerate demo data | `npm run generate:synthetic` | Rewrites the 12-week stress scenario `data/synthetic/scenario.json` from `params.json` + public data (tsx). A test fails if the committed file is stale, so run this after changing the generator or params. Verified 2026-10-08 |
+| Regenerate the deck-story scenario | `npm run generate:deck-story` | Rewrites `data/synthetic/deck-story.json` (the scenario the app shows, ADR D-20) from `scenario.json` + `deck-story-params.json`. Run `generate:synthetic` first if the base changed. A test fails if the committed file is stale. Verified 2026-10-16 |
 | Refresh public data | `npm run fetch:public` | Re-downloads the two DOSM series into `data/public/` (CC BY 4.0). Then update the manifest row's retrieved date by hand. Verified 2026-10-08 |
 | Hard-coded figures | `npm run check:literals` | Fails if a numeric literal (3+ digits or a fraction) appears in `src/core` or `src/app` outside a named SCREAMING_CASE constant. Verified 2026-10-08 |
-| Dev server | `npm run dev` | Routes: `/` board, `/inbox`, `/decisions` (approve or change; writes the ledger), `/ledger`, `/ask`, `/value`. Dev mode verified 2026-10-09 (all six routes return 200, no errors logged); the production build was run with `npm run build` then `npx next start` and viewed (2026-10-08). After a rebuild, stop the old `next start` process first or it keeps serving the stale build. The ledger is `.ledger/ledger.jsonl` (gitignored; override with `PLR_LEDGER_PATH`); with `PLR_LEDGER_MODE=cookie`, or on Vercel, it is a per-browser cookie (ADR D-19). Hosting steps: `refdocs/guides/deploy.md` |
-| Agents smoke test | *not yet defined* | P2 |
+| Dev server | `npm run dev` | Routes: `/` overview, `/board`, `/inbox`, `/inbox/try`, `/decisions` (approve or change, edit drafts, approve and send; writes the ledger and the simulated outbox), `/huddle`, `/ask`, `/calloffs`, `/outbox`, `/ledger`, `/finance` (+ `/finance/export` CSV), `/value`, `/pilot`, `/sources`, `/do-image/[id]`. Dev mode verified 2026-10-09 (the then six routes returned 200); the 2026-10-16 pages were checked against the production build with `npm run smoke`; the production build was run with `npm run build` then `npx next start` and viewed (2026-10-08). After a rebuild, stop the old `next start` process first or it keeps serving the stale build. The ledger is `.ledger/ledger.jsonl` (gitignored; override with `PLR_LEDGER_PATH`); with `PLR_LEDGER_MODE=cookie`, or on Vercel, it is a per-browser cookie (ADR D-19). Hosting steps: `refdocs/guides/deploy.md` |
+| Smoke test | `BASE_URL=http://localhost:3111 npm run smoke` | Against a running `next start`: every page answers with what the deck promises, the CSV and image routes behave, no key-shaped text in any page. Verified 2026-10-16 |
+| Reader evaluation | `npm run eval:rules` (offline) · `npm run eval:model` (live; needs a key and spends a few cents) | Scores a reader against the 22 invented sample messages. The rules baseline is committed in `refdocs/evals/`. The model run has **never been done** (ADR D-21) |
+| Model layer switches | `PLR_LLM_MODE=off|live|record|replay`, `ANTHROPIC_API_KEY`, `PLR_LLM_MODEL`, `PLR_LLM_MAX_CALLS` | Default off. See `refdocs/guides/env_setup.md` |
 
 ---
 
@@ -130,4 +135,4 @@ P0 Foundation (skeleton, schemas, data + provenance, rule calculator) → P1 Boa
 
 ---
 
-*Companion brief to `refdocs/plant-load-radar-PRD.md`. Last updated: 2026-10-08.*
+*Companion brief to `refdocs/plant-load-radar-PRD.md`. Last updated: 2026-10-16.*

@@ -1,0 +1,560 @@
+{
+  "meta": {
+    "kind": "synthetic",
+    "seed": 20261054,
+    "startWeek": "2026-W41",
+    "weekCount": 6,
+    "paramsFile": "data/synthetic/deck-story-params.json",
+    "generator": "src/data/deck-story.ts",
+    "calibration": {
+      "weeklyNominalCapacityM3": {
+        "value": 18269,
+        "from": "chinhin.aac.capacity.third_plant_addition_m3_year / 52 x availabilityFactor"
+      },
+      "unbilledSalesRM": {
+        "value": 2180000000,
+        "from": "chinhin.pipeline.unbilled_property_rm_billion"
+      },
+      "aacPrecastPbtMargin": {
+        "value": 0.108221,
+        "from": "chinhin.seg.aac_precast.pbt.q2fy26 / chinhin.seg.aac_precast.revenue.q2fy26"
+      },
+      "contributionMarginRatio": {
+        "value": 0.208221,
+        "from": "aacPrecastPbtMargin + margin.fixedCostShareOfRevenue (assumed)"
+      },
+      "demandGrowthYoy": {
+        "value": 0.065,
+        "from": "dosm-gdp-construction-quarterly p4 growth_yoy, latest quarter"
+      },
+      "seasonalIndexQ1": {
+        "value": 0.979984,
+        "from": "dosm-gdp-construction-quarterly p4 abs, years excluding calibrationExcludedYears"
+      },
+      "seasonalIndexQ2": {
+        "value": 0.961779,
+        "from": "dosm-gdp-construction-quarterly p4 abs, years excluding calibrationExcludedYears"
+      },
+      "seasonalIndexQ3": {
+        "value": 1.037301,
+        "from": "dosm-gdp-construction-quarterly p4 abs, years excluding calibrationExcludedYears"
+      },
+      "seasonalIndexQ4": {
+        "value": 1.020936,
+        "from": "dosm-gdp-construction-quarterly p4 abs, years excluding calibrationExcludedYears"
+      }
+    },
+    "notes": [
+      "Synthetic. Not Chin Hin data. Every party is fictional.",
+      "Order sizes, prices and project dates are assumptions (see provenance in params.json); only the items under calibration are anchored to public data.",
+      "There is no public AAC price per m3, so the price is a placeholder; test the demo at several prices.",
+      "Demand tiers (firm / likely / possible) arrive with the intake agent in P2; this scenario holds firm orders and new requests only.",
+      "Deck story (ADR D-20): derived from data/synthetic/scenario.json and deck-story-params.json so the board shows the revised deck's weeks 41 to 46 and its headline figures. Illustrative, not Chin Hin data.",
+      "Project A is priced from RM530m, an upper bound (Avantro's GDV); every outside customer earns the public 10.8% AAC and precast PBT margin, as slide 15 states."
+    ]
+  },
+  "plant": {
+    "id": "plant-s",
+    "name": "Plant S (fictional)",
+    "product": "AAC block"
+  },
+  "plannerSettings": {
+    "stockCapM3": 1000
+  },
+  "capacity": [
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W41",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W42",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W43",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W44",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W45",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W46",
+      "capacityM3": 18269
+    }
+  ],
+  "projects": [
+    {
+      "projectId": "project-a",
+      "purchasePriceRM": 530000000,
+      "projectedHandover": "2026-10-12",
+      "handoverDeadline": "2026-09-28",
+      "bufferDays": 0,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.42857142857142855,
+      "name": "Project A (fictional)"
+    },
+    {
+      "projectId": "project-b",
+      "purchasePriceRM": 118500000,
+      "projectedHandover": "2026-06-21",
+      "handoverDeadline": "2026-09-12",
+      "bufferDays": 45,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.523988,
+      "name": "Project B (fictional)"
+    },
+    {
+      "projectId": "project-c",
+      "purchasePriceRM": 123400000,
+      "projectedHandover": "2027-05-08",
+      "handoverDeadline": "2027-08-31",
+      "bufferDays": 28,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.776947,
+      "name": "Project C (fictional)"
+    },
+    {
+      "projectId": "project-d",
+      "purchasePriceRM": 208400000,
+      "projectedHandover": "2027-01-25",
+      "handoverDeadline": "2027-02-13",
+      "bufferDays": 33,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.681017,
+      "name": "Project D (fictional)"
+    },
+    {
+      "projectId": "project-e",
+      "purchasePriceRM": 137800000,
+      "projectedHandover": "2027-04-18",
+      "handoverDeadline": "2027-07-08",
+      "bufferDays": 13,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.516609,
+      "name": "Project E (fictional)"
+    },
+    {
+      "projectId": "project-f",
+      "purchasePriceRM": 49000000,
+      "projectedHandover": "2026-08-05",
+      "handoverDeadline": "2026-09-01",
+      "bufferDays": 14,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.964792,
+      "name": "Project F (fictional)"
+    },
+    {
+      "projectId": "project-g",
+      "purchasePriceRM": 172300000,
+      "projectedHandover": "2026-08-28",
+      "handoverDeadline": "2026-10-12",
+      "bufferDays": 29,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.655584,
+      "name": "Project G (fictional)"
+    },
+    {
+      "projectId": "project-h",
+      "purchasePriceRM": 66900000,
+      "projectedHandover": "2027-03-20",
+      "handoverDeadline": "2027-06-19",
+      "bufferDays": 45,
+      "idleSiteCostPerDayRM": 0,
+      "scheduleSensitivity": 0.710733,
+      "name": "Project H (fictional)"
+    }
+  ],
+  "customers": [
+    {
+      "customerId": "contractor-a",
+      "pricePerM3RM": 270.740583,
+      "variableCostPerM3RM": 241.440766,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor A (fictional)"
+    },
+    {
+      "customerId": "contractor-b",
+      "pricePerM3RM": 278.333333,
+      "variableCostPerM3RM": 248.211821,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor B (fictional)"
+    },
+    {
+      "customerId": "contractor-c",
+      "pricePerM3RM": 242.393056,
+      "variableCostPerM3RM": 216.161037,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor C (fictional)"
+    },
+    {
+      "customerId": "contractor-d",
+      "pricePerM3RM": 268.043146,
+      "variableCostPerM3RM": 239.035249,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor D (fictional)"
+    },
+    {
+      "customerId": "contractor-e",
+      "pricePerM3RM": 246.911146,
+      "variableCostPerM3RM": 220.190175,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor E (fictional)"
+    },
+    {
+      "customerId": "contractor-f",
+      "pricePerM3RM": 251.423044,
+      "variableCostPerM3RM": 224.213791,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor F (fictional)"
+    },
+    {
+      "customerId": "contractor-g",
+      "pricePerM3RM": 277.425897,
+      "variableCostPerM3RM": 247.402589,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor G (fictional)"
+    },
+    {
+      "customerId": "contractor-h",
+      "pricePerM3RM": 276.9194,
+      "variableCostPerM3RM": 246.950906,
+      "keyAccount": false,
+      "lossRiskRM": 0,
+      "name": "Contractor H (fictional)"
+    },
+    {
+      "customerId": "contractor-i",
+      "pricePerM3RM": 250.993782,
+      "variableCostPerM3RM": 223.830984,
+      "keyAccount": true,
+      "lossRiskRM": 20000,
+      "name": "Contractor I (fictional)"
+    },
+    {
+      "customerId": "contractor-j",
+      "pricePerM3RM": 248.275162,
+      "variableCostPerM3RM": 221.406576,
+      "keyAccount": true,
+      "lossRiskRM": 20000,
+      "name": "Contractor J (fictional)"
+    }
+  ],
+  "firmOrders": [
+    {
+      "id": "firm-2026-W41-01",
+      "week": "2026-W41",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 4090
+    },
+    {
+      "id": "firm-2026-W41-02",
+      "week": "2026-W41",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2740
+    },
+    {
+      "id": "firm-2026-W41-03",
+      "week": "2026-W41",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 6140
+    },
+    {
+      "id": "firm-2026-W41-04",
+      "week": "2026-W41",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 4099
+    },
+    {
+      "id": "firm-2026-W42-01",
+      "week": "2026-W42",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 4190
+    },
+    {
+      "id": "firm-2026-W42-02",
+      "week": "2026-W42",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2800
+    },
+    {
+      "id": "firm-2026-W42-03",
+      "week": "2026-W42",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 6280
+    },
+    {
+      "id": "firm-2026-W42-04",
+      "week": "2026-W42",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 4199
+    },
+    {
+      "id": "firm-2026-W43-01",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-b",
+      "volumeM3": 1948
+    },
+    {
+      "id": "firm-2026-W43-02",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 1190
+    },
+    {
+      "id": "firm-2026-W43-03",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-a",
+      "volumeM3": 2260
+    },
+    {
+      "id": "firm-2026-W43-04",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-b",
+      "volumeM3": 1190
+    },
+    {
+      "id": "firm-2026-W43-05",
+      "week": "2026-W43",
+      "side": "external",
+      "partyId": "contractor-f",
+      "volumeM3": 6381
+    },
+    {
+      "id": "firm-2026-W43-06",
+      "week": "2026-W43",
+      "side": "external",
+      "partyId": "contractor-j",
+      "volumeM3": 3500
+    },
+    {
+      "id": "firm-2026-W44-01",
+      "week": "2026-W44",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 3250
+    },
+    {
+      "id": "firm-2026-W44-02",
+      "week": "2026-W44",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2180
+    },
+    {
+      "id": "firm-2026-W44-03",
+      "week": "2026-W44",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 4880
+    },
+    {
+      "id": "firm-2026-W44-04",
+      "week": "2026-W44",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 3259
+    },
+    {
+      "id": "firm-2026-W45-01",
+      "week": "2026-W45",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 3590
+    },
+    {
+      "id": "firm-2026-W45-02",
+      "week": "2026-W45",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2400
+    },
+    {
+      "id": "firm-2026-W45-03",
+      "week": "2026-W45",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 5380
+    },
+    {
+      "id": "firm-2026-W45-04",
+      "week": "2026-W45",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 3599
+    },
+    {
+      "id": "firm-2026-W46-01",
+      "week": "2026-W46",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 4020
+    },
+    {
+      "id": "firm-2026-W46-02",
+      "week": "2026-W46",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2690
+    },
+    {
+      "id": "firm-2026-W46-03",
+      "week": "2026-W46",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 6030
+    },
+    {
+      "id": "firm-2026-W46-04",
+      "week": "2026-W46",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 4029
+    }
+  ],
+  "requests": [
+    {
+      "id": "req-2026-W42-01",
+      "week": "2026-W42",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 900,
+      "confirmedOn": "2026-10-02"
+    },
+    {
+      "id": "req-2026-W42-02",
+      "week": "2026-W42",
+      "side": "external",
+      "partyId": "contractor-e",
+      "volumeM3": 600,
+      "confirmedOn": "2026-10-04"
+    },
+    {
+      "id": "req-story-internal",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-a",
+      "volumeM3": 1500,
+      "confirmedOn": "2026-10-16"
+    },
+    {
+      "id": "req-story-external",
+      "week": "2026-W43",
+      "side": "external",
+      "partyId": "contractor-b",
+      "volumeM3": 600,
+      "confirmedOn": "2026-10-07"
+    },
+    {
+      "id": "req-2026-W43-01",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 650,
+      "confirmedOn": "2026-10-09"
+    },
+    {
+      "id": "req-2026-W43-02",
+      "week": "2026-W43",
+      "side": "internal",
+      "partyId": "project-c",
+      "volumeM3": 1050,
+      "confirmedOn": "2026-10-15"
+    },
+    {
+      "id": "req-2026-W44-01",
+      "week": "2026-W44",
+      "side": "external",
+      "partyId": "contractor-c",
+      "volumeM3": 600,
+      "confirmedOn": "2026-10-20"
+    }
+  ],
+  "asOf": "2026-10-12",
+  "reservations": [
+    {
+      "id": "res-project-e-w45",
+      "projectId": "project-e",
+      "week": "2026-W45",
+      "reservedM3": 800,
+      "releaseOn": "2026-10-26",
+      "callOffConfirmed": false
+    },
+    {
+      "id": "res-project-h-w46",
+      "projectId": "project-h",
+      "week": "2026-W46",
+      "reservedM3": 500,
+      "releaseOn": "2026-11-02",
+      "callOffConfirmed": false
+    }
+  ],
+  "reservationPolicy": {
+    "aheadWeeks": 4,
+    "releaseDaysBefore": 14
+  },
+  "huddle": {
+    "minutes": 30,
+    "blocks": [
+      {
+        "id": "decisions",
+        "label": "Decisions waiting",
+        "minutes": 15
+      },
+      {
+        "id": "covered",
+        "label": "Build-ahead plan to confirm",
+        "minutes": 5
+      },
+      {
+        "id": "reservations",
+        "label": "Reserved slots about to lapse",
+        "minutes": 5
+      },
+      {
+        "id": "orders",
+        "label": "Orders to check",
+        "minutes": 5
+      }
+    ]
+  },
+  "whatIf": {
+    "projectId": "project-a",
+    "floatDays": 20
+  }
+}

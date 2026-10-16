@@ -2,16 +2,29 @@
 // Server-side or test code only (no fs here, but it is the data layer's seam into src/core).
 
 import { externalValueRM, slipCostRM } from "@/core/costs";
+import { addDays } from "@/core/dates";
+import { committedForWeek } from "@/core/fairness";
+import { plannedWeeks } from "@/core/planner";
 import type { PricedRequest, WeekCapacity } from "@/core/types";
 import type { SyntheticScenario } from "./schema";
 
 const DAYS_PER_WEEK = 7;
 
-/** Capacity per week with firm orders taken out as committed volume. */
+/** Date used when a scenario has no `asOf`: early enough that every unconfirmed reservation is still active. */
+const BEFORE_ANY_RELEASE = "1970-01-01";
+
+/** Capacity per week with firm orders and still-active reservations taken out as committed volume (slide 7, guardrail 2). */
 export function toWeekCapacities(s: SyntheticScenario): WeekCapacity[] {
-  const committed = new Map<string, number>();
-  for (const o of s.firmOrders) committed.set(o.week, (committed.get(o.week) ?? 0) + o.volumeM3);
-  return s.capacity.map((c) => ({ week: c.week, capacityM3: c.capacityM3, committedM3: committed.get(c.week) ?? 0 }));
+  const asOf = s.asOf ?? BEFORE_ANY_RELEASE;
+  return s.capacity.map((c) => ({ week: c.week, capacityM3: c.capacityM3, committedM3: committedForWeek(s.firmOrders, s.reservations ?? [], c.week, asOf) }));
+}
+
+/**
+ * Capacity as the decisions see it: the raw weeks with every short week that building ahead fully covers already
+ * covered (ADR D-20). The chart and "ask the board" use the raw weeks; the rule, the decisions page and the ledger use these.
+ */
+export function toPlannedWeekCapacities(s: SyntheticScenario): WeekCapacity[] {
+  return plannedWeeks(toWeekCapacities(s), toPricedRequests(s), s.plannerSettings.stockCapM3);
 }
 
 /**
@@ -48,4 +61,12 @@ export function toPricedRequests(s: SyntheticScenario): PricedRequest[] {
       deferralCostRM: () => value,
     };
   });
+}
+
+/** The scenario with one project given `floatDays` of float: its projected handover moves that far inside deadline plus buffer. */
+export function withProjectFloat(s: SyntheticScenario, projectId: string, floatDays: number): SyntheticScenario {
+  return {
+    ...s,
+    projects: s.projects.map((p) => (p.projectId === projectId ? { ...p, projectedHandover: addDays(addDays(p.handoverDeadline, p.bufferDays), -floatDays) } : p)),
+  };
 }

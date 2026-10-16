@@ -1,0 +1,6 @@
+customer,product,volume_m3,needed_by,reference
+Contractor C,AAC block 150mm,600,2026-10-29,PO C-118
+Project D,AAC block 100mm,650,2026-10-26,CO D-31
+Contractor E,AAC block 100mm,1500,2026-10-14,
+Project H,AAC block,300,,
+Contractor F,AAC block 100mm,1000,2026-10-26,PO F-77

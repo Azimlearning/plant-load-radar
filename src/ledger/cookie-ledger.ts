@@ -3,7 +3,7 @@
 // scenario and drops any row that does not match: an edited cookie cannot show a figure the calculator did not produce.
 
 import { recommendationFor, recommendationWithChoice } from "@/core/decision";
-import { toPricedRequests, toWeekCapacities } from "@/data/scenario";
+import { toPlannedWeekCapacities, toPricedRequests } from "@/data/scenario";
 import { LedgerRowSchema, type LedgerRow, type SyntheticScenario } from "@/data/schema";
 import { linesOf } from "./decide";
 
@@ -19,7 +19,7 @@ const stable = (v: unknown): string =>
 export function isGenuine(s: SyntheticScenario, row: LedgerRow): boolean {
   try {
     if (row.id !== `dec-${row.week}`) return false;
-    const weeks = toWeekCapacities(s);
+    const weeks = toPlannedWeekCapacities(s);
     const reqs = toPricedRequests(s);
     const rec =
       row.mode === "recommendation-approved"

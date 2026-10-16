@@ -3,7 +3,7 @@
 // which records them (see board.test.tsx, the "every figure comes from the model" check).
 
 import Link from "next/link";
-import { Shell } from "./shell";
+import { Shell, type NavCounts } from "./shell";
 import type { Bar, BoardModel, Chart, Line, RecommendationView } from "@/data/board";
 
 // ---- chart geometry (pixels in the SVG's own coordinate system; not data) ----------------------------
@@ -35,6 +35,12 @@ function ChartSvg({ chart }: { chart: Chart }) {
   return (
     <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} role="img" aria-label={chart.summary} className="chart-svg">
       <title>{chart.summary}</title>
+      <defs>
+        <pattern id="hatch-short" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="6" height="6" className="hatch-bg" />
+          <line x1="0" y1="0" x2="0" y2="6" className="hatch-line" />
+        </pattern>
+      </defs>
 
       {chart.ticks.map((t) => (
         <g key={t.m3}>
@@ -67,6 +73,11 @@ function ChartSvg({ chart }: { chart: Chart }) {
             {b.contested && (
               <text x={Math.min(Math.max(cx, 52), VIEW_W - 52)} y={VIEW_H - 10} textAnchor="middle" className="decision-tag">
                 Decision needed
+              </text>
+            )}
+            {b.covered && (
+              <text x={Math.min(Math.max(cx, 52), VIEW_W - 52)} y={VIEW_H - 10} textAnchor="middle" className="covered-tag">
+                Covered by build-ahead
               </text>
             )}
           </g>
@@ -188,12 +199,56 @@ function Prebuild({ rec, area }: { rec: RecommendationView; area?: string }) {
   );
 }
 
-const TONE: Record<string, string> = { "weeks-short": "kpi-alert", "at-stake": "kpi-good" };
+function Covered({ model }: { model: BoardModel }) {
+  return (
+    <>
+      {model.covered.map((c) => (
+        <section key={c.weekName} className="card" aria-labelledby={`covered-${c.weekName}`}>
+          <p className="eyebrow eyebrow-done">Covered, no decision needed</p>
+          <h2 id={`covered-${c.weekName}`} className="card-title">
+            {c.headline}
+          </h2>
+          <ul className="moves">{c.moves.map((m) => <li key={m}>{m}</li>)}</ul>
+          <p className="rule-note">{c.note}</p>
+        </section>
+      ))}
+    </>
+  );
+}
 
-export function Board({ model }: { model: BoardModel }) {
+function WhatIf({ model }: { model: BoardModel }) {
+  const w = model.whatIf;
+  if (!w) return null;
+  return (
+    <section className="card" aria-labelledby="whatif-title">
+      <p className="eyebrow eyebrow-done">What-if, not recorded</p>
+      <h2 id="whatif-title" className="card-title">
+        {w.title}
+      </h2>
+      <p className="muted">
+        {w.intro} {w.headline}.
+      </p>
+      <div className="two-col">
+        <div>
+          <h3 className="col-title">Serve this week</h3>
+          <ul className="lines">{w.served.map((l) => <LineItem key={l.who + l.volume} line={l} />)}</ul>
+        </div>
+        <div>
+          <h3 className="col-title">Move to the next free week</h3>
+          <ul className="lines">{w.moved.map((l) => <LineItem key={l.who + l.volume} line={l} />)}</ul>
+        </div>
+      </div>
+      <p className="rule-note">{w.note}</p>
+    </section>
+  );
+}
+
+const TONE: Record<string, string> = { "weeks-short": "kpi-alert", "at-stake": "kpi-good", "delay-avoided": "kpi-good" };
+
+export function Board({ model, counts }: { model: BoardModel; counts?: NavCounts }) {
   const [first, ...others] = model.recommendations;
   return (
-    <Shell current="/" banner={model.banner} title="Board" lede={`${model.plant} · ${model.product} · ${model.range}`}>
+    <Shell counts={counts} current="/board" banner={model.banner} title="Board" lede={`${model.plant} · ${model.product} · ${model.range}`}>
       <section aria-label="Headline figures" className="kpis">
         {model.kpis.map((k) => (
           <div key={k.id} className={`kpi ${TONE[k.id] ?? ""}`}>
@@ -255,6 +310,9 @@ export function Board({ model }: { model: BoardModel }) {
         )}
         {first && !first.decided ? <Prebuild rec={first} area="area-alt" /> : null}
       </div>
+
+      <Covered model={model} />
+      <WhatIf model={model} />
 
       {others.map((rec) => (
         <Recommendation key={rec.week} rec={rec} actionsNote={model.actionsNote} />
