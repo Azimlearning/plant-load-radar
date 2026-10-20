@@ -219,7 +219,7 @@ describe("provenance and honesty", () => {
 
   it("every synthetic file is in the manifest as kind 'synthetic' (never 'real')", () => {
     const rows = loadManifest(dir).filter((e) => e.file.startsWith("synthetic/"));
-    expect(rows.map((r) => r.file).sort()).toEqual(["synthetic/inbox-samples.json", PARAMS_FILE, SCENARIO_FILE, "synthetic/value-inputs.json", "synthetic/deck-story-params.json", "synthetic/deck-story.json", "synthetic/demo-history.json", "synthetic/kingdee-export.csv", "synthetic/do-images/do-01.png", "synthetic/do-images/do-02.png"].sort());
+    expect(rows.map((r) => r.file).sort()).toEqual(["synthetic/inbox-samples.json", PARAMS_FILE, SCENARIO_FILE, "synthetic/value-inputs.json", "synthetic/deck-story-params.json", "synthetic/deck-story.json", "synthetic/demo-history.json", "synthetic/kingdee-export.csv", "synthetic/whatsapp-export-sample.txt", "synthetic/do-images/do-01.png", "synthetic/do-images/do-02.png"].sort());
     expect(rows.every((r) => r.kind === "synthetic")).toBe(true);
   });
 

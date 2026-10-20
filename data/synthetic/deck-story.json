@@ -3,7 +3,7 @@
     "kind": "synthetic",
     "seed": 20261054,
     "startWeek": "2026-W41",
-    "weekCount": 6,
+    "weekCount": 12,
     "paramsFile": "data/synthetic/deck-story-params.json",
     "generator": "src/data/deck-story.ts",
     "calibration": {
@@ -96,6 +96,42 @@
       "plant": "plant-s",
       "product": "AAC block",
       "week": "2026-W46",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W47",
+      "capacityM3": 12788
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W48",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W49",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W50",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W51",
+      "capacityM3": 18269
+    },
+    {
+      "plant": "plant-s",
+      "product": "AAC block",
+      "week": "2026-W52",
       "capacityM3": 18269
     }
   ],
@@ -445,6 +481,174 @@
       "side": "external",
       "partyId": "contractor-d",
       "volumeM3": 4029
+    },
+    {
+      "id": "firm-2026-W47-01",
+      "week": "2026-W47",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 2350
+    },
+    {
+      "id": "firm-2026-W47-02",
+      "week": "2026-W47",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 1570
+    },
+    {
+      "id": "firm-2026-W47-03",
+      "week": "2026-W47",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 3520
+    },
+    {
+      "id": "firm-2026-W47-04",
+      "week": "2026-W47",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 2348
+    },
+    {
+      "id": "firm-2026-W48-01",
+      "week": "2026-W48",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 3180
+    },
+    {
+      "id": "firm-2026-W48-02",
+      "week": "2026-W48",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2130
+    },
+    {
+      "id": "firm-2026-W48-03",
+      "week": "2026-W48",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 4770
+    },
+    {
+      "id": "firm-2026-W48-04",
+      "week": "2026-W48",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 3189
+    },
+    {
+      "id": "firm-2026-W49-01",
+      "week": "2026-W49",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 3300
+    },
+    {
+      "id": "firm-2026-W49-02",
+      "week": "2026-W49",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2210
+    },
+    {
+      "id": "firm-2026-W49-03",
+      "week": "2026-W49",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 4950
+    },
+    {
+      "id": "firm-2026-W49-04",
+      "week": "2026-W49",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 3309
+    },
+    {
+      "id": "firm-2026-W50-01",
+      "week": "2026-W50",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 3180
+    },
+    {
+      "id": "firm-2026-W50-02",
+      "week": "2026-W50",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2130
+    },
+    {
+      "id": "firm-2026-W50-03",
+      "week": "2026-W50",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 4770
+    },
+    {
+      "id": "firm-2026-W50-04",
+      "week": "2026-W50",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 3189
+    },
+    {
+      "id": "firm-2026-W51-01",
+      "week": "2026-W51",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 2940
+    },
+    {
+      "id": "firm-2026-W51-02",
+      "week": "2026-W51",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 1970
+    },
+    {
+      "id": "firm-2026-W51-03",
+      "week": "2026-W51",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 4410
+    },
+    {
+      "id": "firm-2026-W51-04",
+      "week": "2026-W51",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 2949
+    },
+    {
+      "id": "firm-2026-W52-01",
+      "week": "2026-W52",
+      "side": "internal",
+      "partyId": "project-d",
+      "volumeM3": 3060
+    },
+    {
+      "id": "firm-2026-W52-02",
+      "week": "2026-W52",
+      "side": "internal",
+      "partyId": "project-e",
+      "volumeM3": 2050
+    },
+    {
+      "id": "firm-2026-W52-03",
+      "week": "2026-W52",
+      "side": "external",
+      "partyId": "contractor-a",
+      "volumeM3": 4590
+    },
+    {
+      "id": "firm-2026-W52-04",
+      "week": "2026-W52",
+      "side": "external",
+      "partyId": "contractor-d",
+      "volumeM3": 3069
     }
   ],
   "requests": [
@@ -553,6 +757,7 @@
       }
     ]
   },
+  "displayWeeks": 6,
   "whatIf": {
     "projectId": "project-a",
     "floatDays": 20

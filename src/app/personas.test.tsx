@@ -86,7 +86,8 @@ describe("call-offs and reserved slots (slide 6, slide 7)", () => {
     const m = buildCallOffs(deck, [], {});
     const html = renderToStaticMarkup(<CallOffs model={m} action={async () => {}} />);
     expect(stray(html, m.allowedFigures)).toEqual([]);
-    expect(m.weekOptions.map((o) => o.label)).toEqual(["Week 46 (1,000 m³ spare)"]);
+    expect(m.weekOptions.map((o) => o.label.split(" (")[0])).toEqual(["Week 46", "Week 47", "Week 48", "Week 49", "Week 50", "Week 51", "Week 52"]);
+    expect(m.weekOptions[0]!.label).toBe("Week 46 (1,000 m³ spare)");
     expect(m.slots.map((s) => s.status)).toEqual(["Held until the call-off is confirmed", "Held until the call-off is confirmed"]);
     expect(m.policy).toContain("4 or more weeks ahead");
   });

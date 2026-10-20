@@ -25,7 +25,7 @@ Nothing in P0 reads an environment variable — the deterministic core and data 
 | `PLR_LLM_RECORDINGS` | `.llm/recordings.json` (gitignored) | Where `record` saves and `replay` reads model answers. They are model output; committing them needs a manifest row and an ADR |
 | `PLR_DATA_DIR` | `./data` | Where loaders look for datasets and `MANIFEST.md` |
 | `PLR_LEDGER_MODE` | Optional. `file` or `cookie`; default `cookie` when `VERCEL` is set, else `file` | Where decisions are kept. Cookie mode is per-browser and re-derived on every read (ADR D-19) |
-| `PLR_LEDGER_PATH` | Optional. Default `.ledger/ledger.jsonl` (gitignored) | Where the append-only decision ledger is written (ADR D-18). Needs a writable filesystem, so it works locally and with `next start`, not on static hosting. Not yet listed in `.env.example` (edits to that file are blocked in this environment); add the lines `PLR_LEDGER_PATH=`, `PLR_LEDGER_MODE=`, `PLR_LLM_MODE=`, `PLR_LLM_MAX_CALLS=` and `PLR_LLM_RECORDINGS=` by hand |
+| `PLR_LEDGER_PATH` | Optional. Default `.ledger/ledger.jsonl` (gitignored) | Where the append-only decision ledger is written (ADR D-18). Needs a writable filesystem, so it works locally and with `next start`, not on static hosting. |
 
 ---
 

@@ -5,7 +5,7 @@ import type { CallOffsModel } from "@/data/calloffs-view";
 
 export function SlotTable({ slots }: { slots: CallOffsModel["slots"] }) {
   return (
-    <div className="table-scroll">
+    <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
       <table>
         <thead>
           <tr>

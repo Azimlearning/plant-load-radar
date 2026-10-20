@@ -10,7 +10,8 @@ import { coveredByPrebuild, prebuildAlternative, recommend, weekBalances, type R
 import type { Week } from "@/core/types";
 import { weekStart } from "@/core/weeks";
 import { toPlannedWeekCapacities, toPricedRequests, toWeekCapacities, withProjectFloat } from "./scenario";
-import type { SyntheticScenario } from "./schema";
+import type { CallOff, SyntheticScenario } from "./schema";
+import { slotViews, type SlotView } from "./slots";
 
 const MINUS = "−"; // a real minus sign, so "-" is never read as a hyphen
 const TICK_TARGET = 4; // roughly how many gridlines per side
@@ -163,6 +164,10 @@ export interface BoardModel {
   /** The requests competing in the first contested week, plus the committed volume beneath them. */
   focus: { weekName: string; committed: string; rows: TableRow[] } | null;
   weekTable: { week: string; capacity: string; committed: string; free: string; wanted: string; spare: string }[];
+  /** The weeks beyond the default view (slide 9 draws six): a link to show or hide them, or null when there are none. */
+  horizon: { showingAll: boolean; hidden: string; href: string; label: string } | null;
+  /** Capacity held for projects that confirmed call-offs ahead (slide 7, guardrail 2), seeded and the visitor's own. */
+  slots: { rows: SlotView[]; note: string } | null;
   /** Shown beside the Approve and Change buttons. */
   actionsNote: string;
   /** The orders-to-check strip under the chart, or null when no capture source is given. */
@@ -254,11 +259,21 @@ export interface HistoryInput {
   totalRM: number;
 }
 
-export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledger: LedgerSummaryInput["rows"] = [], history?: HistoryInput): BoardModel {
+/** What the visitor chose to see: all the weeks in the data, and the call-offs they confirmed (for the slot list). */
+export interface BoardView {
+  allWeeks?: boolean;
+  callOffs?: readonly CallOff[];
+}
+
+export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledger: LedgerSummaryInput["rows"] = [], history?: HistoryInput, view: BoardView = {}): BoardModel {
   const fig = new Figures();
   const weeks = toWeekCapacities(s);
   const reqs = toPricedRequests(s);
-  const balances = weekBalances(weeks, reqs);
+  const allBalances = weekBalances(weeks, reqs);
+  const hiddenCount = s.displayWeeks === undefined ? 0 : Math.max(0, allBalances.length - s.displayWeeks);
+  const showingAll = view.allWeeks === true || hiddenCount === 0;
+  // The chart and the table show the first `displayWeeks` weeks (slide 9) unless asked for more; the rule, the decisions and the KPIs always use every week.
+  const balances = showingAll ? allBalances : allBalances.slice(0, s.displayWeeks);
   const planned = toPlannedWeekCapacities(s); // the rule runs on the weeks with covered shortages already built ahead (ADR D-20)
   const recs = recommend(planned, reqs);
   const coveredWeeks = coveredByPrebuild(weeks, reqs, s.plannerSettings.stockCapM3);
@@ -290,15 +305,16 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledge
       aria: `${fig.week(b.week)}: ${fig.m3(b.spareM3)} ${isShort ? "short" : "spare"}`,
     };
   });
-  const shortWeeks = balances.filter((b) => b.spareM3 < 0);
+  const shortWeeks = allBalances.filter((b) => b.spareM3 < 0);
+  const shownShort = balances.filter((b) => b.spareM3 < 0);
   const chart: Chart = {
     extentM3: extent,
     ticks,
     bars,
     summary:
-      shortWeeks.length === 0
+      shownShort.length === 0
         ? "Spare capacity by week. No week is short."
-        : `Spare or short capacity by week. ${shortWeeks.map((b) => `${fig.week(b.week)} is ${fig.m3(b.spareM3)} short`).join("; ")}.`,
+        : `Spare or short capacity by week. ${shownShort.map((b) => `${fig.week(b.week)} is ${fig.m3(b.spareM3)} short`).join("; ")}.`,
   };
 
   // Recommendations -------------------------------------------------------------------------------------
@@ -414,6 +430,22 @@ export function buildBoard(s: SyntheticScenario, capture?: CaptureSummary, ledge
     whatIf: whatIfView(s, fig, recs[0]?.week),
     focus,
     weekTable,
+    horizon:
+      hiddenCount === 0
+        ? null
+        : {
+            showingAll,
+            hidden: fig.n(hiddenCount),
+            href: showingAll ? "/board" : "/board?weeks=all",
+            label: showingAll ? "Show the first weeks only" : `Show ${fig.n(hiddenCount)} more weeks`,
+          },
+    slots:
+      (s.reservations ?? []).length === 0
+        ? null
+        : {
+            rows: slotViews(s, fig, view.callOffs ?? []),
+            note: "Reserved capacity counts as committed, so it is already off the free capacity above. An unused slot is released on its date, so nobody can hoard the plant.",
+          },
     orders: capture?.preview
       ? {
           title: "Orders to check",

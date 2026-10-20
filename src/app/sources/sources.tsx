@@ -43,7 +43,7 @@ export function Sources({ model, counts }: { model: SourcesModel; counts?: NavCo
         <h2 id="files-title" className="card-title">
           Every data file the app can load
         </h2>
-        <div className="table-scroll">
+        <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
           <table>
             <thead>
               <tr>
@@ -80,7 +80,7 @@ export function Sources({ model, counts }: { model: SourcesModel; counts?: NavCo
             <summary>
               {g.title} ({g.count})
             </summary>
-            <div className="table-scroll">
+            <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
               <table>
                 <thead>
                   <tr>

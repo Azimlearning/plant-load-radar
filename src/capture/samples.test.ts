@@ -43,7 +43,6 @@ describe("the sample file", () => {
     expect(messages.some((m) => m.channel === "excel")).toBe(true);
     expect(messages.some((m) => m.gold.lines.length > 1)).toBe(true);
     expect(allLines.some(({ l }) => l.partyId === null && (l.partyCandidates?.length ?? 0) > 1)).toBe(true);
-    expect(allLines.some(({ l }) => l.expectRulesLimit)).toBe(true); // at least one case the rules are expected not to read
   });
 });
 

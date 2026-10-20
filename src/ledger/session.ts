@@ -9,7 +9,7 @@ import type { LedgerRow, SyntheticScenario } from "@/data/schema";
 import { COOKIE_NAME, decodeRows, encodeRows, MAX_COOKIE_CHARS } from "./cookie-ledger";
 import { recordDecision, type DecisionInput, type Outcome } from "./decide";
 import { fileStore } from "./store";
-import { callOffStore, outboxStore } from "./visitor";
+import { callOffStore, huddleFlagStore, outboxStore } from "./visitor";
 
 import { ledgerMode } from "./mode";
 export { ledgerMode };
@@ -41,5 +41,6 @@ export async function resetDemo(): Promise<boolean> {
   (await cookies()).delete(COOKIE_NAME);
   await callOffStore.clear();
   await outboxStore.clear();
+  await huddleFlagStore.clear();
   return true;
 }

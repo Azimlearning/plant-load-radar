@@ -3,20 +3,13 @@
 
 import { formatDayShort } from "@/core/dates";
 import { weekBalances } from "@/core/planner";
-import { daysBetween } from "@/core/dates";
 import { Figures } from "./board";
 import { CALLOFF_REFUSAL_TEXT, earliestReservableWeek } from "./calloffs";
 import { toPricedRequests, toWeekCapacities } from "./scenario";
 import type { CallOff, SyntheticScenario } from "./schema";
+import { slotViews, type SlotView } from "./slots";
 
-export interface SlotView {
-  project: string;
-  weekName: string;
-  volume: string;
-  releases: string;
-  status: string;
-  source: string;
-}
+export { slotViews, type SlotView };
 
 export interface CallOffsModel {
   title: string;
@@ -32,25 +25,6 @@ export interface CallOffsModel {
   nearWeeksNote: string;
   note: string;
   allowedFigures: string[];
-}
-
-/** Reserved slots as shown on the board and the huddle: seeded ones plus the visitor's call-offs. */
-export function slotViews(s: SyntheticScenario, fig: Figures, mine: readonly CallOff[] = []): SlotView[] {
-  const names = new Map(s.projects.map((p) => [p.projectId, p.name] as const));
-  const mineIds = new Set(mine.map((c) => c.id));
-  return [...(s.reservations ?? [])]
-    .sort((a, b) => a.week.localeCompare(b.week) || a.id.localeCompare(b.id))
-    .map((r) => {
-      const lapsed = s.asOf !== undefined && !r.callOffConfirmed && daysBetween(r.releaseOn, s.asOf) > 0;
-      return {
-        project: names.get(r.projectId) ?? r.projectId,
-        weekName: fig.week(r.week),
-        volume: fig.m3(r.reservedM3),
-        releases: fig.text(formatDayShort(r.releaseOn)),
-        status: r.callOffConfirmed ? "Call-off confirmed: now a firm order" : lapsed ? "Released: no call-off in time" : "Held until the call-off is confirmed",
-        source: mineIds.has(r.id) ? "Your call-off" : "Seeded for the demo",
-      };
-    });
 }
 
 export function buildCallOffs(s: SyntheticScenario, mine: readonly CallOff[], params: { error?: string; ok?: boolean }): CallOffsModel {

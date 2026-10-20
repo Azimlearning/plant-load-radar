@@ -9,9 +9,11 @@ const base = (process.env.BASE_URL ?? "http://localhost:3000").replace(/\/$/, ""
 
 const pages = [
   ["/", ["Plant Load Radar", "Synthetic demo data", "+83%", "RM435,616", "The rule, on one example", "Group finance"]],
-  ["/board", ["Week 43 is 2,000 m³ short", "RM145,205 a day × 3 days of slip", "RM18,073", "Covered by build-ahead", "What if Project A (fictional) had 20 days of float?", "Decisions waiting"]],
+  ["/board", ["Week 43 is 2,000 m³ short", "RM145,205 a day × 3 days of slip", "RM18,073", "Covered by build-ahead", "What if Project A (fictional) had 20 days of float?", "Decisions waiting", "Show 6 more weeks"]],
+  ["/board?weeks=all", ["Show the first weeks only", "Reserved slots", "Seeded for the demo"]],
   ["/inbox", ["Orders inbox", "22 messages"]],
   ["/inbox/try?sample=msg-01", ["What each step did", "1,800 m³ free after confirmed orders, 3,800 m³ already requested", "Hi project planner"]],
+  ["/inbox/try?chat=sample", ["Read 4 messages from a WhatsApp chat export", "Hakim (Project D)", "quantity written in words"]],
   ["/inbox/try?csv=sample", ["Contractor F", "What each step did"]],
   ["/decisions", ["Approve and send", "Send to the huddle", "Mon 26 Oct"]],
   ["/huddle", ["Weekly huddle", "Start the huddle", "Build-ahead plan to confirm", "Reserved slots"]],

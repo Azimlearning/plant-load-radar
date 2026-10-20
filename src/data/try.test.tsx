@@ -4,14 +4,15 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { TryIt } from "@/app/inbox/try/tryit";
 import { loadCaptureInputs } from "./inbox";
-import { loadJsonDataset } from "./loaders";
+import { loadJsonDataset, loadTextDataset } from "./loaders";
 import { SyntheticScenarioSchema } from "./schema";
-import { buildTry } from "./try";
+import { buildTry, TRY_MAX_CHARS } from "./try";
 
 const dir = join(process.cwd(), "data");
 const deck = loadJsonDataset("synthetic/deck-story.json", SyntheticScenarioSchema, dir).data;
 const { known, samples } = loadCaptureInputs();
 const csv = readFileSync(join(dir, "synthetic/kingdee-export.csv"), "utf8");
+const chat = loadTextDataset("synthetic/whatsapp-export-sample.txt", dir).text;
 
 const stray = (html: string, allowed: readonly string[]) => {
   const text = html.replace(/<[^>]+>/g, " ").replace(/&(?:amp|lt|gt|quot|#x27|#39);/g, " ").replace(/\b\d{4}-\d{2}-\d{2}\b/g, " ").replace(/\b\d{4}-W\d{2}\b/g, " ");
@@ -68,6 +69,25 @@ describe("what it does with other input", () => {
     expect(m.results.map((x) => x.message.channel)).toEqual(Array(5).fill("Excel"));
     expect(stray(renderToStaticMarkup(<TryIt model={m} />), m.allowedFigures)).toEqual([]);
   });
+  it("a pasted WhatsApp chat export is split into messages and each goes through the same four steps", () => {
+    const m = buildTry(deck, known, samples, { chat: "sample" }, "", {}, chat);
+    expect(m.chatSample).toBe(true);
+    expect(m.form.text).toBe(chat.slice(0, TRY_MAX_CHARS));
+    expect(m.notes[0]).toBe("Read 4 messages from a WhatsApp chat export; 2 system, media or unreadable lines were left out.");
+    expect(m.results.map((x) => x.message.sender)).toEqual(["Siti (Project A site)", "Aiman (Contractor C)", "Hakim (Project D)", "Lim (Contractor B)"]);
+    expect(m.results.every((x) => x.trace.map((t) => t.id).join() === "intake,matching,planner,writer,checkpoint")).toBe(true);
+    expect(m.results[3]!.trace[0]!.lines[0]).toMatch(/No order in this message/);
+    // The box echoes what the visitor pasted (timestamps and all); that is their text, not a figure the page produced.
+    const withoutEcho = renderToStaticMarkup(<TryIt model={m} />).replace(/<textarea[\s\S]*?<\/textarea>/, "");
+    expect(stray(withoutEcho, m.allowedFigures)).toEqual([]);
+  });
+  it("a chat export pasted into the box works the same as the sample, and the number-word message is read as inferred, not confirmed", () => {
+    const m = buildTry(deck, known, samples, { text: chat }, "");
+    expect(m.results).toHaveLength(4);
+    const words = m.results[2]!.message.lines[0]!;
+    expect(words.chips.find((c) => c.field === "Volume")).toMatchObject({ state: "inferred" });
+    expect(m.results[2]!.trace[0]!.lines[1]).toContain("volume inferred");
+  });
   it("nothing typed means no error on first visit, and an error when asked with nothing", () => {
     expect(buildTry(deck, known, samples, {}, "").error).toBeNull();
     expect(buildTry(deck, known, samples, { text: "   " }, "").error).toMatch(/Nothing to read/);
@@ -78,6 +98,31 @@ describe("what it does with other input", () => {
   });
   it("an over-long paste is cut, not processed whole", () => {
     const m = buildTry(deck, known, samples, { text: `Project D 200 m3 AAC 100mm 23 Oct ${"x".repeat(5000)}` }, "");
-    expect(m.form.text.length).toBeLessThanOrEqual(1500);
+    expect(m.form.text.length).toBeLessThanOrEqual(TRY_MAX_CHARS);
+  });
+});
+
+describe("text that only looks like a chat export", () => {
+  it("a typed message that starts with a timestamp but has no sender is read as a typed message, not dropped", () => {
+    const m = buildTry(deck, known, samples, { text: "12/10/2026 9:42 - Project A need 500 m3 AAC 100mm 20 Oct" }, "");
+    expect(m.results).toHaveLength(1);
+    expect(m.results[0]!.message.sender).toBe("You (typed in)");
+  });
+  it("a sender that is a phone number is a quoted piece of text, so its digits are accounted for", () => {
+    const m = buildTry(deck, known, samples, { text: "[12/10/2026, 9:00 AM] +60 12-345 6789: Project D 200 m3 AAC 100mm 23 Oct" }, "");
+    const html = renderToStaticMarkup(<TryIt model={m} />).replace(/<textarea[\s\S]*?<\/textarea>/, "");
+    expect(stray(html, m.allowedFigures)).toEqual([]);
+  });
+  it("says when a long paste was cut at the cap", () => {
+    const m = buildTry(deck, known, samples, { text: `Project D 200 m3 AAC 100mm 23 Oct ${"x".repeat(TRY_MAX_CHARS)}` }, "");
+    expect(m.notes.join(" ")).toContain("were read; the rest was left out");
+  });
+});
+
+describe("a pasted chat export with an impossible year", () => {
+  it.each(["1/1/0500", "31/12/9999"])("%s does not crash the page: it is not read as an export, so it is read as one typed message", (d) => {
+    const m = buildTry(deck, known, samples, { text: `[${d}, 9:00 AM] B: Contractor C nak 600 m3 AAC 100mm 26 Oct` }, "");
+    expect(m.results.map((x) => x.message.sender)).toEqual(["You (typed in)"]);
+    expect(m.results[0]!.trace.map((t) => t.id)).toContain("planner");
   });
 });

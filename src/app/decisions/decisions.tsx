@@ -27,13 +27,20 @@ function LineItem({ line }: { line: Line }) {
   );
 }
 
-function Pending({ p, action, approverNote }: { p: PendingView; action: (formData: FormData) => void | Promise<void>; approverNote: string }) {
+type FormAction = (formData: FormData) => void | Promise<void>;
+
+function Pending({ p, action, huddleAction, approverNote }: { p: PendingView; action: FormAction; huddleAction?: FormAction; approverNote: string }) {
   return (
     <section className="card" aria-labelledby={`pending-${p.week}`}>
       <p className="eyebrow">Decision needed</p>
       <h2 id={`pending-${p.week}`} className="card-title">
         {p.headline}
       </h2>
+      {p.flagged ? (
+        <p className="flag" role="status">
+          Sent to the huddle by {p.flagged.by} on {p.flagged.when}. The decision is still open: the huddle settles it, and a named person still records it here.
+        </p>
+      ) : null}
       <p className="muted">
         {p.freeText} · {p.wantedText}
       </p>
@@ -112,16 +119,22 @@ function Pending({ p, action, approverNote }: { p: PendingView; action: (formDat
           <button type="submit" name="send" value="0" className="secondary">
             Record decision only
           </button>
-          <Link className="button secondary" href={`/huddle#week-${p.week}`}>
-            Send to the huddle
-          </Link>
+          {p.flagged || !huddleAction ? (
+            <Link className="button secondary" href={`/huddle#week-${p.week}`}>
+              {p.flagged ? "Open it in the huddle" : "Send to the huddle"}
+            </Link>
+          ) : (
+            <button type="submit" formAction={huddleAction} className="secondary">
+              Send to the huddle
+            </button>
+          )}
         </div>
       </form>
     </section>
   );
 }
 
-export function Decisions({ model, action, resetAction, counts }: { model: DecisionsModel; action: (formData: FormData) => void | Promise<void>; resetAction?: () => void | Promise<void>; counts?: NavCounts }) {
+export function Decisions({ model, action, huddleAction, resetAction, counts }: { model: DecisionsModel; action: FormAction; huddleAction?: FormAction; resetAction?: () => void | Promise<void>; counts?: NavCounts }) {
   return (
     <Shell counts={counts} current="/decisions" banner={model.banner} title={model.title} lede={<>
         <p>{model.intro}</p>
@@ -136,7 +149,7 @@ export function Decisions({ model, action, resetAction, counts }: { model: Decis
           <p className="muted">{model.emptyNote}</p>
         </section>
       ) : (
-        model.pending.map((p) => <Pending key={p.week} p={p} action={action} approverNote={model.approverNote} />)
+        model.pending.map((p) => <Pending key={p.week} p={p} action={action} huddleAction={huddleAction} approverNote={model.approverNote} />)
       )}
       {resetAction ? (
         <form className="form" action={resetAction}>

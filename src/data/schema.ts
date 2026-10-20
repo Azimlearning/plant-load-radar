@@ -305,6 +305,8 @@ export const SyntheticScenarioSchema = z
     reservationPolicy: z.object({ aheadWeeks: z.number().int().positive(), releaseDaysBefore: z.number().int().nonnegative() }).optional(),
     /** The weekly huddle's time frame and agenda blocks (slide 11: under 30 minutes). */
     huddle: z.object({ minutes: z.number().int().positive(), blocks: z.array(z.object({ id: z.string().min(1), label: z.string().min(1), minutes: z.number().int().positive() })).min(1) }).optional(),
+    /** How many weeks the board shows by default (the rest sit behind "show more weeks"). Absent means all of them. */
+    displayWeeks: z.number().int().min(1).optional(),
     /** Optional read-only what-if shown on the board: this project is given this many days of float (ADR D-20). */
     whatIf: z.object({ projectId: z.string().min(1), floatDays: z.number().int().positive() }).optional(),
   })
@@ -346,6 +348,8 @@ export const SyntheticScenarioSchema = z
 export const DeckStoryParamsSchema = z.object({
   startWeek: WeekSchema,
   weekCount: z.number().int().min(1),
+  /** How many weeks the board and its chart show by default; the weeks after them are an outlook behind a control. */
+  displayWeeks: z.number().int().min(1),
   /** Weeks copied unchanged from the base scenario (the story week keeps its requests and committed orders). */
   keepWeeks: z.array(WeekSchema),
   /** Weeks authored here: free capacity after confirmed orders, and the new requests asking for the week. */
@@ -398,6 +402,15 @@ export const CallOffSchema = z.object({
   requestedBy: z.string().trim().min(1).max(80),
 });
 export type CallOff = z.output<typeof CallOffSchema>;
+
+/** A pending decision flagged for the weekly huddle by a named person. A marker only: it changes no figure and decides nothing. */
+export const HuddleFlagSchema = z.object({
+  id: z.string().min(1),
+  week: WeekSchema,
+  flaggedBy: z.string().trim().min(1).max(80),
+  flaggedAt: z.iso.datetime(),
+});
+export type HuddleFlag = z.output<typeof HuddleFlagSchema>;
 
 export const OutboxRowSchema = z.object({
   id: z.string().min(1),

@@ -12,7 +12,7 @@ function Line({ line }: { line: LineView }) {
         {line.title}
       </h2>
       <p className="muted">{line.formula}</p>
-      <div className="table-scroll">
+      <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
         <table>
           <thead>
             <tr>
@@ -77,7 +77,7 @@ export function Value({ model, counts }: { model: ValueModel; counts?: NavCounts
           Per unit, without the invented counts
         </h2>
         <p className="muted">Multiply these by Chin Hin&apos;s own counts. This is the part to replace first.</p>
-        <div className="table-scroll">
+        <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
           <table>
             <thead>
               <tr>
@@ -119,7 +119,7 @@ export function Value({ model, counts }: { model: ValueModel; counts?: NavCounts
         <h2 id="assume-title" className="card-title">
           What each assumption stands in for
         </h2>
-        <div className="table-scroll">
+        <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
           <table>
             <thead>
               <tr>

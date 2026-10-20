@@ -5,6 +5,7 @@
 import { csvToMessages } from "@/capture/csv";
 import { processInbox, type Extractor, type ProcessedLine, type ProcessedMessage } from "@/capture/pipeline";
 import { extractWithRules } from "@/capture/rules";
+import { looksLikeWhatsAppExport, MAX_EXPORT_CHARS, parseWhatsAppExport } from "@/capture/whatsapp";
 import type { InboxMessage } from "@/capture/types";
 import { AskError, canTake } from "@/core/ask";
 import { formatDayShort } from "@/core/dates";
@@ -15,7 +16,7 @@ import { toPricedRequests, toWeekCapacities } from "./scenario";
 import type { SyntheticScenario } from "./schema";
 import type { KnownParty } from "@/capture/matching";
 
-export const TRY_MAX_CHARS = 1500;
+export const TRY_MAX_CHARS = MAX_EXPORT_CHARS;
 
 /** The instant the demo's messages arrive: slide 9's "Updated 9:42 AM" on the scenario's as-of date. */
 export const demoReceivedAt = (s: SyntheticScenario): string => `${s.asOf ?? "2026-10-12"}${DEMO_RECEIVED_UTC_TIME}`;
@@ -50,6 +51,7 @@ export interface TryModel {
   example: { text: string; maxChars: number };
   samples: { id: string; label: string }[];
   csvSample: boolean;
+  chatSample: boolean;
   /** Which reader the user asked for, and one line saying whether the model reader is available (no secret in it). */
   readerChoice: "rules" | "model";
   modelNote: string;
@@ -69,6 +71,8 @@ export interface TryParams {
   channel?: string;
   sample?: string;
   csv?: string;
+  /** "sample" loads the invented WhatsApp chat export. */
+  chat?: string;
   reader?: string;
   photo?: string;
 }
@@ -140,21 +144,34 @@ export function clarificationDraft(pm: ProcessedMessage, view: MessageView, name
 }
 
 /** The messages a request asks for: a typed one, a sample, or the rows of the sample export. Pure. */
-export function resolveMessages(s: SyntheticScenario, samples: InboxMessage[], params: TryParams, csvText: string): { messages: InboxMessage[]; notes: string[]; text: string; sampleId: string } {
+export function resolveMessages(s: SyntheticScenario, samples: InboxMessage[], params: TryParams, csvText: string, chatText = ""): { messages: InboxMessage[]; notes: string[]; text: string; sampleId: string } {
   const receivedAt = demoReceivedAt(s);
   const channel: "whatsapp" | "excel" = params.channel === "excel" ? "excel" : "whatsapp";
-  const text = (params.text ?? "").slice(0, TRY_MAX_CHARS);
+  const text = (params.chat === "sample" ? chatText : (params.text ?? "")).slice(0, TRY_MAX_CHARS);
   const sample = samples.find((m) => m.id === params.sample);
   if (params.csv === "sample") {
     const out = csvToMessages(csvText, receivedAt, "Kingdee export (fictional)");
     return { messages: out.messages, notes: [...out.problems, ...(out.ignoredColumns.length ? [`Columns ignored: ${out.ignoredColumns.join(", ")}.`] : [])], text, sampleId: "" };
   }
   if (sample) return { messages: [sample], notes: [], text: sample.text, sampleId: sample.id };
-  if (text.trim() !== "") return { messages: [{ id: "try-1", channel, receivedAt, sender: "You (typed in)", text }], notes: [], text, sampleId: "" };
+  const cut = (params.chat === "sample" ? chatText : (params.text ?? "")).length > TRY_MAX_CHARS ? [`Only the first ${TRY_MAX_CHARS} characters were read; the rest was left out.`] : [];
+  const exported = looksLikeWhatsAppExport(text) ? parseWhatsAppExport(text) : null;
+  // A line that merely starts like a timestamp but holds no "name: message" is not an export: read it as a typed message.
+  if (exported && exported.messages.length > 0) {
+    const out = exported;
+    const notes = [
+      `Read ${out.messages.length} message${out.messages.length === 1 ? "" : "s"} from a WhatsApp chat export; ${out.ignored} system, media or unreadable line${out.ignored === 1 ? " was" : "s were"} left out.`,
+      ...(out.truncated ? ["Only the first messages were read; the rest of the export was left out."] : []),
+      ...(out.dateOrderAssumed ? ["No date in the export settled day/month against month/day, so day/month was assumed."] : []),
+      ...cut,
+    ];
+    return { messages: out.messages, notes, text, sampleId: "" };
+  }
+  if (text.trim() !== "") return { messages: [{ id: "try-1", channel, receivedAt, sender: "You (typed in)", text }], notes: cut, text, sampleId: "" };
   return { messages: [], notes: [], text, sampleId: "" };
 }
 
-export function buildTry(s: SyntheticScenario, known: KnownParty[], samples: InboxMessage[], params: TryParams, csvText: string, ctx: TryContext = {}): TryModel {
+export function buildTry(s: SyntheticScenario, known: KnownParty[], samples: InboxMessage[], params: TryParams, csvText: string, ctx: TryContext = {}, chatText = ""): TryModel {
   const extract = ctx.extract ?? extractWithRules;
   const readerName = ctx.readerName ?? "Rules reader";
   const fig = new Figures();
@@ -163,7 +180,7 @@ export function buildTry(s: SyntheticScenario, known: KnownParty[], samples: Inb
   const base = {
     title: "Try it: one message becomes a priced decision",
     banner: "Synthetic demo data. Every party is fictional and every figure is illustrative. This is not Chin Hin data.",
-    intro: "Paste a WhatsApp message, pick a sample, read the sample sales-order export, or read a photo of a paper delivery order. The reader turns it into order lines with a confidence on every field; the calculator checks capacity; a draft question goes to the project planner when anything is unsure. Nothing is saved, added to the board or sent.",
+    intro: "Paste a WhatsApp message or a whole chat export, pick a sample, read the sample sales-order export, or read a photo of a paper delivery order. The reader turns it into order lines with a confidence on every field; the calculator checks capacity; a draft question goes to the project planner when anything is unsure. Nothing is saved, added to the board or sent.",
     samples: sampleOptions,
     readerName,
     readerChoice: (params.reader === "model" ? "model" : "rules") as "rules" | "model",
@@ -173,13 +190,13 @@ export function buildTry(s: SyntheticScenario, known: KnownParty[], samples: Inb
     example: { text: fig.text("Boss, Project A site need 1,500 m3 AAC 100mm by Tue 20 Oct. Can confirm ya"), maxChars: TRY_MAX_CHARS },
     note: "Whichever reader is used, a value is Confirmed only when its words are really in the message, the calculator does the maths, and a person decides everything that matters. A photo can never be better than Inferred.",
   };
-  const resolved = resolveMessages(s, samples, params, csvText);
+  const resolved = resolveMessages(s, samples, params, csvText, chatText);
   const messages = [...resolved.messages, ...(ctx.extraMessages ?? [])];
   const notes = resolved.notes.map((n) => fig.text(n));
   const form = { text: resolved.text, channel: (params.channel === "excel" ? "excel" : "whatsapp") as "whatsapp" | "excel", sample: resolved.sampleId };
   if (messages.length === 0) {
-    const asked = params.text !== undefined || params.csv !== undefined || params.sample !== undefined || params.photo !== undefined;
-    return { ...base, form, csvSample: params.csv === "sample", error: asked ? "Nothing to read. Type or paste a message, choose a sample, read the sample export, or read a photo." : null, notes, results: [], allowedFigures: fig.all() };
+    const asked = params.text !== undefined || params.csv !== undefined || params.chat !== undefined || params.sample !== undefined || params.photo !== undefined;
+    return { ...base, form, csvSample: params.csv === "sample", chatSample: params.chat === "sample", error: asked ? "Nothing to read. Type or paste a message or a chat export, choose a sample, read the sample export, or read a photo." : null, notes, results: [], allowedFigures: fig.all() };
   }
 
   const result = processInbox(messages, known, extract);
@@ -195,5 +212,5 @@ export function buildTry(s: SyntheticScenario, known: KnownParty[], samples: Inb
     ] as TraceStep[]).map((t) => ({ ...t, agent: fig.text(t.agent) })); // the agents are numbered in the deck; the numbers are labels, not figures
     return { message: view, trace };
   });
-  return { ...base, form, csvSample: params.csv === "sample", error: null, notes, results, allowedFigures: fig.all() };
+  return { ...base, form, csvSample: params.csv === "sample", chatSample: params.chat === "sample", error: null, notes, results, allowedFigures: fig.all() };
 }

@@ -3,10 +3,13 @@
 
 import { recommend } from "@/core/planner";
 import type { Refusal } from "@/ledger/decide";
+import { receivedLocalDate } from "@/capture/normalise";
+import { formatDayShort } from "@/core/dates";
 import { templateDrafter, type Drafter, type Drafts } from "@/writer/drafter";
 import { Figures, lineFormatter, type Line, type RecommendationView } from "./board";
 import { toPlannedWeekCapacities, toPricedRequests } from "./scenario";
-import type { LedgerLine, LedgerRow, SyntheticScenario } from "./schema";
+import { HUDDLE_FLAG_REFUSAL_TEXT } from "./huddle-flags";
+import type { HuddleFlag, LedgerLine, LedgerRow, SyntheticScenario } from "./schema";
 
 /** Fixed messages by refusal code. The page never prints text taken from the address bar. */
 export const REFUSAL_TEXT: Record<Refusal | "unknown", string> = {
@@ -21,7 +24,7 @@ export const REFUSAL_TEXT: Record<Refusal | "unknown", string> = {
 };
 
 export const refusalText = (code: string | undefined): string | null =>
-  code === undefined ? null : (REFUSAL_TEXT as Record<string, string>)[code] ?? REFUSAL_TEXT.unknown;
+  code === undefined ? null : ({ ...REFUSAL_TEXT, ...HUDDLE_FLAG_REFUSAL_TEXT } as Record<string, string>)[code] ?? REFUSAL_TEXT.unknown;
 
 export interface ChangeOption {
   id: string;
@@ -37,6 +40,8 @@ export interface PendingView {
   moved: Line[];
   changeOptions: ChangeOption[];
   drafts: Drafts;
+  /** Set once a person has sent this week to the huddle; the decision itself is still open. */
+  flagged: { by: string; when: string } | null;
 }
 export interface DecisionsModel {
   title: string;
@@ -51,7 +56,12 @@ export interface DecisionsModel {
   allowedFigures: string[];
 }
 
-export function buildDecisions(s: SyntheticScenario, ledger: readonly LedgerRow[], error: string | null, drafter: Drafter = templateDrafter): DecisionsModel {
+/** Who flagged a week for the huddle and when, as the pages show it. */
+export function flaggedView(f: HuddleFlag | undefined, fig: Figures): { by: string; when: string } | null {
+  return f ? { by: fig.text(f.flaggedBy), when: fig.text(formatDayShort(receivedLocalDate(f.flaggedAt))) } : null;
+}
+
+export function buildDecisions(s: SyntheticScenario, ledger: readonly LedgerRow[], error: string | null, drafter: Drafter = templateDrafter, flags: readonly HuddleFlag[] = []): DecisionsModel {
   const fig = new Figures();
   const weeks = toPlannedWeekCapacities(s);
   const reqs = toPricedRequests(s);
@@ -83,6 +93,7 @@ export function buildDecisions(s: SyntheticScenario, ledger: readonly LedgerRow[
         moved: view.moved,
         changeOptions: r.deferred.filter((d) => d.volumeM3 <= r.freeM3).map((d) => ({ id: d.requestId, label: `${fmt.who(d.requestId)} (${fig.m3(d.volumeM3)})` })),
         drafts: drafter(s.plant.name, view),
+        flagged: flaggedView(flags.find((f) => f.week === r.week), fig),
       };
     });
 

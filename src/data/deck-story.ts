@@ -128,6 +128,7 @@ export function buildDeckStory(base: SyntheticScenario, p: DeckStoryParams): Syn
     customers,
     firmOrders,
     requests,
+    displayWeeks: p.displayWeeks,
     whatIf: p.whatIf,
     asOf: p.asOf,
     reservations: p.reservations,

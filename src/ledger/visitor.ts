@@ -5,7 +5,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { cookies } from "next/headers";
 import type { ZodType } from "zod";
-import { CallOffSchema, OutboxRowSchema, type CallOff, type OutboxRow } from "@/data/schema";
+import { CallOffSchema, HuddleFlagSchema, OutboxRowSchema, type CallOff, type HuddleFlag, type OutboxRow } from "@/data/schema";
 import { decodeList, encodeList, MAX_VISITOR_COOKIE_CHARS } from "./visitor-codec";
 import { ledgerMode } from "./mode";
 import { ledgerPath } from "./store";
@@ -60,3 +60,4 @@ export function visitorStore<T>(name: string, schema: ZodType<T>): VisitorStore<
 
 export const callOffStore = visitorStore<CallOff>("calloffs", CallOffSchema);
 export const outboxStore = visitorStore<OutboxRow>("outbox", OutboxRowSchema);
+export const huddleFlagStore = visitorStore<HuddleFlag>("huddleflags", HuddleFlagSchema);

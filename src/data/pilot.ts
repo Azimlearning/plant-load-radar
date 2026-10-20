@@ -2,7 +2,7 @@
 // It shows the measurement plan with its baselines EMPTY ON PURPOSE: nothing has been measured at Chin Hin. Beside each measure
 // it shows what the demo can already show, labelled as seeded or illustrative. Every number goes through `Figures`.
 
-import { dailyDelayRateRM } from "@/core/costs";
+import { breakEvenMarginShare, contributionMarginRM, dailyDelayRateRM } from "@/core/costs";
 import { comparePolicies, type PolicyId } from "@/core/policies";
 import { recommend } from "@/core/planner";
 import { Figures } from "./board";
@@ -32,6 +32,11 @@ export interface PolicyCase {
   rows: PolicyRow[];
 }
 
+export interface Sensitivity {
+  title: string;
+  lines: string[];
+}
+
 export interface PilotModel {
   title: string;
   banner: string;
@@ -40,6 +45,8 @@ export interface PilotModel {
   measures: Measure[];
   policyIntro: string;
   policyCases: PolicyCase[];
+  /** How much the story week's call depends on the outside margin assumption (ADR D-20), or null. */
+  sensitivity: Sensitivity | null;
   risks: { risk: string; how: string; where: string; href: string }[];
   needs: string[];
   nextStep: string;
@@ -76,6 +83,32 @@ function policyCase(s: SyntheticScenario, fig: Figures, title: string): PolicyCa
       waitingValue: fig.rm(p.waitingRM),
       note: POLICY_NOTE[p.policy],
     })),
+  };
+}
+
+const PERCENT = 100;
+
+/** The outside margin is the public PBT margin, lower than a contribution margin. This shows how far it would have to rise to change the call. */
+function marginSensitivity(s: SyntheticScenario, fig: Figures): Sensitivity | null {
+  const rec = recommend(toPlannedWeekCapacities(s), toPricedRequests(s))[0];
+  if (!rec) return null;
+  const internal = rec.served.filter((e) => e.side === "internal").reduce((t, e) => t + e.valueRM, 0);
+  const outside = rec.deferred.find((e) => e.side === "external");
+  if (!outside || internal <= 0) return null;
+  const request = s.requests.find((r) => r.id === outside.requestId);
+  const customer = s.customers.find((c) => c.customerId === request?.partyId);
+  if (!request || !customer) return null;
+  const used = contributionMarginRM(outside.volumeM3, customer) / (outside.volumeM3 * customer.pricePerM3RM);
+  const needed = breakEvenMarginShare(outside.volumeM3, customer, internal);
+  const lead = `${fig.text(customer.name)}'s order is worth ${fig.rm(outside.volumeM3 * customer.pricePerM3RM)} in sales. The demo gives it the public ${fig.dec(used * PERCENT)}% margin (${fig.rm(outside.valueRM)}).`;
+  return {
+    title: "How much does this call depend on the margin assumption?",
+    lines: [
+      lead,
+      needed > 1
+        ? `To go first it would need a margin of ${fig.n(needed * PERCENT)}% of its sales to match the project's ${fig.rm(internal)}. No margin can be above ${fig.n(PERCENT)}%, so the call holds at any margin, including a contribution margin well above the public figure.`
+        : `To go first it would need a margin of ${fig.dec(needed * PERCENT)}% of its sales to match the project's ${fig.rm(internal)}. Above that, the rule would serve the outside order first.`,
+    ],
   };
 }
 
@@ -158,6 +191,7 @@ export function buildPilot(s: SyntheticScenario, history: DemoHistory, ledger: r
     measures,
     policyIntro: "One synthetic week, four ways of choosing who waits. It shows how the choice moves the cost between the two sides, not how much anyone would save: the inputs are invented.",
     policyCases: [story, float].filter((c): c is PolicyCase => c !== null),
+    sensitivity: marginSensitivity(s, fig),
     risks: [
       { risk: "The AI misreads an order", how: "Confidence on every field; anything unsure goes to a person first.", where: "Try it", href: "/inbox/try" },
       { risk: "Teams inflate their cost of delay", how: "Late-handover cost comes from the sale-and-purchase dates and programmes; finance audits the ledger monthly.", where: "Finance", href: "/finance" },

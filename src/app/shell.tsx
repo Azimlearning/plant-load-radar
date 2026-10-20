@@ -59,6 +59,9 @@ export function Shell({ current, banner, title, lede, kicker, counts, hero, chil
       <div className="banner" role="note">
         {banner}
       </div>
+      <a className="skip-link" href="#content">
+        Skip to the page content
+      </a>
       <header className="topbar">
         <span className="brand">
           <span className="brand-mark" aria-hidden="true" />
@@ -80,7 +83,7 @@ export function Shell({ current, banner, title, lede, kicker, counts, hero, chil
             </div>
           ))}
         </nav>
-        <main className="content">
+        <main id="content" className="content" tabIndex={-1}>
           {hero ?? (
             <div className="page-head">
               {kicker ? <p className="kicker">{kicker}</p> : null}

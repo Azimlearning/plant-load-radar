@@ -16,7 +16,9 @@
     "generate:deck-story": "tsx scripts/generate-deck-story.ts",
     "eval:rules": "tsx scripts/eval-llm.ts rules",
     "eval:model": "tsx scripts/eval-llm.ts model",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "e2e": "npm run build && playwright test",
+    "e2e:run": "playwright test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",
@@ -26,6 +28,8 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^24.19.1",
     "@types/react": "^19",

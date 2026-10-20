@@ -50,16 +50,57 @@ describe("the rules reader on the authored samples", () => {
     expect(misses).toEqual([]);
   });
 
-  it("fails the documented way on cases it cannot read: unsure, never wrong-and-confident", () => {
-    const limited = file.messages.flatMap((m) => m.gold.lines.map((g, i) => ({ m, g, i }))).filter(({ g }) => g.expectRulesLimit);
-    expect(limited.length).toBeGreaterThan(0);
-    for (const { m, g, i } of limited) {
-      const got = extractWithRules({ id: m.id, channel: m.channel, receivedAt: m.receivedAt, sender: m.sender, text: m.text })[i]!;
-      expect(got.volumeM3.confidence, m.id).toBe("missing");
-      expect(got.volumeM3.value, m.id).toBeNull();
-      expect(got.volumeM3.reason.length, m.id).toBeGreaterThan(0);
-      expect(g.volumeM3[1]).not.toBe("confirmed");
-    }
+  describe("quantities written in words (Bahasa Malaysia read; English left to a person)", () => {
+    const volume = (text: string) =>
+      extractWithRules({ id: "t", channel: "whatsapp", receivedAt: "2026-10-12T01:42:00Z", sender: "t", text })[0]!.volumeM3;
+
+    it("reads the slide's style of message: Project H wants seribu lima ratus kubik as 1,500, inferred, with the words quoted", () => {
+      const v = volume("Project H perlukan seribu lima ratus kubik AAC 100mm 28hb");
+      expect(v).toMatchObject({ value: 1500, confidence: "inferred" });
+      expect(v.reason).toContain("seribu lima ratus");
+      expect(v.source).not.toBeNull();
+    });
+
+    it("reads other totals, with m3 or meter padu as the unit", () => {
+      expect(volume("Project A perlukan dua ribu m3 AAC 100mm").value).toBe(2000);
+      expect(volume("Project A perlukan tiga ratus lima puluh meter padu AAC 100mm").value).toBe(350);
+      expect(volume("Project A perlukan lima ratus kubik AAC 100mm").confidence).toBe("inferred");
+    });
+
+    it("never calls a worded quantity confirmed: only digits in the message earn that", () => {
+      for (const t of ["dua ribu kubik", "seratus kubik", "sepuluh m3"]) expect(volume(`Project A perlukan ${t} AAC 100mm`).confidence).not.toBe("confirmed");
+    });
+
+    it("keeps digits and words that disagree as conflicting, with no silent pick, and lets agreeing ones through", () => {
+      const clash = volume("Project A perlukan 1,200 m3, eh seribu lima ratus kubik AAC 100mm");
+      expect(clash).toMatchObject({ value: null, confidence: "conflicting" });
+      expect(clash.reason).toContain("1,200");
+      expect(clash.reason).toContain("1,500");
+      expect(volume("Project A perlukan 1500 m3 (seribu lima ratus kubik) AAC 100mm")).toMatchObject({ value: 1500, confidence: "confirmed" });
+    });
+
+    it("does not drop a second or corrected quantity: it is conflicting, as it is for digits", () => {
+      for (const t of [
+        "Project A perlukan seribu kubik AAC 100mm 23 Oct, eh silap, seribu dua ratus kubik",
+        "Project A perlukan seribu kubik minggu ni, dua ribu kubik minggu depan AAC 100mm",
+        "Project A perlukan 1000 m3 AAC 100mm, eh silap, seribu dua ratus kubik",
+      ]) {
+        expect(volume(t), t).toMatchObject({ value: null, confidence: "conflicting" });
+      }
+      expect(volume("Project A perlukan seribu kubik, ya seribu kubik AAC 100mm")).toMatchObject({ value: 1000, confidence: "inferred" });
+    });
+
+    it("will not total words that are out of order, or a range: unsure, never a wrong figure", () => {
+      for (const t of ["dua ratus tiga ratus", "seratus lima ratus", "lima ratus seribu", "tiga puluh lima ratus"]) {
+        expect(volume(`Project A perlukan ${t} kubik AAC 100mm`), t).toMatchObject({ value: null, confidence: "missing" });
+      }
+    });
+
+    it("leaves what it cannot total to a person: unsure, never a guess", () => {
+      expect(volume("Project A perlukan seribu seribu kubik AAC 100mm")).toMatchObject({ value: null, confidence: "missing" });
+      expect(volume("Project A perlukan one thousand five hundred cubic AAC 100mm")).toMatchObject({ value: null, confidence: "missing" });
+      expect(volume("Project A perlukan one thousand five hundred cubic AAC 100mm").reason).toContain("Bahasa Malaysia number words only");
+    });
   });
 
   it("returns no lines for chatter", () => {

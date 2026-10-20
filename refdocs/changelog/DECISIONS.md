@@ -240,6 +240,23 @@ There is no `real` kind. Each file under `data/` has a row in `data/MANIFEST.md`
 
 ---
 
+## D-23 — Local development: a longer data horizon, huddle flags, number words, chat import, browser tests (2026-10-20)
+
+**Decision:**
+1. **Twelve weeks in the data, six on screen.** The deck story keeps weeks 41 to 46 exactly as slide 9 and adds six quiet scripted weeks (47 to 52: free capacity, no new requests). `displayWeeks` (6) in the scenario makes the board's chart and week table show the first six; `/board?weeks=all` shows twelve. The rule, decisions, KPIs and "ask the board" always use every week. Call-offs can now reserve weeks 46 to 52; they still cannot reach a decided week (a test reserves in three later weeks and asserts every recommendation is unchanged).
+2. **Reserved slots are listed on the board** (slide 7, guardrail 2), through a shared `slotViews` in `src/data/slots.ts`.
+3. **"Send to the huddle" is a stored marker**, not a link: a per-visitor flag (same store pattern as the outbox) set by a named person on a week that has a decision waiting. It changes no figure and decides nothing; the huddle lists flagged weeks first; recording the decision spends the flag.
+4. **Bahasa Malaysia number words** ("seribu lima ratus kubik") are read by the rules reader as **inferred**, never confirmed, with the words quoted; words that disagree with digits are **conflicting**; unparseable words stay **missing**. English number words remain unread (documented limit, covered by a unit test). Sample msg-21's gold changed from "missing, rules cannot read" to "inferred 1,500"; the committed rules baseline moved from 15 right / 1 wrong to 16 / 0 on volume. "Invented and confirmed" stays 0.
+5. **A pasted WhatsApp chat export** (iPhone and Android shapes, d/m/y Malaysian time) is split deterministically into messages and goes through the same pipeline; system and media lines are dropped; capped at 3,000 characters and 15 messages (`TRY_MAX_CHARS` rose from 1,500 so a short chat fits in a GET address). The sample chat is a new synthetic file with a manifest row.
+6. **Playwright and axe as dev dependencies** for end-to-end tests run against the production build in cookie mode (the hosted mode), at desktop and phone width.
+
+**Why:** each closes a gap the hand-off listed, at the lowest cost (rule 8): no database, no new rule, no model. The 22-message sample set stays fixed so the model evaluation is comparable. **Rejected:** adding messages to the 22-sample file (it feeds the inbox counts, the eval and the docs); a POST form for long pastes (a server action and a body parser for a demo box); recomputing the board from six weeks only (the rule must see the weeks a call-off can reserve).
+7. **Margin sensitivity on `/pilot`:** a break-even (the margin an outside order would need to match the project's value) instead of a second margin figure, so no new assumed number is introduced. For the story week it is 261% of sales, so D-20's public PBT margin does not decide the call.
+
+**Trade-off:** the rules reader's volume now beats the sample the model was meant to beat, so a live model run has less to prove on that row. A pasted export from another year is read faithfully and will mostly fall outside the board's weeks.
+
+---
+
 ## Working assumptions (`ASSUMED:`)
 
 Not decisions — guesses made to keep moving. Each one must be confirmed or killed before anything load-bearing is built on it. When one is resolved, delete it here and write a real ADR above.

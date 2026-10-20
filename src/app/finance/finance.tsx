@@ -45,7 +45,7 @@ export function Finance({ model, counts }: { model: FinanceModel; counts?: NavCo
             </a>
           </div>
         </form>
-        <div className="table-scroll">
+        <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
           <table>
             <thead>
               <tr>

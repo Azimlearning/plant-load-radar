@@ -1,10 +1,10 @@
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { weekBalances } from "@/core/planner";
+import { recommend, weekBalances } from "@/core/planner";
 import { applyCallOffs, checkCallOff, earliestReservableWeek } from "./calloffs";
 import { loadJsonDataset } from "./loaders";
-import { toPricedRequests, toWeekCapacities } from "./scenario";
-import { SyntheticScenarioSchema } from "./schema";
+import { toPlannedWeekCapacities, toPricedRequests, toWeekCapacities } from "./scenario";
+import { SyntheticScenarioSchema, type CallOff } from "./schema";
 import { SCENARIO_FILE } from "./synth";
 
 const deck = loadJsonDataset("synthetic/deck-story.json", SyntheticScenarioSchema, join(process.cwd(), "data")).data;
@@ -54,7 +54,7 @@ describe("a call-off", () => {
     expect(code({ volumeM3: "12.5" })).toBe("bad-volume");
     expect(code({ projectId: "nobody" })).toBe("unknown-project");
     expect(code({ requestedBy: "  " })).toBe("name-required");
-    expect(code({ week: "2026-W52" })).toBe("bad-week");
+    expect(code({ week: "2026-W60" })).toBe("bad-week");
     const first = checkCallOff(deck, ok, []);
     if (first.ok) expect(code({}, [first.callOff] as never)).toBe("already-reserved");
     expect(checkCallOff(stress, ok, [])).toEqual({ ok: false, error: "no-policy" });
@@ -63,5 +63,20 @@ describe("a call-off", () => {
     const r = checkCallOff(deck, ok, []);
     expect(r.ok).toBe(true);
     if (r.ok) expect(r.callOff.week > "2026-W43").toBe(true);
+  });
+  it("can reserve any later week in the data, and still leaves every recommendation and the week-43 inputs untouched", () => {
+    const before = recommend(toPlannedWeekCapacities(deck), toPricedRequests(deck));
+    let merged = deck;
+    const taken: CallOff[] = [];
+    for (const week of ["2026-W46", "2026-W49", "2026-W52"]) {
+      const r = checkCallOff(merged, { ...ok, week, volumeM3: "400" }, taken);
+      expect(r.ok, week).toBe(true);
+      if (!r.ok) return;
+      taken.push(r.callOff);
+      merged = applyCallOffs(deck, taken);
+    }
+    expect(recommend(toPlannedWeekCapacities(merged), toPricedRequests(merged))).toEqual(before);
+    expect(spare(merged)["2026-W43"]).toBe(spare(deck)["2026-W43"]);
+    expect(spare(merged)["2026-W52"]).toBe(spare(deck)["2026-W52"] - 400);
   });
 });

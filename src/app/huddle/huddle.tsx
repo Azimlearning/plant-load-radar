@@ -54,6 +54,11 @@ export function Huddle({ model, minutes, counts }: { model: HuddleModel; minutes
           model.decisions.map((d) => (
             <section key={d.anchor} id={d.anchor} className="card card-alert" aria-label={d.headline}>
               <h3 className="card-title">{d.headline}</h3>
+              {d.flagged ? (
+                <p className="flag" role="status">
+                  Sent here by {d.flagged.by} on {d.flagged.when}.
+                </p>
+              ) : null}
               <p className="muted">
                 {d.freeText} · {d.wantedText}
               </p>

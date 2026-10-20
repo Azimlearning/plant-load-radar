@@ -3,6 +3,7 @@
 // which records them (see board.test.tsx, the "every figure comes from the model" check).
 
 import Link from "next/link";
+import { SlotTable } from "./calloffs/calloffs";
 import { Shell, type NavCounts } from "./shell";
 import type { Bar, BoardModel, Chart, Line, RecommendationView } from "@/data/board";
 
@@ -267,12 +268,12 @@ export function Board({ model, counts }: { model: BoardModel; counts?: NavCounts
           <p className="muted">Cubic metres left after confirmed orders and this week&apos;s new requests.</p>
           <Legend />
           <p className="scroll-hint">Narrow screen: scroll the chart sideways to see every week, or open the table below.</p>
-          <div className="chart-scroll">
+          <div className="chart-scroll" tabIndex={0} role="group" aria-label="Scrollable chart">
             <ChartSvg chart={model.chart} />
           </div>
           <details className="twin">
             <summary>Show as a table</summary>
-            <div className="table-scroll">
+            <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
               <table>
                 <thead>
                   <tr>
@@ -299,6 +300,13 @@ export function Board({ model, counts }: { model: BoardModel; counts?: NavCounts
               </table>
             </div>
           </details>
+          {model.horizon ? (
+            <p className="horizon">
+              <Link className="button secondary" href={model.horizon.href}>
+                {model.horizon.label}
+              </Link>
+            </p>
+          ) : null}
         </section>
         {first ? (
           <Recommendation rec={first} actionsNote={model.actionsNote} area="area-decision" />
@@ -322,13 +330,28 @@ export function Board({ model, counts }: { model: BoardModel; counts?: NavCounts
         <Prebuild key={rec.week} rec={rec} />
       ))}
 
+      {model.slots ? (
+        <section className="card" aria-labelledby="slots-title">
+          <h2 id="slots-title" className="card-title">
+            Reserved slots
+          </h2>
+          <p className="muted">{model.slots.note}</p>
+          <SlotTable slots={model.slots.rows} />
+          <div className="actions">
+            <Link className="button secondary" href="/calloffs">
+              Confirm a call-off
+            </Link>
+          </div>
+        </section>
+      ) : null}
+
       {model.orders && (
         <section className="card" aria-labelledby="orders-title">
           <h2 id="orders-title" className="card-title">
             {model.orders.title}
           </h2>
           <p className="muted">{model.orders.note}</p>
-          <div className="table-scroll">
+          <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
             <table>
               <thead>
                 <tr>
@@ -366,7 +389,7 @@ export function Board({ model, counts }: { model: BoardModel; counts?: NavCounts
             Requests competing in {model.focus.weekName}
           </h2>
           <p className="muted">{model.focus.committed}</p>
-          <div className="table-scroll">
+          <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
             <table>
               <thead>
                 <tr>

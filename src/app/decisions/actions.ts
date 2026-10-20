@@ -11,10 +11,11 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { buildDecisions } from "@/data/decisions";
+import { checkHuddleFlag } from "@/data/huddle-flags";
 import { buildOutboxRows } from "@/ledger/outbox";
 import { loadScenario } from "@/ledger/scenario-session";
 import { loadRows, resetDemo, saveDecision } from "@/ledger/session";
-import { outboxStore } from "@/ledger/visitor";
+import { huddleFlagStore, outboxStore } from "@/ledger/visitor";
 
 const PAGES = ["/", "/board", "/decisions", "/ledger", "/outbox", "/huddle", "/finance"] as const;
 
@@ -48,6 +49,20 @@ export async function decide(formData: FormData): Promise<void> {
   }
   for (const path of PAGES) revalidatePath(path);
   redirect(queued > 0 ? "/outbox" : "/ledger");
+}
+
+/**
+ * "Send to the huddle": flag a waiting decision for the weekly huddle instead of deciding it alone. A marker only: it
+ * records no decision and changes no figure. The form's text goes to `checkHuddleFlag`, which refuses an unnamed person,
+ * a week with no open decision, and a repeat.
+ */
+export async function sendToHuddle(formData: FormData): Promise<void> {
+  const scenario = await loadScenario();
+  const outcome = checkHuddleFlag(scenario, await loadRows(scenario), { week: formData.get("week"), flaggedBy: formData.get("approvedBy") }, await huddleFlagStore.read());
+  if (!outcome.ok) redirect(`/decisions?error=${outcome.error}`);
+  if (!(await huddleFlagStore.append(outcome.flag))) redirect("/decisions?error=huddle-storage-full");
+  for (const path of PAGES) revalidatePath(path);
+  redirect(`/huddle#week-${outcome.flag.week}`);
 }
 
 /** "Start the demo again": clears this visitor's own demo state. Does nothing when the file ledger is in use. */

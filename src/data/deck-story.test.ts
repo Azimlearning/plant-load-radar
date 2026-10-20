@@ -8,6 +8,7 @@ import { coveredByPrebuild, recommend, weekBalances } from "@/core/planner";
 import { recordDecision } from "@/ledger/decide";
 import { ACTIVE_SCENARIO_FILE } from "./active";
 import { buildBoard } from "./board";
+import { applyCallOffs, checkCallOff } from "./calloffs";
 import { buildDecisions } from "./decisions";
 import { DECK_PARAMS_FILE, DECK_SCENARIO_FILE, generateDeckStory } from "./deck-story";
 import { loadJsonDataset } from "./loaders";
@@ -33,9 +34,19 @@ describe("the deck story is what the revised deck shows (slides 3, 7, 9, 10; ADR
   });
 
   it("slide 9: six weeks, spare capacity +1,200, -700, -2,000, +4,100, +2,500, +1,000", () => {
-    const spare = Object.fromEntries(weekBalances(weeks, reqs).map((b) => [b.week, b.spareM3]));
-    expect(spare).toEqual(SLIDE_9_SPARE);
-    expect(deck.meta.weekCount).toBe(6);
+    const shown = weekBalances(weeks, reqs).slice(0, deck.displayWeeks);
+    expect(Object.fromEntries(shown.map((b) => [b.week, b.spareM3]))).toEqual(SLIDE_9_SPARE);
+    expect(deck.displayWeeks).toBe(6);
+  });
+
+  it("the weeks after slide 9 are a quiet outlook: twelve weeks in the data, no request and no shortage after week 46", () => {
+    expect(deck.meta.weekCount).toBe(12);
+    const later = weekBalances(weeks, reqs).slice(deck.displayWeeks);
+    expect(later.map((b) => b.week)).toEqual(["2026-W47", "2026-W48", "2026-W49", "2026-W50", "2026-W51", "2026-W52"]);
+    for (const b of later) {
+      expect(b.requestedM3, b.week).toBe(0);
+      expect(b.spareM3, b.week).toBeGreaterThan(0);
+    }
   });
 
   it("slide 9: two short weeks; week 42 is covered by building ahead, week 43 needs a call", () => {
@@ -123,6 +134,54 @@ describe("what the screens say", () => {
     expect(reply.text).toContain("We can deliver from Mon 26 Oct (Week 44). Shall I lock that in?");
     expect(reply.text).not.toMatch(/RM\d/);
     expect(d.allowedFigures).toContain("26");
+  });
+});
+
+describe("the board's horizon and reserved slots (L3)", () => {
+  const markup = (m: ReturnType<typeof buildBoard>) => renderToStaticMarkup(Board({ model: m }));
+
+  it("shows slide 9's six weeks by default, with a link to six more; the rule and KPIs still use every week", () => {
+    const b = buildBoard(deck);
+    expect(b.chart.bars.map((x) => x.short)).toEqual(["W41", "W42", "W43", "W44", "W45", "W46"]);
+    expect(b.weekTable).toHaveLength(6);
+    expect(b.range).toBe("2026-W41 to 2026-W46");
+    expect(b.horizon).toMatchObject({ showingAll: false, hidden: "6", href: "/board?weeks=all", label: "Show 6 more weeks" });
+    expect(markup(b)).toContain("Show 6 more weeks");
+  });
+
+  it("shows all twelve weeks when asked, with a link back, and the same decisions", () => {
+    const all = buildBoard(deck, undefined, [], undefined, { allWeeks: true });
+    expect(all.chart.bars).toHaveLength(12);
+    expect(all.range).toBe("2026-W41 to 2026-W52");
+    expect(all.horizon).toMatchObject({ showingAll: true, href: "/board" });
+    expect(all.recommendations.map((r) => r.weekName)).toEqual(buildBoard(deck).recommendations.map((r) => r.weekName));
+    expect(all.kpis.find((k) => k.id === "weeks-short")!.value).toBe("2");
+  });
+
+  it("a scenario with no display limit has no horizon control", () => {
+    expect(buildBoard(stress).horizon).toBeNull();
+  });
+
+  it("lists the two seeded slots with their release dates, and marks a visitor's own call-off", () => {
+    const b = buildBoard(deck);
+    expect(b.slots!.rows.map((r) => [r.project, r.weekName, r.volume, r.releases, r.source])).toEqual([
+      ["Project E (fictional)", "Week 45", "800 m³", "Mon 26 Oct", "Seeded for the demo"],
+      ["Project H (fictional)", "Week 46", "500 m³", "Mon 2 Nov", "Seeded for the demo"],
+    ]);
+    const r = checkCallOff(deck, { projectId: "project-d", week: "2026-W46", volumeM3: "300", requestedBy: "Hakim" }, []);
+    if (!r.ok) throw new Error("setup");
+    const merged = applyCallOffs(deck, [r.callOff]);
+    const mine = buildBoard(merged, undefined, [], undefined, { callOffs: [r.callOff] });
+    expect(mine.slots!.rows.map((x) => x.source)).toContain("Your call-off");
+    expect(markup(mine)).toContain("Reserved slots");
+  });
+
+  it("every figure on the longer board is in the model's allowed list", () => {
+    const all = buildBoard(deck, undefined, [], undefined, { allWeeks: true });
+    const text = markup(all).replace(/<[^>]+>/g, " ").replace(/&(?:amp|lt|gt|quot|#x27|#39);/g, " ");
+    const stripped = text.replace(/\b\d{4}-\d{2}-\d{2}\b/g, " ").replace(/\b\d{4}-W\d{2}\b/g, " ").replace(/\bW\d{2}\b/g, " ");
+    const ok = new Set(all.allowedFigures);
+    expect([...new Set((stripped.match(/\d{1,3}(?:,\d{3})+|\d+/g) ?? []).filter((x) => !ok.has(x)))]).toEqual([]);
   });
 });
 

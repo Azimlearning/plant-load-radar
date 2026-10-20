@@ -6,8 +6,10 @@ import { daysBetween, formatDayShort } from "@/core/dates";
 import { coveredByPrebuild, recommend } from "@/core/planner";
 import { Figures, lineFormatter, type Line } from "./board";
 import { slotViews, type SlotView } from "./calloffs-view";
+import { flaggedView } from "./decisions";
+import { openFlags } from "./huddle-flags";
 import { toPlannedWeekCapacities, toPricedRequests, toWeekCapacities } from "./scenario";
-import type { CallOff, LedgerRow, SyntheticScenario } from "./schema";
+import type { CallOff, HuddleFlag, LedgerRow, SyntheticScenario } from "./schema";
 
 export interface HuddleDecision {
   anchor: string;
@@ -16,6 +18,8 @@ export interface HuddleDecision {
   wantedText: string;
   served: Line[];
   moved: Line[];
+  /** Set when a person sent this week here instead of deciding it alone. */
+  flagged: { by: string; when: string } | null;
 }
 
 export interface HuddleBlock {
@@ -41,7 +45,7 @@ export interface HuddleModel {
 
 const LAPSE_WINDOW_DAYS = 14; // a slot is "about to lapse" when its release date is within two weeks of the as-of date
 
-export function buildHuddle(s: SyntheticScenario, ledger: readonly LedgerRow[], capture: { needsPerson: number; lines: number } | null, mine: readonly CallOff[] = []): HuddleModel {
+export function buildHuddle(s: SyntheticScenario, ledger: readonly LedgerRow[], capture: { needsPerson: number; lines: number } | null, mine: readonly CallOff[] = [], flags: readonly HuddleFlag[] = []): HuddleModel {
   const fig = new Figures();
   const weeks = toWeekCapacities(s);
   const planned = toPlannedWeekCapacities(s);
@@ -50,6 +54,7 @@ export function buildHuddle(s: SyntheticScenario, ledger: readonly LedgerRow[], 
   const decided = new Set(ledger.map((r) => r.week));
   const huddle = s.huddle ?? { minutes: 30, blocks: [] };
 
+  const waitingFlags = openFlags(flags, ledger);
   const decisions: HuddleDecision[] = recommend(planned, reqs)
     .filter((r) => !decided.has(r.week))
     .map((r) => ({
@@ -59,7 +64,10 @@ export function buildHuddle(s: SyntheticScenario, ledger: readonly LedgerRow[], 
       wantedText: `${fig.m3(r.demandM3)} wanted`,
       served: fmt.servedLines(r),
       moved: fmt.movedLines(r),
-    }));
+      flagged: flaggedView(waitingFlags.find((f) => f.week === r.week), fig),
+    }))
+    // Weeks a person flagged come first: they asked the huddle to settle them.
+    .sort((a, b) => Number(b.flagged !== null) - Number(a.flagged !== null));
 
   const covered = coveredByPrebuild(weeks, reqs, s.plannerSettings.stockCapM3).map((c) => ({
     headline: `${fig.week(c.week)} is ${fig.m3(c.shortM3)} short, covered by building ahead`,

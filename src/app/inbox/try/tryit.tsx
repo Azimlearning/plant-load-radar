@@ -15,7 +15,7 @@ export function TryIt({ model, counts }: { model: TryModel; counts?: NavCounts }
         </h2>
         <form className="form" method="get" action="/inbox/try">
           <label>
-            Message
+            Message, or a whole pasted WhatsApp chat export
             <textarea name="text" className="draft-edit" rows={4} defaultValue={model.form.text} maxLength={model.example.maxChars} placeholder={model.example.text} />
           </label>
           <div className="row">
@@ -50,6 +50,9 @@ export function TryIt({ model, counts }: { model: TryModel; counts?: NavCounts }
           <p className="muted">{model.modelNote}</p>
           <div className="actions">
             <button type="submit">Read it</button>
+            <Link className="button secondary" href="/inbox/try?chat=sample">
+              Read a sample WhatsApp chat export
+            </Link>
             <Link className="button secondary" href="/inbox/try?csv=sample">
               Read the sample sales-order export
             </Link>

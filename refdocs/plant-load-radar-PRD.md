@@ -173,6 +173,7 @@ Canonical one-line list. Load-bearing entries are expanded as ADRs in `changelog
 | D-20 | Align the demo to the revised deck: deck-story scenario (weeks 41 to 46, RM145k a day, RM18k margin at the public 10.8% PBT margin); short weeks fully covered by building ahead are not decisions | User, 2026-10-16: revised 15-slide deck; "yes" to aligning the numbers (ADR D-20) |
 | D-21 | Model layer: `src/llm/` provider interface, Claude Haiku 5.5 by default, off unless configured, every output behind grounding or a number-subset guard; no trained model for the MVP; deck-green/hatched-coral chart colours | User: small pay-per-use LLM budget, 'suggest a trained model if needed' (ADR D-21) |
 | D-22 | Demo state beyond the ledger: scenario as-of date, seeded reserved slots, call-offs (four or more weeks ahead), simulated outbox, seeded decision history; all per-visitor, none sends anything | Slide 6 and 7 promises needed working analogues for TRL 3 (ADR D-22) |
+| D-23 | Local development: twelve weeks in the data with six on screen, reserved slots on the board, huddle flags as stored markers, Bahasa Malaysia number words read as inferred, pasted WhatsApp chat import, Playwright and axe tests | Closes the hand-off's known gaps without changing the rule or the 22-sample evaluation set (ADR D-23) |
 
 ---
 

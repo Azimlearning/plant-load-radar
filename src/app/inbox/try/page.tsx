@@ -13,8 +13,11 @@ import { loadScenario } from "@/ledger/scenario-session";
 import { TryIt } from "./tryit";
 
 const CSV_FILE = "synthetic/kingdee-export.csv";
+const CHAT_FILE = "synthetic/whatsapp-export-sample.txt";
 /** How many messages one request may send to the model: a cost brake on top of the per-run call cap. */
 const MAX_MODEL_MESSAGES = 10;
+/** Typed or pasted text is anyone's, so it gets fewer model calls than the built-in samples. */
+const MAX_TYPED_MODEL_MESSAGES = 3;
 
 const transcribe = (out: IntakeOutput): string =>
   out.lines.map((l) => [l.customer.value ?? "", l.product.value ?? "", l.volumeM3.value === null ? "" : `${l.volumeM3.value} m3`, l.neededBy.value ?? "", l.reference.value ?? ""].join(" | ")).join("\n");
@@ -24,10 +27,11 @@ export default async function TryPage({ searchParams }: PageProps<"/inbox/try">)
   await connection();
   const q = await searchParams;
   const one = (v: string | string[] | undefined): string | undefined => (typeof v === "string" ? v : undefined);
-  const params = { text: one(q.text), channel: one(q.channel), sample: one(q.sample), csv: one(q.csv), reader: one(q.reader), photo: one(q.photo) };
+  const params = { text: one(q.text), channel: one(q.channel), sample: one(q.sample), csv: one(q.csv), chat: one(q.chat), reader: one(q.reader), photo: one(q.photo) };
   const scenario = await loadScenario();
   const { known, samples } = loadCaptureInputs();
   const csv = params.csv === "sample" ? loadTextDataset(CSV_FILE).text : "";
+  const chat = params.chat === "sample" ? loadTextDataset(CHAT_FILE).text : "";
 
   const config = llmConfig();
   const provider = getProvider(config);
@@ -37,13 +41,15 @@ export default async function TryPage({ searchParams }: PageProps<"/inbox/try">)
   const failures: string[] = [];
 
   if (params.reader === "model" && provider) {
-    const { messages } = resolveMessages(scenario, samples, params, csv);
-    for (const m of messages.slice(0, MAX_MODEL_MESSAGES)) {
+    const { messages } = resolveMessages(scenario, samples, params, csv, chat);
+    const cap = params.chat === "sample" || params.csv === "sample" || params.sample ? MAX_MODEL_MESSAGES : MAX_TYPED_MODEL_MESSAGES;
+    for (const m of messages.slice(0, cap)) {
       const r = await readMessageWithModel(provider, m);
       if (r.ok) read.set(m.id, r.lines);
       else failures.push(r.reason);
     }
     ctx.readerName = provider.name;
+    if (messages.length > cap) ctx.modelNote = `${ctx.modelNote} Only the first ${cap} messages were sent to the model; the rest were read by the rules reader.`;
     if (failures.length > 0) ctx.modelNote = `${ctx.modelNote} ${failures.length} message(s) could not be read by the model (${[...new Set(failures)].join("; ")}), so the rules reader read them instead.`;
   } else if (params.reader === "model") {
     ctx.modelNote = `${ctx.modelNote} The rules reader was used.`;
@@ -69,5 +75,5 @@ export default async function TryPage({ searchParams }: PageProps<"/inbox/try">)
   }
 
   if (read.size > 0) ctx.extract = (m: InboxMessage) => read.get(m.id) ?? extractWithRules(m);
-  return <TryIt counts={await loadNavCounts()} model={buildTry(scenario, known, samples, params, csv, ctx)} />;
+  return <TryIt counts={await loadNavCounts()} model={buildTry(scenario, known, samples, params, csv, ctx, chat)} />;
 }

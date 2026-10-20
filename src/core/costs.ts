@@ -56,6 +56,17 @@ export function externalValueRM(volumeM3: number, customer: CustomerCard): numbe
 }
 
 /**
+ * The margin, as a share of an outside order's revenue, that the order would need to be worth `targetRM` (the customer's
+ * loss risk counted). Above 1 means no margin could do it. Used to show how much the rule's call depends on the margin
+ * assumption: for the story week it is far above 1, so the call holds at any margin.
+ */
+export function breakEvenMarginShare(volumeM3: number, customer: CustomerCard, targetRM: number): number {
+  const revenueRM = volumeM3 * customer.pricePerM3RM;
+  if (revenueRM <= 0) return Number.POSITIVE_INFINITY;
+  return (targetRM - customer.lossRiskRM) / revenueRM;
+}
+
+/**
  * Annual cost of holding excess stock: value × carrying rate. The rate is a required input
  * (a sourced range, never a literal here; research 01 §4 gives 20–30% as a generic upper range).
  */

@@ -10,7 +10,7 @@ On the 22 invented sample messages with hand-written gold readings. The gold sha
 |---|---|---|---|---|---|
 | customer | 21 | 0 | 100% | 0 | 0 |
 | product | 21 | 0 | 100% | 0 | 0 |
-| volumeM3 | 15 | 1 | 94% | 0 | 5 |
+| volumeM3 | 16 | 0 | 100% | 0 | 5 |
 | neededBy | 20 | 0 | 100% | 0 | 1 |
 | reference | 5 | 0 | 100% | 0 | 16 |
 

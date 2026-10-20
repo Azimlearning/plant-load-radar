@@ -3,6 +3,7 @@
 
 import { addDays } from "@/core/dates";
 import { weekOfDate, weekSequence, weekStart } from "@/core/weeks";
+import { MALAY_NUMBER_WORDS, parseMalayNumber } from "./malay-numbers";
 import { MALAYSIA_UTC_OFFSET_HOURS, type Confidence, type Span } from "./types";
 
 export interface Found<T> {
@@ -68,15 +69,34 @@ const NUMBER_WORDS = /\b(?:seribu|ribu|ratus|puluh|belas|sepuluh|dua|tiga|empat|
 
 const toNumber = (s: string): number => Number(s.replace(/,/g, ""));
 
+// A run of Bahasa Malaysia number words followed by a volume unit: "seribu lima ratus kubik".
+const WORD_ALT = MALAY_NUMBER_WORDS.join("|");
+const MALAY_WORDS_RE = new RegExp(String.raw`\b((?:${WORD_ALT})(?:\s+(?:dan\s+)?(?:${WORD_ALT}))*)\s+(?:${M3}|meter\s+padu)`, "i");
+
 export function findVolume(text: string, offset = 0): Found<number | null> {
   const found = [...text.matchAll(new RegExp(`(${NUM})\\s*${M3}`, "gi"))];
-  const distinct = [...new Set(found.map((m) => toNumber(m[1]!)))];
+  // Every worded quantity counts, not just the first: a correction ("eh silap, ...") or a second figure must not be dropped.
+  const worded = [...text.matchAll(new RegExp(MALAY_WORDS_RE.source, "gi"))].map((m) => ({ m, value: parseMalayNumber(m[1]!) }));
+  const unparsed = worded.find((w) => w.value === null);
+  if (unparsed) {
+    return { value: null, confidence: "missing", source: null, reason: `quantity written in words ("${unparsed.m[1]}") that this reader could not total` };
+  }
+  const distinct = [...new Set([...found.map((m) => toNumber(m[1]!)), ...worded.map((w) => w.value!)])];
   if (distinct.length > 1) {
     return { value: null, confidence: "conflicting", source: null, reason: `two quantities in one message: ${distinct.map((v) => v.toLocaleString("en-US")).join(" and ")} m3` };
   }
   if (found.length > 0) {
     const m = found[0]!;
     return { value: toNumber(m[1]!), confidence: "confirmed", source: { start: m.index! + offset, end: m.index! + m[0].length + offset }, reason: "" };
+  }
+  if (worded.length > 0) {
+    const { m, value } = worded[0]!;
+    return {
+      value,
+      confidence: "inferred",
+      source: { start: m.index + offset, end: m.index + m[0].length + offset },
+      reason: `quantity written in words ("${m[1]}"); read as ${value!.toLocaleString("en-US")} m3`,
+    };
   }
   const other = new RegExp(`(${NUM})\\s*${OTHER_UNITS}\\b`, "i").exec(text);
   if (other) {
@@ -86,7 +106,7 @@ export function findVolume(text: string, offset = 0): Found<number | null> {
     return { value: null, confidence: "missing", source: null, reason: "a quantity like \"1.5k\" has no unit" };
   }
   if (NUMBER_WORDS.test(text)) {
-    return { value: null, confidence: "missing", source: null, reason: "quantity written in words; this reader does not read number words" };
+    return { value: null, confidence: "missing", source: null, reason: "quantity written in words; this reader reads Bahasa Malaysia number words only" };
   }
   return { value: null, confidence: "missing", source: null, reason: "no quantity stated" };
 }

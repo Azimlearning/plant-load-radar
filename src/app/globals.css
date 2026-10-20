@@ -37,6 +37,9 @@ body {
   line-height: 1.5;
 }
 a { color: var(--brand); }
+.skip-link { position: absolute; left: -9999px; top: 0.5rem; z-index: 20; padding: 0.5rem 0.9rem; background: var(--brand); color: #fff; border-radius: 0.4rem; font-weight: 600; }
+.skip-link:focus { left: 0.5rem; }
+main:focus { outline: none; }
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 0.25rem; }
 
 /* ---- shell: notice, top bar, side navigation, canvas --------------------------------------------- */
@@ -166,6 +169,7 @@ a.button:hover, .form button:hover { background: var(--brand-dark); border-color
 /* ---- tables -------------------------------------------------------------------------------------- */
 .twin summary { cursor: pointer; color: var(--brand); font-weight: 600; font-size: 0.875rem; padding: 0.3rem 0; }
 .table-scroll { overflow-x: auto; }
+.horizon { margin: 0.8rem 0 0; }
 table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
 th, td { text-align: left; padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: top; }
 thead th { color: var(--ink-2); font-weight: 650; font-size: 0.8rem; background: var(--wash); padding-left: 0.6rem; border-bottom: 1px solid var(--line-strong); }
@@ -245,6 +249,7 @@ a.button.ghost:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff
 .photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0.9rem; }
 .photo { margin: 0; display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; }
 .photo img { width: 100%; height: auto; border: 1px solid var(--line-strong); border-radius: 0.4rem; background: #fff; }
+.photo figcaption a { text-decoration: underline; text-underline-offset: 0.15em; }
 .refs { margin: 0; padding-left: 1.4rem; display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.875rem; }
 .assumptions { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0.6rem 1.2rem; margin: 0; }
 .assumptions dt { font-weight: 650; color: var(--brand-dark); font-size: 0.875rem; }

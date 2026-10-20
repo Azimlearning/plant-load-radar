@@ -31,7 +31,7 @@ export function Pilot({ model, counts }: { model: PilotModel; counts?: NavCounts
         <h2 id="measures-title" className="card-title">
           It worked if we see
         </h2>
-        <div className="table-scroll">
+        <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
           <table>
             <thead>
               <tr>
@@ -66,10 +66,20 @@ export function Pilot({ model, counts }: { model: PilotModel; counts?: NavCounts
           Why a rule: one week, four ways to choose
         </h2>
         <p className="muted">{model.policyIntro}</p>
+        {model.sensitivity ? (
+          <section className="card" aria-labelledby="sens-title">
+            <h3 id="sens-title" className="card-title">
+              {model.sensitivity.title}
+            </h3>
+            {model.sensitivity.lines.map((l) => (
+              <p key={l}>{l}</p>
+            ))}
+          </section>
+        ) : null}
         {model.policyCases.map((c) => (
           <section key={c.title} className="card" aria-label={c.title}>
             <h3 className="card-title">{c.title}</h3>
-            <div className="table-scroll">
+            <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
               <table>
                 <thead>
                   <tr>
@@ -100,7 +110,7 @@ export function Pilot({ model, counts }: { model: PilotModel; counts?: NavCounts
         <h2 id="risks-title" className="card-title">
           The risks are known
         </h2>
-        <div className="table-scroll">
+        <div className="table-scroll" tabIndex={0} role="group" aria-label="Scrollable table">
           <table>
             <thead>
               <tr>

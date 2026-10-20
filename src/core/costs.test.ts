@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  breakEvenMarginShare,
   contributionMarginRM,
   dailyDelayRateRM,
   delayCostPerDayRM,
@@ -92,5 +93,19 @@ describe("margin and carrying cost", () => {
 
   it("working capital: RM5m excess at a 25% rate = RM1.25m a year", () => {
     expect(workingCapitalCostPerYearRM(5_000_000, 0.25)).toBe(1_250_000);
+  });
+});
+
+describe("breakEvenMarginShare", () => {
+  const customer = { customerId: "c", pricePerM3RM: 200, variableCostPerM3RM: 100, keyAccount: false, lossRiskRM: 0 };
+  it("is the margin share of sales an outside order needs to be worth a target", () => {
+    expect(breakEvenMarginShare(500, customer, 25_000)).toBeCloseTo(0.25, 10); // 500 m3 x RM200 = RM100,000 in sales
+  });
+  it("counts the customer's loss risk as value already in hand", () => {
+    expect(breakEvenMarginShare(500, { ...customer, lossRiskRM: 10_000 }, 25_000)).toBeCloseTo(0.15, 10);
+  });
+  it("is above 1 when no margin could reach the target, and infinite for an order with no sales", () => {
+    expect(breakEvenMarginShare(500, customer, 250_000)).toBeGreaterThan(1);
+    expect(breakEvenMarginShare(0, customer, 1)).toBe(Number.POSITIVE_INFINITY);
   });
 });

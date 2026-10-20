@@ -59,3 +59,10 @@ wandb/
 
 # Recorded model answers (record/replay in src/llm/recording.ts); model output, not committed
 .llm/
+
+# Playwright
+test-results/
+playwright-report/
+
+# Local video-skill output (contains licensed fonts and machine paths)
+brag-output/

@@ -120,7 +120,7 @@ export function messageView(pm: ProcessedMessage, fig: Figures, names: Map<strin
   fig.text(pm.message.text);
   return {
     key: pm.message.id,
-    sender: pm.message.sender,
+    sender: fig.text(pm.message.sender),
     channel: pm.message.channel === "whatsapp" ? "WhatsApp" : pm.message.channel === "photo" ? "Photo of a paper DO" : "Excel",
     received: receivedLocalDate(pm.message.receivedAt),
     segments: segmentsOf(pm.message.text, spans),

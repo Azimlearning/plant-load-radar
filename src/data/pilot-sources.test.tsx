@@ -34,6 +34,15 @@ describe("the pilot scorecard (slides 11, 12)", () => {
     expect(model.measures[1]!.demo).toBe("0 of 5 decisions moved a confirmed order");
     expect(model.measures[3]!.demo).toBe("30 minutes planned, in 4 blocks");
   });
+  it("shows how little the call depends on the margin assumption: Contractor B would need over 100% margin to go first", () => {
+    const sens = model.sensitivity!;
+    expect(sens.lines[0]).toContain("RM167,000 in sales");
+    expect(sens.lines[0]).toContain("10.8% margin (RM18,073)");
+    expect(sens.lines[1]).toContain("margin of 261% of its sales to match the project's RM435,616");
+    expect(sens.lines[1]).toContain("the call holds at any margin");
+    expect(html).toContain("How much does this call depend on the margin assumption?");
+    expect(stray(html, model.allowedFigures)).toEqual([]);
+  });
   it("shows the four policies on the story week and again with float, and the rule never costs more than the habits", () => {
     expect(model.policyCases).toHaveLength(2);
     const story = model.policyCases[0]!.rows;
